@@ -14,7 +14,6 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 alias cb="xsel -b"
 alias bi="bind -f ~/.inputrc"
 alias bt='acpi -b'
-alias hg='hi | grep -i'
 alias hh=htop
 alias hs='python -m http.server'
 alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
@@ -68,6 +67,7 @@ fl () { sudo fdisk -l $@ | cat -s; }
 fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort; }
 fu () { fusermount -u ${2:+-z} /tmp/$1; }
 gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
+hg () { hi $2 | grep -i $1; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
 cw () { xd; wmctrl -c $1; }

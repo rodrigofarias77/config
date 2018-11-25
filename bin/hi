@@ -3,14 +3,14 @@
 import datetime, gzip, os, pydoc, re, sys
 
 if len(sys.argv) > 1:
-    f = gzip.open(sys.argv[1])
+    f = gzip.open(sys.argv[1]).read().decode('utf-8')
 else:
-    f = open(os.path.expanduser('~/.bash_history'))
+    f = open(os.path.expanduser('~/.bash_history')).read()
 
 p = None
 l = []
 
-for i, j in sorted(re.findall(r'#(\d+)\n(.*)', f.read())):
+for i, j in sorted(re.findall(r'#(\d+)\n(.*)', f)):
     s = int(i)
     d = s - (p if p else s)
     p = s
