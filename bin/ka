@@ -23,11 +23,12 @@ if '-c' in o:
 else:
     b = 'https://katcr.co/katsearch/page/%s/' + k
 
-r = '(?s)/user/(?P<user>.*?)/.*?' \
-    + '/category/(?P<category>.*?)[./].*?' \
+r = '(?s)/profile/(?P<user>.*?)".*?' \
+    + '/category/(?P<category>.*?)/.*?' \
+    + '/subcate/(?P<subcat>.*?)/.*?' \
     + '"(?P<magnet>magnet:.*?)".*?' \
     + '"Size">\s*(?P<size>.*?) (?P<unit>.*?)<.*?' \
-    + '"Age".*?"(?P<age>.*?)".*?' \
+    + '"Age".*?>(?P<age>.*?)<.*?' \
     + '"Seed">\s*(?P<seed>.*?)<.*?' \
     + '"Leech">\s*(?P<leech>.*?)<'
 
@@ -50,12 +51,11 @@ for p in range(1, int(o['-p']) + 1 if '-p' in o else 2):
 
             print(u)
 
-            if 'ERROR LOADING CONTENT' in h \
-                    or 'Flood Detected' in h:
-                time.sleep(5)
-            else:
+            if 'magnet:' in h:
                 time.sleep(1)
                 break
+            else:
+                time.sleep(5)
 
             if c == 10:
                 raise Exception('Tried %s times' % c)
@@ -89,7 +89,7 @@ if '-d' not in o:
     l.sort(key=lambda t: int(t['seed'].replace(',', '')), reverse=True)
 
 for t in reversed(l):
-    print('%s\n  %s, %s %s, %s/%s, %s, %s' % (
+    print('%s\n  %s, %s %s, %s/%s, %s, %s/%s' % (
         re.sub('  +', ' ', t['magnet']),
         t['age'],
         t['size'],
@@ -97,4 +97,5 @@ for t in reversed(l):
         t['seed'],
         t['leech'],
         t['user'].lower(),
-        t['category']))
+        t['category'],
+        t['subcat']))
