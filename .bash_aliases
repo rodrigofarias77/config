@@ -53,7 +53,7 @@ bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 ca () { python -c "print($1)"; }
 cc () { cut -c -${1:-15} | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
-co () { sp | cut -d ' ' -f $1; }
+co () { awk "{ print \$$1 }"; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
@@ -98,9 +98,8 @@ ry () { read -p "$1? " r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { rs -n --del "$@"; ry && rs --del "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
-sg () { systemctl --plain | cut -d " " -f 1 | grep -i $@ | sort; }
+sg () { systemctl --plain | co 1 | grep -i $@ | sort; }
 sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; do rs --del --max-size=1M "${@:2}" && rs -P --del --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma sync $ma; }
-sp () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cat -s; }
 sr () { sed -nr -e 's/.*<title>([^<]*).*/\1/p' -e "/${1:-.}/s/.*(http[^\"<]*).*/  \1/p"; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
 tl () { grep -i $1 $(ls -r ${2:-~/trash}/*idx) | sed 's/idx:/tar /' | while read i; do echo $i; tar -OPx -f $i | head -100; echo; ec -; done | le; }
