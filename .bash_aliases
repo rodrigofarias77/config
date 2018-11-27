@@ -94,7 +94,7 @@ pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1 --random-source=/dev/random; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rf () { find $@ -exec rm -iv {} +; }
-ry () { read -p "$1? " r; [ "$r" = y ]; }
+ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { rs -n --del "$@"; ry && rs --del "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
