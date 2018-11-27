@@ -42,7 +42,7 @@ case "$1" in
             du -h $a
             read -p '? ' r
             if [ "$r" = y ]; then
-                cd $d
+                cd "$d"
                 $s tar -x -Pkv -f $a
                 rm -f ${i%.*}.*
                 break
