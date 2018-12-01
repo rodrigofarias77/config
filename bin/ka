@@ -50,12 +50,15 @@ for p in range(1, int(o['-p']) + 1 if '-p' in o else 2):
             h = html.unescape(f.page_source)
 
             print(u)
+            open('/tmp/ka.htm', 'w').write(h)
 
             if 'magnet:' in h:
                 time.sleep(1)
                 break
             else:
-                time.sleep(5)
+                time.sleep(1)
+                f.refresh()
+                time.sleep(1)
 
             if c == 10:
                 raise Exception('Tried %s times' % c)
@@ -64,8 +67,6 @@ for p in range(1, int(o['-p']) + 1 if '-p' in o else 2):
         except:
             f.quit()
             raise
-
-    open('/tmp/ka.htm', 'w').write(h)
 
     for i in re.finditer(r, h):
         t = i.groupdict()
