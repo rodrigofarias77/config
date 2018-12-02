@@ -54,6 +54,7 @@ for p in range(int(o['-p']) if '-p' in o else 1):
             pass
 
         print(u)
+        open('/tmp/pb.htm', 'w').write(h)
 
         if 'magnet:' in h:
             time.sleep(1)
@@ -61,12 +62,10 @@ for p in range(int(o['-p']) if '-p' in o else 1):
         else:
             time.sleep(5)
 
-        if c == 10:
-            sys.exit('Tried %s times' % c)
+        if c == 5:
+            sys.exit('Tried %s times.' % c)
         else:
             c += 1
-
-    open('/tmp/pb.htm', 'w').write(h)
 
     for i in re.finditer(r, h):
         t = i.groupdict()
