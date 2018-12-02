@@ -53,7 +53,7 @@ bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 ca () { python -c "print($1)"; }
 cc () { cut -c -${1:-15} | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
-co () { awk "{ print \$$1 }"; }
+co () { xargs -L 1 | cut -d " " -f $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
@@ -89,7 +89,7 @@ ms () { ma $1 $ma <<< "$? - $PWD"; }
 nd () { nu "$@" & disown; }
 om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
-pk () { pp $1 | tr -s " " | cut -d " " -f 2 | xargs -r kill $2; sleep 1; pp $1; }
+pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1 --random-source=/dev/random; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
@@ -98,7 +98,6 @@ ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { rs -n --del "$@"; ry && rs --del "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
-sg () { systemctl --plain | co 1 | grep -i $@ | sort; }
 sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; do rs --del --max-size=1M "${@:2}" && rs -P --del --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma sync $ma; }
 sr () { sed -nr -e 's/.*<title>([^<]*).*/\1/p' -e "/${1:-.}/s/.*(http[^\"<]*).*/  \1/p"; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
