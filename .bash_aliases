@@ -101,7 +101,7 @@ sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; do rs --del --max-size=1M "${@:2}" && rs -P --del --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma sync $ma; }
 sr () { sed -nr -e 's/.*<title>([^<]*).*/\1/p' -e "/${1:-.}/s/.*(http[^\"<]*).*/  \1/p"; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
-tl () { grep -i $1 $(ls -r ${2:-~/trash}/*idx) | sed 's/idx:/tar /' | while read i; do echo $i; tar -OPx -f $i | head -100; echo; ec -; done | le; }
+tg () { grep -i $1 $(ls -r ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; do echo $t $a; tar -OPx -f $t "$a" | head -100; echo; ec -; done | le; }
 up () { uptime | xargs; }
 us () { n2 xn du -chsx | sort -h; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
