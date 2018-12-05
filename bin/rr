@@ -10,11 +10,11 @@ u=30
 
 [ -z "$1" ] && echo -e "$t
 -t: trash\n
--p: purge $u
--r regex: restore\n
 -k: keep
 -s: sudo
--z: gzip" && exit 1
+-z: gzip\n
+-p: purge $u
+-r regex: restore" && exit 1
 
 [ "$1" = -t ] && t=$2 && shift 2
 
