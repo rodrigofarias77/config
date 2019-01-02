@@ -13,7 +13,7 @@ alias gu='git pull'
 alias gw='git diff -U0 --color-words'
 
 gg () { git status -s $1 | grep -v swp$; }
-gs () { git stash && git fetch --depth=1 ${1:-origin} && git reset --hard origin/master && git stash pop; }
+gs () { git stash && git fetch --depth=1 origin && git reset --hard origin/master && git stash pop; }
 gt () { gg $2 | grep $1 | cut -c 4-; }
 
 # vim: filetype=sh
