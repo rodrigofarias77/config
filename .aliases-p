@@ -12,7 +12,7 @@ alias ar="$h -Rs"
 alias au="$h -Syu --devel"
 
 ag () { sed -nr -e 's/^.(.{16}).*started/@\1/p' -e 's/.*installed ([^ ]*).*/\1/p' /var/log/pacman.log | tr '\n' ' ' | grep -Eo '20.{14} [^@]+' | grep ${1:-.}; }
-am () { m=/etc/pacman.d/mirrorlist; rr -k $m; sudo reflector --country $(ii | jq -r .country) --sort rate --verbose --save $m; }
+am () { m=/etc/pacman.d/mirrorlist; rr -k $m; sudo reflector --country ${1:-CA} --sort rate --verbose --save $m; }
 as () { l=$($h -Ss --topdown $1 | perl -0pe "s/\s*\n\s+/ - /g" | sed "s:/: :"); { grep Installed <<< $l && echo; grep -v Installed <<< $l; } | le -X; }
 
 # vim: filetype=sh
