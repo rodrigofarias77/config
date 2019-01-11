@@ -54,6 +54,7 @@ ca () { python -c "print($1)"; }
 cc () { cut -c -${1:-15} | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
 co () { xargs -L 1 | cut -d " " -f $1; }
+cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
@@ -70,7 +71,6 @@ gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
 hg () { hi $2 | grep -i $1; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
-cw () { xd; wmctrl -c $1; }
 ii () { wo ipinfo.io/$1 && echo; }
 im () { mkdir im && cp ${@:3} im && mogrify -quality $1% -resize $2x$2 -verbose ${@:3}; }
 jg () { journalctl -n 5000 | grep -i $@ | le +G; }
