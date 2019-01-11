@@ -7,7 +7,7 @@ from selenium import webdriver
 o = webdriver.FirefoxOptions()
 o.add_argument('--headless')
 
-d = webdriver.Firefox(firefox_options=o, log_path='/tmp/geckodriver.log')
+d = webdriver.Firefox(options=o, service_log_path='/tmp/geckodriver.log')
 
 try:
     d.get(sys.argv[1])
