@@ -8,3 +8,5 @@ alias ao='sudo eopkg remove-orphans'
 alias ar='sudo eopkg autoremove'
 alias as="eopkg list-available | tr -s ' ' | grep -i"
 alias au='sudo eopkg upgrade'
+
+# vim: filetype=sh
