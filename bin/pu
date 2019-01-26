@@ -5,7 +5,7 @@
 
 [ -z $1 ] && echo "Usage: $0 [-s] [-u] mail" && exit 1
 
-[ $s ] && sleep $((RANDOM%3600))
+[ $s ] && sleep $((RANDOM%600))
 
 n=$(basename $0)
 m=$1

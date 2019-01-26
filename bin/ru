@@ -12,7 +12,7 @@ Notify software updates to MAIL.
 n=$(basename $0)
 m=$@
 
-[ $s ] && sleep $((RANDOM%3600))
+[ $s ] && sleep $((RANDOM%600))
 
 l=/tmp/$n.log
 
