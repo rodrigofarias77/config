@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+[ -z "$3" ] && echo "Usage: $0 mail cmd arg..." && exit 1
+
+m=$1
+c=$2
+a=${@:3}
+
+l=/tmp/$c-$(date +%s).log
+
+exec > $l 2>&1
+
+te () { tail -100 $l | mail -s "$(hostname -s): $c failed" $m; exit 1; }
+
+trap te err
+
+date
+echo $@
+
+$c $a
