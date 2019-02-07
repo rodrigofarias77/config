@@ -91,7 +91,7 @@ om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
-ra () { shuf -i ${2:-1}-$1 -n 1 --random-source=/dev/random; }
+ra () { shuf -i ${2:-1}-$1 -n 1; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rf () { find $@ -exec rm -iv {} +; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
