@@ -24,7 +24,7 @@ case $1 in
 -s)
     vboxmanage controlvm $2 savestate ;;
 -t)
-    vboxmanage snapshot $2 take $(date +%Y%m%d) ;;
+    vboxmanage snapshot $2 take ${3:-$(date +%Y%m%d)} ;;
 -x)
     sudo vboxmanage extpack install --replace $2 ;;
 *)
