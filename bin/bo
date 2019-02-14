@@ -2,7 +2,7 @@
 
 set -e
 
-[ "$1" = -p ] && read -p "Enter passphrase: " -s BORG_PASSPHRASE && export BORG_PASSPHRASE && shift
+[ "$1" = -p ] && read -p "Enter passphrase: " -s BORG_PASSPHRASE && echo && export BORG_PASSPHRASE && shift
 
 [ -z "$4" ] && echo "Usage: $0 [-p] repo keep mail args" && exit 1
 
