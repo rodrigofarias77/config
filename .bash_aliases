@@ -92,6 +92,7 @@ on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
+rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp -grab-keyboard /cert-ignore /dynamic-resolution /from-stdin /u:$2 /v:$1; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rf () { find $@ -exec rm -iv {} +; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
