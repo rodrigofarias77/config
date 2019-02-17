@@ -60,7 +60,7 @@ dp () { os; $s vi -d $2 ${1%/}/$2; }
 ds () { vi -d $2 scp://$1/$PWD/$2; }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i 60 ${@:3} $(rl $1) $2; }
-er () { sed -n "/$1/,/$2/p"; }
+er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fl () { sudo fdisk -l $@ | cat -s; }
 fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort; }
