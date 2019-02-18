@@ -23,12 +23,12 @@ if '-c' in o:
 else:
     b = 'https://katcr.co/katsearch/page/%s/' + k
 
-r = '(?s)/profile/(?P<user>.*?)".*?' \
+r = '(?s)/user/(?P<user>.*?)/.*?' \
     + '/category/(?P<category>.*?)/.*?' \
     + '/subcate/(?P<subcat>.*?)/.*?' \
     + '"(?P<magnet>magnet:.*?)".*?' \
     + '"Size">\s*(?P<size>.*?) (?P<unit>.*?)<.*?' \
-    + '"Age".*?>(?P<age>.*?)<.*?' \
+    + '"Age".*?>\s*(?P<age>.*?)<.*?' \
     + '"Seed">\s*(?P<seed>.*?)<.*?' \
     + '"Leech">\s*(?P<leech>.*?)<'
 
