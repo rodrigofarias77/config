@@ -6,14 +6,13 @@ if len(sys.argv) < 2:
     sys.exit('''-d: sort by date
 -p 5: pages
 -r regex: in magnet
--R regex: not
 -s 100: seeds
 -t: tor
 -z 500: size (MB)\n
 query
 -u user''')
 
-g = getopt.getopt(sys.argv[1:], 'dp:R:r:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'dp:r:s:tuz:')
 o = dict(g[0])
 k = '+'.join(g[1])
 
@@ -74,7 +73,6 @@ for p in range(int(o['-p']) if '-p' in o else 1):
         m = float(t['size']) * 1024 ** (z.index(t['unit'][0]) - 1)
 
         if '-r' in o and not re.search('(?i)' + o['-r'], t['magnet']) \
-                or '-R' in o and re.search('(?i)' + o['-R'], t['magnet']) \
                 or '-s' in o and int(t['seed']) < int(o['-s']) \
                 or '-z' in o and m < float(o['-z']):
             continue
