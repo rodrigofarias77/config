@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+
+[ -z "$4" ] && echo "Usage: $0 vm repo keep mail" && exit 1
+
+v=$1
+r=$2
+k=$3
+m=$4
+
+d=$(date +%s)
+
+l=/tmp/$(basename $0)-$d.log
+
+tty -s && exec > >(tee $l) 2>&1 || exec > $l 2>&1
+
+te () { tail -100 $l | mail -s "$(hostname -s): $0 failed" $m; exit 1; }
+
+trap te err
+
+date
+echo $@
+
+vboxmanage snapshot $v take $d
+
+cd $(vboxmanage showvminfo $v | sed -nr "s:^Config.* (.*)/$v/.*:\1:p")
+
+borg create --compression=zstd --filter=AME --list --stats $r::$d $v
+
+borg prune --keep-last=$k --list --stats $r
+
+vboxmanage snapshot $v delete $d
