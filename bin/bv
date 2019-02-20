@@ -28,6 +28,6 @@ cd $(vboxmanage showvminfo $v | sed -nr "s:^Config.* (.*)/$v/.*:\1:p")
 
 borg create --compression=zstd --filter=AME --list --stats $r::$d $v
 
-borg prune --keep-last=$k --list --stats $r
-
 vboxmanage snapshot $v delete $d
+
+borg prune --keep-last=$k --list --stats $r
