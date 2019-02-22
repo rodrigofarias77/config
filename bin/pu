@@ -1,9 +1,10 @@
 #!/bin/bash
 
+[ "$1" = -k ] && k=$2 && shift 2 || k=linux
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
 
-[ -z $1 ] && echo "Usage: $0 [-s] [-u] mail" && exit 1
+[ -z $1 ] && echo "Usage: $0 [-k kernel] [-s] [-u] mail" && exit 1
 
 [ $s ] && sleep $((RANDOM%600))
 
@@ -34,10 +35,8 @@ if $h -Qu | grep .; then
     lo | ma
 fi
 
-uname -r | grep -q lts && p=linux-lts || p=linux
-
-i=$($h -Q $p | sed -r "s/.* ([0-9]*\.[0-9]*\.[0-9]*).*/\1/")
+i=$($h -Q $k | sed -r "s/.* ([0-9]*\.[0-9]*\.[0-9]*).*/\1/")
 r=$(uname -r | sed "s/-.*//")
 t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
 
-[ $r != $i ] && echo "Kernel $i has been installed; the running version is $r. Up for $t." | ma
+[ $r != $i ] && echo "Kernel $i was installed. $r is running for $t." | ma
