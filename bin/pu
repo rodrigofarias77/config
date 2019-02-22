@@ -13,11 +13,13 @@ m=$1
 h=yay
 l=/tmp/$n.log
 
-fa () { lo | ma failed; exit 1; }
 lo () { tail -100 $l | tr -s " "; }
+
 ma () { mail -s "$(hostname -s): $n $1" $m; }
 
-trap fa err
+te () { lo | ma failed; exit 1; }
+
+trap te err
 
 exec > $l 2>&1
 
@@ -34,7 +36,8 @@ fi
 
 uname -r | grep -q lts && p=linux-lts || p=linux
 
-r=$(uname -r | sed "s/-.*//")
 i=$($h -Q $p | sed -r "s/.* ([0-9]*\.[0-9]*\.[0-9]*).*/\1/")
+r=$(uname -r | sed "s/-.*//")
+t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
 
-[ $r != $i ] && echo "kernel $i has been installed. The running version is $r." | ma
+[ $r != $i ] && echo "Kernel $i has been installed; the running version is $r. Up for $t." | ma
