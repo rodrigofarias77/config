@@ -16,9 +16,11 @@ m=$@
 
 l=/tmp/$n.log
 
-fa () { lo | ma failed; exit 1; }
 lo () { sed -r -e "s/^ +//" -e "s/ {2,}/ /g" -e "s/[-=]{3,}//" $l; }
+
 ma () { mail -s "$(hostname -s): $n $1" $m; }
+
+te () { lo | ma failed; exit 1; }
 
 exec > $l 2>&1
 
@@ -30,7 +32,7 @@ $d check-update
 
 e=$?
 
-trap fa err
+trap te err
 
 if [ $e -eq 100 ]; then
     [ $u ] && echo -e "\n--" && $d -y upgrade
@@ -38,7 +40,8 @@ if [ $e -eq 100 ]; then
     lo | ma
 fi
 
-r=$(uname -r)
 i=$(rpm -q kernel | tail -1 | cut -d - -f 2-)
+r=$(uname -r)
+t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
 
-[ $r != $i ] && echo "kernel $i has been installed. The running version is $r." | ma
+[ $r != $i ] && echo "Kernel $i was installed. $r is running for $t." | ma
