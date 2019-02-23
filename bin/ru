@@ -44,4 +44,4 @@ i=$(rpm -q kernel | tail -1 | cut -d - -f 2-)
 r=$(uname -r)
 t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
 
-[ $r != $i ] && echo "Kernel $i was installed. $r is running for $t." | ma
+[ $r != $i ] && echo "Kernel $i installed. $r running for $t." | ma

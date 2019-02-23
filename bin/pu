@@ -39,4 +39,4 @@ i=$($h -Q $k | sed -r "s/.* ([0-9]*\.[0-9]*\.[0-9]*).*/\1/")
 r=$(uname -r | sed "s/-.*//")
 t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
 
-[ $r != $i ] && echo "Kernel $i was installed. $r is running for $t." | ma
+[ $r != $i ] && echo "Kernel $i installed. $r running for $t." | ma
