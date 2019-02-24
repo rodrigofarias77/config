@@ -66,5 +66,5 @@ rsync -ahv -AX --exclude=/{dev,mnt,proc,run,sys,tmp}/* / /mnt
 rsync -e 'ssh bar ssh foo' foo :
 shuf -n 1 /usr/share/dict/words
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
-xset b off
-xset s off -dpms
+systemctl mask systemd-journald-audit.socket
+vboxmanage modifymedium disk foo.vdi --compact
