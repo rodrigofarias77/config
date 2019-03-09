@@ -10,4 +10,6 @@ alias ar='sudo apt --purge autoremove'
 alias au='sudo apt update; sudo apt full-upgrade'
 
 ag () { ls -rt /var/log/apt/history.log* | xargs zgrep "^Install.*$1" | sed -e 's/.*: //' -e 's/ ([^)]*),\?//g'; }
-as () { l=$(n2 apt search $@ | tail -n +3 | sed 's/\/[^ ]*//' | tr '\n' @ | sed -e 's/@  / - /g' -e 's/@\+/\n/g'); grep installed <<< "$l"; echo; grep -v installed <<< "$l"; }
+as () { l=$(n2 apt search $@ | tail -n +3 | perl -0pe 's/(.*?)\/(.*)\n  (.*)\n/$1 $2 - $3/g'); { grep installed <<< $l && echo; grep -v installed <<< $l; } | le -X; }
+
+# vim: filetype=sh
