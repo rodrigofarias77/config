@@ -29,8 +29,8 @@ autologin-user=foo # gpasswd -a foo autologin
 /etc/lightdm/lightdm-gtk-greeter.conf
 indicators=~host;~spacer;~clock;~spacer;~language;~session;~a11y;~power
 
-/etc/profile
-export QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
+/etc/environment
+QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 
 /etc/samba/smb.conf
 map to guest = Bad User
@@ -62,3 +62,4 @@ shuf -n 1 /usr/share/dict/words
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl mask systemd-journald-audit.socket
 vboxmanage modifymedium disk foo.vdi --compact
+xset s off
