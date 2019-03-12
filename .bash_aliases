@@ -72,7 +72,7 @@ hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
 ii () { wo ipinfo.io/$1 && echo; }
 im () { mkdir im && cp ${@:3} im && mogrify -quality $1% -resize $2x$2 -verbose ${@:3}; }
-jg () { journalctl -n 5000 | grep -i $@ | le +G; }
+jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
 jr () { bb -m $1 && jpegtran -copy all -rotate ${2:-90} $1-* > $1 && rr $1-*; }
 kp () { nc -w 1 -z $1 $2; }
