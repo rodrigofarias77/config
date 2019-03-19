@@ -2,6 +2,11 @@
 [Settings]
 gtk-primary-button-warps-slider = false
 
+.config/monitors
+xrandr --newmode "1024x600_60.00" 49.00 1024 1072 1168 1312 600 603 613 624 -hsync +vsync # cvt 1024 600
+xrandr --addmode Virtual1 1024x600_60.00
+xrandr --output Virtual1 --mode 1024x600_60.00
+
 .minttyrc
 WordCharsExcl=:
 
