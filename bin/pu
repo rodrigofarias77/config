@@ -13,7 +13,7 @@ m=$1
 h=yay
 l=/tmp/$n.log
 
-lo () { tail -100 $l | tr -s " "; }
+lo () { tail -1000 $l | tr -s " "; }
 
 ma () { mail -s "$(hostname -s): $n $1" $m; }
 
