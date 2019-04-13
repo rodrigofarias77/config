@@ -7,7 +7,7 @@ HISTTIMEFORMAT='%s '
 PROMPT_COMMAND='history -a'
 PS1="\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ "
 
-jj=cron
+jj=crond
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv'
 
