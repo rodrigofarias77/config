@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $0 host" && exit 1
+
+h=$1
+
+. ~/.nirc
+
+i=$(wget -q -O - ipinfo.io | jq -r .ip)
+
+host $h | grep -q $i || wget -q --password=$p -O - "https://$u@dynupdate.no-ip.com/nic/update?hostname=$h"
