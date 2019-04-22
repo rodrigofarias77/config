@@ -1,11 +1,11 @@
 [ -x /usr/bin/yum ] || return
 
-[ -x /usr/bin/dnf ] && c=dnf || c=yum
+[ -x /usr/bin/dnf ] && c=dnf w=" --setopt=install_weak_deps=0" || c=yum
 
 [ $EUID != 0 ] && s="sudo "
 
 alias ac="$s$c clean all"
-alias ai="$s$c install"
+alias ai="$s$c$w install"
 alias an="$c info"
 alias ar="$s$c autoremove"
 alias au="$s$c upgrade"
