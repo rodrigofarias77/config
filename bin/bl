@@ -1,8 +1,0 @@
-#!/bin/bash
-
-b=/usr/lib/gsd-backlight-helper
-
-m=$($b --get-max-brightness)
-
-[ $1 ] && pkexec --user root $b --set-brightness $(($m*$1/100)) ||
-    echo $((($($b --get-brightness)+1)*100/$m))%
