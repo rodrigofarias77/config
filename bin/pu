@@ -3,12 +3,13 @@
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
 
-[ -z $1 ] && echo "Usage: $0 [-s] [-u] mail" && exit 1
+[ -z $1 ] && echo "Usage: $0 [-s] [-u] mail [xtra]" && exit 1
 
 [ $s ] && sleep $((RANDOM%600))
 
 n=$(basename $0)
 m=$1
+x=${@:2}
 
 h=yay
 l=/tmp/$n.log
@@ -29,7 +30,7 @@ $h -Sy
 echo
 
 if $h -Qu | grep .; then
-    [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm
+    [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm $x
 
     lo | ma
 fi
