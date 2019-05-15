@@ -1,19 +1,11 @@
 #!/usr/bin/python -u
 
-import datetime, getopt, glob, os, random, re, requests, subprocess, sys, time
+import glob, json, os, random, re, requests, time
 
-if len(sys.argv) < 2:
-    sys.exit('''Usage: 9g ... 200
-  -c: continue''')
+def js(h):
+    return json.loads(re.search("GAG.App.loadConfigs.(.*)..loadAsynScripts", h).group(1))
 
-o, a = getopt.getopt(sys.argv[1:], 'c')
-o = dict(o)
-
-m = int(a[0])
-v = 'eog'
-w = os.path.expanduser('~/9gag')
-
-def rget(u):
+def rg(u):
     r = None
     while not r:
         try:
@@ -23,97 +15,68 @@ def rget(u):
             time.sleep(5)
     return r
 
-def wtmp(h):
-    open('/tmp/9gag.htm', 'w').write(h)
+def tw(h):
+    open("/tmp/9gag.htm", "w").write(h)
 
+w = os.path.expanduser("~/9gag")
 os.chdir(w)
 
-d = sorted(os.listdir('.'))[-1] if '-c' in o else \
-    datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+c = 0
+d = str(round(time.time()))
+g = "https://9gag.com"
 l = []
-g = 'https://9gag.com'
-s = open(w + '.log').read().split()
-x = [i.split('-')[2] for i in sorted(glob.glob('*/*.*'))]
+x = [i.split("-")[2] for i in sorted(glob.glob("*/*.*"))]
 
-t = '/tmp/' + d
+h = rg(g).text
+tw(h)
+j = js(h)["data"]["posts"]
 
-if os.path.exists(t):
-    l = open(t).read().split()
-    l = l[:l.index(x[-1])]
-else:
-    c = 0
-    h = rget(g).text
-    wtmp(h)
-
-    i = re.search('jsid-latest-entries.*?>(.*?)<', h).group(1)
-
-    while c < 50:
-        p = g + '/gag/' + i
-
-        if i in s or i in x:
+while c < 50:
+    for i in j:
+        if i["id"] in x or i["id"] in [i["id"] for i in l]:
             c += 1
-            print('> ' + i)
-        elif re.search(i + '[^"]*mp4', h):
-            s.append(i)
-            print('> %s - mp4' % p)
+            print("> " + i["id"])
         else:
             l.append(i)
             c = 0
-            print('%s (%s)' % (i, len(l)))
+            print("%s (%s)" % (i["id"], len(l)))
 
-        h = rget(p).text
+    h = rg(l[-1]["url"]).text
+    tw(h)
+    j = js(h)["data"]
 
-        try:
-            i = re.search('nextPosts":.*?:"(.*?)"', h).group(1)
-        except:
-            print('> ?')
-            break
+    if "nextPosts" in j:
+        j = j["nextPosts"]
+    else:
+        print("> ?")
+        break
 
-    open(t, 'w').write('\n'.join(l))
-
-i = input('%s to %s in %s (%s)\n? ' % (l[-1], l[0], d, len(l)))
+i = input("%s to %s in %s (%s)\n? " % (l[-1]["id"], l[0]["id"], d, len(l)))
 
 if i:
     m = int(i)
-
-if '-c' in o:
-    c, i = sorted(os.listdir(d))[-1].split('-')[:2]
-    j = int(c) + 1
 else:
-    j = 1
-    os.mkdir(d)
+    m = 1000
 
+j = 1
+os.mkdir(d)
 os.chdir(d)
 
 for i in reversed(l):
     if j > m:
         break
 
-    p = g + '/gag/' + i
-    h = rget(p).text
-    wtmp(h)
+    if i["type"] == "Animated":
+        u = i["images"]["image460sv"]["url"]
+    else:
+        u = i["images"]["image700"]["url"]
 
-    r = rget(re.search('image_src.*?(http[^"]*)', h).group(1))
+    t = re.sub(r"[^\w]*", "", i["title"].title())
+    n = "%03d-%s-%s.%s" % (j, i["id"], t[:100], u.split(".")[-1])
 
-    z = int(r.headers['content-length'])
-    e = r.url.split('.')[-1]
-
-    if z > 250 * 1024:
-        s.append(i)
-        print('> %s - %s (%s)' % (p, e, z // 1024))
-        continue
-
-    t = re.sub('&.*?;', '', re.search('(?s)<title>(.*?) - 9GAG', h).group(1))
-    t = re.sub(r'[^\w]*', '', t.title())
-    n = '%03d-%s-%s.%s' % (j, i, t[:100], e)
-
-    open(n, 'wb').write(r.content)
-    print(p + ' - ' + n)
-
-    if v:
-        subprocess.Popen([v, '.'], stderr=subprocess.DEVNULL)
-        v = ''
+    open(n, "wb").write(rg(u).content)
+    print(i["url"] + " - " + n)
 
     j += 1
 
-open(w + '.log', 'w').write('\n'.join(s[-1000:]))
+print(os.path.join(w, d))
