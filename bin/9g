@@ -19,13 +19,12 @@ def tw(h):
     open("/tmp/9gag.htm", "w").write(h)
 
 w = os.path.expanduser("~/9gag")
-os.chdir(w)
 
 c = 0
-d = str(round(time.time()))
+d = w + "/" + str(round(time.time()))
 g = "https://9gag.com"
 l = []
-x = [i.split("-")[2] for i in sorted(glob.glob("*/*.*"))]
+x = [os.path.basename(i).split("-")[1] for i in sorted(glob.glob(w + "/*/*"))]
 
 h = rg(g).text
 tw(h)
@@ -51,16 +50,17 @@ while c < 50:
         print("> ?")
         break
 
-i = input("%s to %s in %s (%s)\n? " % (l[-1]["id"], l[0]["id"], d, len(l)))
+i = input("%s to %s (%s)\n? " % (l[-1]["id"], l[0]["id"], len(l)))
 
 if i:
     m = int(i)
 else:
     m = 1000
 
-j = 1
 os.mkdir(d)
-os.chdir(d)
+open(d + ".json", "w").write(json.dumps(l, indent=4))
+
+j = 1
 
 for i in reversed(l):
     if j > m:
@@ -74,9 +74,9 @@ for i in reversed(l):
     t = re.sub(r"[^\w]*", "", i["title"].title())
     n = "%03d-%s-%s.%s" % (j, i["id"], t[:100], u.split(".")[-1])
 
-    open(n, "wb").write(rg(u).content)
+    open(d + "/" + n, "wb").write(rg(u).content)
     print(i["url"] + " - " + n)
 
     j += 1
 
-print(os.path.join(w, d))
+print(d)
