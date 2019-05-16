@@ -38,7 +38,8 @@ while c < 50:
         else:
             l.append(i)
             c = 0
-            print("%s (%s)" % (i["id"], len(l)))
+            t = time.strftime("%F %T", time.localtime(i["creationTs"]))
+            print(i["id"] + " - " + t)
 
     h = rg(l[-1]["url"]).text
     tw(h)
@@ -67,14 +68,20 @@ for i in reversed(l):
         break
 
     if i["type"] == "Animated":
-        u = i["images"]["image460sv"]["url"]
+        r = rg(i["images"]["image460sv"]["url"])
     else:
-        u = i["images"]["image700"]["url"]
+        r = rg(i["images"]["image700"]["url"])
+
+    z = int(r.headers['content-length']) / 1024**2
+
+    if z > 5:
+        print('> %s - %sM' % (i["url"], round(z, 1)))
+        continue
 
     t = re.sub(r"[^\w]*", "", i["title"].title())
-    n = "%03d-%s-%s.%s" % (j, i["id"], t[:100], u.split(".")[-1])
+    n = "%03d-%s-%s.%s" % (j, i["id"], t[:100], r.url.split('.')[-1])
 
-    open(d + "/" + n, "wb").write(rg(u).content)
+    open(d + "/" + n, "wb").write(r.content)
     print(i["url"] + " - " + n)
 
     j += 1
