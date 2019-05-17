@@ -5,12 +5,12 @@ import glob, gzip, html, json, os, random, re, requests, time
 def js(h):
     return json.loads(re.search("GAG.App.loadConfigs.(.*)..loadAsynScripts", h).group(1))
 
-def rg(u):
+def rg(u, s=1):
     r = None
     while not r:
         try:
             r = requests.get(u, stream=True, timeout=10)
-            time.sleep(random.random())
+            time.sleep(random.random() * s)
         except:
             time.sleep(5)
     return r
@@ -30,18 +30,18 @@ h = rg(g).text
 tw(h)
 j = js(h)["data"]["posts"]
 
-while c < 50:
+while c < 100:
     for i in j:
         if i["id"] in x or i["id"] in [i["id"] for i in l]:
             c += 1
-            print("> " + i["id"])
+            print("> %s - %s" % (i["id"], c))
         else:
             l.append(i)
             c = 0
             t = time.strftime("%F %T", time.localtime(i["creationTs"]))
             print(i["id"] + " - " + t)
 
-    h = rg(l[-1]["url"]).text
+    h = rg(j[-1]["url"], 5).text
     tw(h)
     j = js(h)["data"]
 
