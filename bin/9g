@@ -1,6 +1,6 @@
 #!/usr/bin/python -u
 
-import glob, json, os, random, re, requests, time
+import glob, html, json, os, random, re, requests, time
 
 def js(h):
     return json.loads(re.search("GAG.App.loadConfigs.(.*)..loadAsynScripts", h).group(1))
@@ -78,7 +78,7 @@ for i in reversed(l):
         print('> %s - %sM' % (i["url"], round(z, 1)))
         continue
 
-    t = re.sub(r"[^\w]*", "", i["title"].title())
+    t = re.sub(r"[^\w]*", "", html.unescape(i["title"]).title())
     n = "%03d-%s-%s.%s" % (j, i["id"], t[:100], r.url.split('.')[-1])
 
     open(d + "/" + n, "wb").write(r.content)
