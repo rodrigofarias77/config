@@ -1,6 +1,6 @@
 #!/usr/bin/python -u
 
-import glob, html, json, os, random, re, requests, time
+import glob, gzip, html, json, os, random, re, requests, time
 
 def js(h):
     return json.loads(re.search("GAG.App.loadConfigs.(.*)..loadAsynScripts", h).group(1))
@@ -59,7 +59,7 @@ else:
     m = 1000
 
 os.mkdir(d)
-open(d + ".json", "w").write(json.dumps(l, indent=4))
+gzip.open(d + ".json.gz", 'wt').write(json.dumps(l, indent=4))
 
 j = 1
 
