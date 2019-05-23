@@ -30,7 +30,7 @@ h = rg(g).text
 tw(h)
 j = js(h)["data"]["posts"]
 
-while c < 100:
+while c < 50:
     for i in j:
         if i["id"] in x or i["id"] in [i["id"] for i in l]:
             c += 1
@@ -41,7 +41,7 @@ while c < 100:
             t = time.strftime("%F %T", time.localtime(i["creationTs"]))
             print(i["id"] + " - " + t)
 
-    h = rg(j[-1]["url"], 5).text
+    h = rg(j[-1]["url"]).text
     tw(h)
     j = js(h)["data"]
 
