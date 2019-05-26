@@ -4,6 +4,7 @@ import getopt, html, requests, re, sys, time, unicodedata
 
 if len(sys.argv) < 2:
     sys.exit('''-d: sort by date
+-m: magnet only
 -p 5: pages
 -r regex: in magnet
 -s 100: seeds
@@ -12,7 +13,7 @@ if len(sys.argv) < 2:
 query
 -u user''')
 
-g = getopt.getopt(sys.argv[1:], 'dp:r:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'dmp:r:s:tuz:')
 o = dict(g[0])
 k = '+'.join(g[1])
 
@@ -53,7 +54,7 @@ for p in range(int(o['-p']) if '-p' in o else 1):
         except:
             pass
 
-        print(u)
+        print(u, file=sys.stderr)
         open('/tmp/pb.htm', 'w').write(h)
 
         if 'magnet:' in h:
@@ -80,17 +81,18 @@ for p in range(int(o['-p']) if '-p' in o else 1):
         if t not in l:
             l.append(t)
 
-print()
-
 if '-d' in o or '-u' in o:
     l.sort(key=lambda t: int(t['id']), reverse=True)
 
 for t in reversed(l):
-    print('%s\n  %s, %s %s, %s/%s, %s' % (
-        t['magnet'],
-        t['date'],
-        t['size'],
-        t['unit'],
-        t['seed'],
-        t['leech'],
-        t['user'].lower() if t['user'] else '?'))
+    if '-m' not in o:
+        print('%s\n  %s, %s %s, %s/%s, %s' % (
+            t['magnet'],
+            t['date'],
+            t['size'],
+            t['unit'],
+            t['seed'],
+            t['leech'],
+            t['user'].lower() if t['user'] else '?'))
+    else:
+        print(t['magnet'])
