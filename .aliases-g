@@ -1,4 +1,3 @@
-alias ct='cd $(git rev-parse --show-toplevel)'
 alias ga='git add'
 alias gb='git branch -v | cut -c -$COLUMNS'
 alias gc='gd --cached'
@@ -12,6 +11,7 @@ alias gp='git log -p --decorate'
 alias gu='git pull'
 alias gw='git diff -U0 --color-words'
 
+ct () { cd $(git rev-parse --show-toplevel); }
 gg () { git status -s $1 | grep -v swp$; }
 gs () { git stash && git fetch --depth=1 origin && git reset --hard origin/master && git stash pop; }
 gt () { gg $2 | grep $1 | cut -c 4-; }
