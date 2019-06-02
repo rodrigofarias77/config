@@ -4,7 +4,7 @@
 
 [ $EUID != 0 ] && s="sudo "
 
-w="--setopt=install_weak_deps=0"
+wd="--setopt=install_weak_deps=0"
 
 alias ac="$s$c clean all"
 alias ai="$s$c install"
