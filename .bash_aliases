@@ -15,7 +15,7 @@ alias cb="xsel -b"
 alias bi="bind -f ~/.inputrc"
 alias bt='acpi -b'
 alias hh=htop
-alias hs='python -m http.server'
+alias hs='python3 -m http.server'
 alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
 alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
 alias io='sudo iotop'
@@ -48,7 +48,7 @@ alias sudo='sudo '
 
 bc () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
-ca () { python -c "print($1)"; }
+ca () { python3 -c "print($1)"; }
 cc () { cut -c -${1:-15} | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
 co () { xargs -L 1 | cut -d " " -f $1; }
