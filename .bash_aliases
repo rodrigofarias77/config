@@ -3,8 +3,8 @@ set -C
 HISTCONTROL=ignoreboth
 HISTFILESIZE=20000
 HISTSIZE=10000
-HISTTIMEFORMAT='%s '
-PROMPT_COMMAND='history -a'
+HISTTIMEFORMAT="%c "
+PROMPT_COMMAND="history -a"
 PS1="\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ "
 
 jj=crond
@@ -20,7 +20,6 @@ alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
 alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
 alias io='sudo iotop'
 alias lg='la -F | grep'
-alias lo="tr A-Z a-z"
 alias n1="1> /dev/null"
 alias n2="2> /dev/null"
 alias nh='unset HISTFILE'
@@ -79,6 +78,7 @@ kp () { nc -w 1 -z $1 $2; }
 l2 () { la -F $1 | cc 31; }
 lc () { la -F $1 | cc; }
 lh () { ll $1 | head -20; }
+lo () { tr A-Z a-z; }
 lt () { ll $1 | tail -20; }
 lu () { la -p $@ | us; }
 ma () { mail -s "$(hostname -s): $1" ${@:2}; }
