@@ -1,8 +1,5 @@
 set -o noclobber
 
-shopt -s nocaseglob
-shopt -s nullglob
-
 HISTCONTROL=ignoreboth
 HISTFILESIZE=20000
 HISTSIZE=10000
