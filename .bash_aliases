@@ -3,7 +3,7 @@ set -o noclobber
 HISTCONTROL=ignoreboth
 HISTFILESIZE=20000
 HISTSIZE=10000
-HISTTIMEFORMAT="%c "
+HISTTIMEFORMAT="%F %T "
 PROMPT_COMMAND="history -a"
 PS1="\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ "
 
