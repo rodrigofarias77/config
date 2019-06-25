@@ -12,16 +12,16 @@ if len(sys.argv) < 2:
 -u user
 -z 500: size (MB)\n
 query
--c tv: category''')
+-c tv/hd: category''')
 
 g = getopt.getopt(sys.argv[1:], 'dc:p:r:s:u:z:')
 o = dict(g[0])
 k = '+'.join(g[1])
 
 if '-c' in o:
-    b = 'https://katcr.co/category/' + o['-c'] + '/page/%s'
+    b = 'https://katcr.co/category/%s/subcate/%s/page/%%s' % tuple(o['-c'].split('/'))
 else:
-    b = 'https://katcr.co/katsearch/page/%s/' + k
+    b = 'https://katcr.co/katsearch/page/%%s/%s' % k
 
 r = '(?s)/user/(?P<user>.*?)/.*?' \
     + '/category/(?P<category>.*?)/.*?' \
