@@ -3,7 +3,7 @@
 import glob, gzip, html, json, os, random, re, requests, time
 
 def js(h):
-    return json.loads(re.search("GAG.App.loadConfigs.(.*)..loadAsynScripts", h).group(1))
+    return json.loads(re.search("jsid-config.>(.*)</", h).group(1))
 
 def rg(u, s=1):
     r = None
