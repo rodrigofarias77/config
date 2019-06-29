@@ -6,6 +6,7 @@ from selenium import webdriver
 
 if len(sys.argv) < 2:
     sys.exit('''-d: sort by date
+-m: magnet only
 -p 5: pages
 -r regex: in magnet
 -s 100: seeds
@@ -14,7 +15,7 @@ if len(sys.argv) < 2:
 query
 -c tv/hd: category''')
 
-g = getopt.getopt(sys.argv[1:], 'dc:p:r:s:u:z:')
+g = getopt.getopt(sys.argv[1:], 'dc:mp:r:s:u:z:')
 o = dict(g[0])
 k = '+'.join(g[1])
 
@@ -49,7 +50,7 @@ for p in range(1, int(o['-p']) + 1 if '-p' in o else 2):
             f.get(u)
             h = html.unescape(f.page_source)
 
-            print(u)
+            print(u, file=sys.stderr)
             open('/tmp/ka.htm', 'w').write(h)
 
             if 'magnet:' in h:
@@ -84,19 +85,20 @@ for p in range(1, int(o['-p']) + 1 if '-p' in o else 2):
 
 f.quit()
 
-print()
-
 if '-d' not in o:
     l.sort(key=lambda t: int(t['seed'].replace(',', '')), reverse=True)
 
 for t in reversed(l):
-    print('%s\n  %s, %s %s, %s/%s, %s, %s/%s' % (
-        re.sub('  +', ' ', t['magnet']),
-        t['age'],
-        t['size'],
-        t['unit'],
-        t['seed'],
-        t['leech'],
-        t['user'].lower(),
-        t['category'],
-        t['subcat']))
+    if '-m' not in o:
+        print('%s\n  %s, %s %s, %s/%s, %s, %s/%s' % (
+            re.sub('  +', ' ', t['magnet']),
+            t['age'],
+            t['size'],
+            t['unit'],
+            t['seed'],
+            t['leech'],
+            t['user'].lower(),
+            t['category'],
+            t['subcat']))
+    else:
+        print(t['magnet'])
