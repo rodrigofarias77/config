@@ -3,7 +3,8 @@
 import glob, gzip, html, json, os, random, re, requests, time
 
 def js(h):
-    return json.loads(re.search("jsid-config.>(.*)</", h).group(1))
+    s = re.search("JSON.parse..(.*)..;</", h).group(1)
+    return json.loads(bytes(s, "utf-8").decode("unicode_escape"))
 
 def rg(u, s=1):
     r = None
