@@ -45,7 +45,7 @@ alias xv='x11vnc -q -cursor arrow -display :0 -usepw'
 
 alias sudo='sudo '
 
-bc () { os; $s rc -p $1 ~/backup; }
+ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 ca () { python3 -c "print($1)"; }
 cc () { cut -c -${1:-15} | column -c $(tput cols); }
