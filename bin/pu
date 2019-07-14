@@ -14,17 +14,16 @@ x=${@:2}
 h=yay
 l=/tmp/$n.log
 
-lo () { tail -1000 $l | tr -s " "; }
+ma () { tail -1000 $l | tr -s " " | mail -s "$(hostname -s): $n $1" $m; }
 
-ma () { mail -s "$(hostname -s): $n $1" $m; }
-
-te () { lo | ma failed; exit 1; }
+te () { ma failed; exit 1; }
 
 trap te err
 
 exec > $l 2>&1
 
 date
+uptime | sed -r "s/.*(up [^,]*).*/\u\1/"
 
 $h -Sy
 echo
@@ -32,11 +31,5 @@ echo
 if $h -Qu | grep .; then
     [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm $x
 
-    lo | ma
+    ma
 fi
-
-i=$(file /boot/vmlinuz-linux | sed -r "s/.*version ([^-]*).*/\1/")
-r=$(uname -r | sed "s/-.*//")
-t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
-
-[ $r != $i ] && echo "Kernel $i installed. $r running for $t." | ma
