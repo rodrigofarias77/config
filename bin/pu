@@ -14,7 +14,7 @@ x=${@:2}
 h=yay
 l=/tmp/$n.log
 
-ma () { tail -1000 $l | tr -s " " | mail -s "$(hostname -s): $n $1" $m; }
+ma () { tail -500 $l | tr -s " " | mail -s "$(hostname -s): $n $1" $m; }
 
 te () { ma failed; exit 1; }
 
