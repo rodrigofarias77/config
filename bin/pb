@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/python3 -u
 
 import getopt, html, requests, re, sys, time, unicodedata
 
