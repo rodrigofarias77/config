@@ -13,7 +13,6 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 
 alias cb="xsel -b"
 alias bi="bind -f ~/.inputrc"
-alias bt='acpi -b'
 alias hh=htop
 alias hs='python3 -m http.server'
 alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
