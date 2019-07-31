@@ -8,7 +8,7 @@ alias fm='nice -n 15 ffmpeg -hide_banner'
 alias fp='ffprobe -hide_banner'
 
 bp () { mediainfo "$1" | sed -n "s/^Bits.*: //p"; }
-fb () { r=23; while true; do o=ff-$r.mp4; fm -n -i $1 ${@:3} $fv -crf $r $o || break; echo; ec -; b=$(ca "int(round($(bp $o)*1000))"); echo $o $b | ma ff $ma; [ $b -gt 55 ] && let r++ || let r--; [ $r -gt 27 -o $r -lt 19 ] && break; done; read -p '? ' r; fm -i "$2" ${@:3} $fv -crf $r -ac 2 $fa -sn -map_metadata -1 ff.mp4; ms ff; }
+fb () { r=23; while true; do o=ff-$r.mp4; fm -n -i $1 ${@:3} $fv -crf $r $o || break; echo; ec -; b=$(ca "int(round($(bp $o)*1000))"); echo $o $b | ma ffmpeg $ma; [ $b -gt 55 ] && let r++ || let r--; [ $r -gt 27 -o $r -lt 19 ] && break; done; read -p '? ' r; fm -i "$2" ${@:3} $fv -crf $r -ac 2 $fa -sn -map_metadata -1 ff.mp4; ms ffmpeg; }
 fd () { fv duration "$1"; echo ${format_duration%.*}; }
 fn () { fm -ss ${2:-600} -i "$1" -frames:v 1 ff.png; }
 fs () { eval $(for i in $(seq 60 60 $(fd "$1")); do echo "cat <(fm -v error -ss $i -i \"$1\" -t 6 -c copy -an -f mpegts -);"; done) | fm -i - -c copy ff-fs.mp4; }
