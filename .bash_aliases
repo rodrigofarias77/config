@@ -99,7 +99,7 @@ sb () { unalias -a; . ~/.bashrc; }
 sd () { rs -n --del "$@"; ry && rs --del "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl --plain | sed "s/ *$//" | co 1 | sort | grep -i $1; }
-sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; do rs --del --max-size=1M "${@:2}" && rs -P --del --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma sync $ma; }
+sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; do rs --del --max-size=1M "${@:2}" && rs -P --del --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma rsync $ma; }
 sr () { sed -nr -e 's/.*<title>([^<]*).*/\1/p' -e "/${1:-.}/s/.*(http[^\"<]*).*/  \1/p"; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
