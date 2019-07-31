@@ -25,9 +25,8 @@ alias nh='unset HISTFILE'
 alias nu="> /dev/null 2>&1"
 alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
-alias pc='parallel --will-cite'
 alias rl='readlink -f'
-alias rm='rm -v'
+alias rm='rm -Iv'
 alias rs='rsync -ahv'
 alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
 alias sv='nu ssvncviewer -bgr233 -encodings zrle'
