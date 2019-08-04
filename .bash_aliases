@@ -32,7 +32,7 @@ alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
 alias sv='nu ssvncviewer -bgr233 -encodings zrle'
 alias sx='sudo xv -auth /run/lightdm/root/:0'
 alias ta='n1 tmux -2 new -AD -s 0'
-alias tp='tar -x -OP -f'
+alias tp='tar -OPx -f'
 alias uu='du -hs'
 alias vn='vi -i NONE'
 alias vr='vi -R'
@@ -103,7 +103,7 @@ sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; 
 sr () { sed -nr -e 's/.*<title>([^<]*).*/\1/p' -e "/${1:-.}/s/.*(http[^\"<]*).*/  \1/p"; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
-tg () { grep -i $1 $(ls -r ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; do echo $t $a; tar -OPx -f $t "$a" | head -100; echo; ec -; done | le; }
+tg () { grep -i $1 $(ls -r ${2:-~/trash}/*idx) | sed "s/idx:/tar /" | while read t a; do echo $t $a; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
 up () { uptime | xargs; }
 us () { n2 xn du -chsx | sort -h; }
