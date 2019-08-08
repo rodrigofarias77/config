@@ -68,10 +68,13 @@ for i in reversed(l):
     if j > m:
         break
 
-    if i["type"] == "Animated":
+    if i["type"] == "Photo":
+        r = rg(i["images"]["image700"]["url"])
+    elif i["type"] == "Animated":
         r = rg(i["images"]["image460sv"]["url"])
     else:
-        r = rg(i["images"]["image700"]["url"])
+        print('> %s - %s' % (i["url"], i["type"]))
+        continue
 
     z = int(r.headers['content-length']) / 1024**2
 
@@ -79,7 +82,7 @@ for i in reversed(l):
         print('> %s - %sM' % (i["url"], round(z, 1)))
         continue
 
-    t = re.sub(r"[^\w]*", "", html.unescape(i["title"]).title())
+    t = re.sub(r"(?i)[^0-9a-z]", "", html.unescape(i["title"]).title())
     n = "%03d-%s-%s.%s" % (j, i["id"], t[:100], r.url.split('.')[-1])
 
     open(d + "/" + n, "wb").write(r.content)
