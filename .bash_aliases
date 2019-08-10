@@ -19,10 +19,7 @@ alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
 alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
 alias io='sudo iotop'
 alias lg='la -F | grep'
-alias n1="1> /dev/null"
-alias n2="2> /dev/null"
 alias nh='unset HISTFILE'
-alias nu="> /dev/null 2>&1"
 alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
@@ -84,8 +81,11 @@ mc () { mkdir -p "$1" && cd "$1"; }
 mo () { mv "$@" $OLDPWD; }
 mq () { mountpoint -q $1 && echo "$1 already mounted"; }
 ms () { ma $1 $ma <<< "$? - $PWD"; }
+n1 () { "$@" 1> /dev/null; }
+n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
 nn () { n2 sudo nethogs $(ip -o l | cut -d : -f 2 | grep -v lo | head -1); }
+nu () { "$@" &> /dev/null; }
 om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
