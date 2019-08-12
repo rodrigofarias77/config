@@ -1,10 +1,9 @@
 #!/bin/bash
 
 [ -z "$2" ] && echo -e "name\n
--j: exif\n
 -c: capitalize
 -f: sanitize
--l: lowercase
+-l: lower case
 -r: regex
 " && exit 1
 
@@ -13,12 +12,10 @@ c=$(type -p perl-rename prename | head -1)
 ry () { $c -n "$@" || exit 1; read -p '? ' r; [ "$r" = y ] && $c -v "$@"; }
 
 case $1 in
--j)
-    jhead -exonly -n%Y%m%d-%H%M%S-$2 "${@:3}" ;;
 -c)
-    ry 's/(^|[- _])[a-z]/\U$&/g' "${@:2}" ;;
+    ry 's/\b[a-z]/\u$&/g' "${@:2}" ;;
 -f)
-    ry 's/[^-+.\w]//g' "${@:2}" ;;
+    ry 's/[^-+.0-9a-z]//gi' "${@:2}" ;;
 -l)
     ry 'y/A-Z/a-z/' "${@:2}" ;;
 -r)
