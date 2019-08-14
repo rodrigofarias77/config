@@ -82,7 +82,7 @@ for i in reversed(l):
         print('> %s - %sM' % (i["url"], round(z, 1)))
         continue
 
-    t = html.unescape(i["title"]).replace("'", "").title()
+    t = re.sub("['’]", "", html.unescape(i["title"])).title()
     t = re.sub("[^0-9A-Za-z]", "", t)[:100]
     n = "%03d-%s-%s.%s" % (j, i["id"], t, r.url.split('.')[-1])
 
