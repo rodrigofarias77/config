@@ -24,7 +24,6 @@ alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
 alias rm='rm -Iv'
-alias rs='rsync -ahv'
 alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
 alias sv='nu ssvncviewer -bgr233 -encodings zrle'
 alias sx='sudo xv -auth /run/lightdm/root/:0'
@@ -94,12 +93,12 @@ ra () { shuf -i ${2:-1}-$1 -n 1; }
 rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp -grab-keyboard /cert-ignore /dynamic-resolution /from-stdin /u:$2 /v:$1; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rf () { find $@ -exec rm -iv {} +; }
+rs () { s="rsync -ahv"; $s -n "$@"; ry && $s "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
-sd () { rs -n --del "$@"; ry && rs --del "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl --plain | sed "s/ *$//" | co 1 | sort | grep -i $1; }
-sm () { l=/tmp/sm-$(date +%s).log; rs -n --del "${@:2}"; ry && for i in {1..5}; do rs --del --max-size=1M "${@:2}" && rs -P --del --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma rsync $ma; }
+sm () { s="rsync -ahv"; l=/tmp/sm-$(date +%s).log; $s -n "${@:2}"; ry && for i in {1..5}; do $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 --log-file=$l "${@:2}" && break || sleep 10m; done; echo -e "${@:2}\n\n--\n$(cat $l)" | ma rsync $ma; }
 sr () { sed -nr -e 's/.*<title>([^<]*).*/\1/p' -e "/${1:-.}/s/.*(http[^\"<]*).*/  \1/p"; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
