@@ -1,0 +1,22 @@
+#!/bin/bash
+
+[ -z "$2" ] && echo -e "regex
+-c: capitalize
+-l: lower case
+-s: sanitize
+" && exit 1
+
+c=$(type -p perl-rename prename | head -1)
+
+ry () { $c -n "$@" || exit 1; read -p "? " r; [ "$r" = y ] && $c -v "$@"; }
+
+case $1 in
+-c)
+    ry "s/(^|[- ])[a-z]/\U$&/g" "${@:2}" ;;
+-l)
+    ry "y/A-Z/a-z/" "${@:2}" ;;
+-s)
+    ry "s/[^-+.0-9a-z]//gi" "${@:2}" ;;
+*)
+    ry "s/$1/$2/gi" "${@:3}" ;;
+esac
