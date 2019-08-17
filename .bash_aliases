@@ -94,6 +94,7 @@ rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp -grab-keyboard /cert
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rf () { find $@ -exec rm -iv {} +; }
 rn () { mv "$2" "$1.${2##*.}"; }
+rp () { c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "${@:3}"; ry && $c -v "$e" "${@:3}"; }
 rs () { s="rsync -ahv"; $s -n "$@"; ry && $s "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
