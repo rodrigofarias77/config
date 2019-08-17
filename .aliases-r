@@ -12,10 +12,9 @@ alias an="$c info"
 alias ar="$s$c autoremove"
 alias au="$s$c upgrade"
 
-_s () { $c -C list $2 "*$1*" | grep -E "i686|noarch|x86_64" | sort -u | tr -s " "; }
+_l () { $c -C list $2 "*$1*" | grep -E "i686|noarch|x86_64" | sort -u | tr -s " "; }
 
-ag () { tr '\n' @ < /var/log/$c.log | grep -Eo '@Installed:(@  [^@]*)*' | tr -d @ | sed 's/ [0-9][^ ]* */ /g' | cut -c 13- | grep -i $1; }
-al () { _s $1 installed; }
-as () { l=$(_s $1 --showduplicates); { grep @ <<< "$l" && echo; grep -v @ <<< "$l"; } | le -X; }
+al () { _l $1 installed; }
+as () { l=$(_l $1 --showduplicates); { grep @ <<< "$l" && echo; grep -v @ <<< "$l"; } | le -X; }
 
 # vim: filetype=sh
