@@ -12,36 +12,30 @@ Notify software updates to MAIL.
 n=$(basename $0)
 m=$@
 
-[ $s ] && sleep $((RANDOM%3600))
-
 l=/tmp/$n.log
-
-lo () { sed -r -e "s/^ +//" -e "s/ {2,}/ /g" -e "s/[-=]{3,}//" $l; }
-
-ma () { mail -s "$(hostname -s): $n $1" $m; }
-
-te () { lo | ma failed; exit 1; }
 
 exec > $l 2>&1
 
-[ -x /usr/bin/dnf ] && d=dnf || d=yum
+[ $s ] && sleep $((RANDOM%3600))
 
-[ $(id -u) = 0 ] || d="sudo $d"
+date
+uptime | sed -r "s/.*(up [^,]*).*/\u\1/"
+
+[ -x /usr/bin/dnf ] && d=dnf || d=yum
 
 $d check-update
 
 e=$?
 
-trap te err
+ma () {
+    sed -r -e "s/^ +//" -e "s/ {2,}/ /g" -e "s/[-=]{3,}//" $l |
+        mail -s "$(hostname -s): $n $1" $m
+}
+
+trap "ma failed; exit 1" err
 
 if [ $e -eq 100 ]; then
     [ $u ] && echo -e "\n--" && $d -y upgrade
 
-    lo | ma
+    ma # ok
 fi
-
-i=$(rpm -q kernel | tail -1 | cut -d - -f 2-)
-r=$(uname -r)
-t=$(uptime | sed -r "s/.*up ([^,]*).*/\1/")
-
-[ $r != $i ] && echo "Kernel $i installed. $r running for $t." | ma
