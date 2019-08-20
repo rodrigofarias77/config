@@ -14,13 +14,11 @@ x=${@:2}
 h=yay
 l=/tmp/$n.log
 
+exec > $l 2>&1
+
 ma () { tail -500 $l | tr -s " " | mail -s "$(hostname -s): $n $1" $m; }
 
-te () { ma failed; exit 1; }
-
-trap te err
-
-exec > $l 2>&1
+trap "ma failed; exit 1" err
 
 date
 uptime | sed -r "s/.*(up [^,]*).*/\u\1/"
@@ -31,5 +29,5 @@ echo
 if $h -Qu | grep .; then
     [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm $x
 
-    ma
+    ma # ok
 fi
