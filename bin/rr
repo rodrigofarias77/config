@@ -27,8 +27,7 @@ mkdir -pv $t
 case "$1" in
 -p)
     for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +100k); do
-        a=$(df --output=avail $p | tail -1)
-        let "$(wc -c < $i) / 1024 + 1048576 > $a" && du -h $i && exit 1
+        [ $(($(wc -c < $i)/1024+1024**2)) -gt $(df --output=avail $p | tail -1) ] && du -h $i && exit 1
         head ${i%.*}.idx
         mv -iv ${i%.*}.* $p
         echo
