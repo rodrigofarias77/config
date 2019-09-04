@@ -31,7 +31,7 @@ h = rg(g).text
 tw(h)
 j = js(h)["data"]["posts"]
 
-while c < 50:
+while c < 25:
     for i in j:
         if i["id"] in x or i["id"] in [i["id"] for i in l]:
             c += 1
