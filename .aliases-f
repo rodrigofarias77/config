@@ -8,13 +8,13 @@ alias fm='nice -n 15 ffmpeg -hide_banner'
 alias fp='ffprobe -hide_banner'
 
 bp () { mediainfo "$1" | sed -n "s/^Bits.*: //p"; }
-fb () { fs "$1"; r=23; while true; do o=ff-$r.mp4; fm -n -i ff-fs.mp4 ${@:2} $fv -crf $r $o || break; echo; ec -; b=$(ca "int(round($(bp $o)*1000))"); echo $o $b | ma ffmpeg $ma; [ $b -gt 55 ] && let r++ || let r--; [ $r -gt 27 -o $r -lt 19 ] && break; done; read -p '? ' r; fm -i "$1" ${@:2} $fv -crf $r -ac 2 $fa -sn -map_metadata -1 ff.mp4; ms ffmpeg; }
+fb () { fs "$1"; echo; ec -; r=23; while true; do o=ff-$r.mp4; fm -n -i ff-fs.mp4 ${@:2} $fv -crf $r $o || break; echo; ec -; b=$(ca "int(round($(bp $o)*1000))"); echo $o $b | ma ffmpeg $ma; [ $b -gt 55 ] && let r++ || let r--; [ $r -gt 27 -o $r -lt 19 ] && break; done; read -p '? ' r; fm -i "$1" ${@:2} $fv -crf $r -ac 2 $fa -sn -map_metadata -1 ff.mp4; ms ffmpeg; }
 fd () { fv duration "$1"; echo ${format_duration%.*}; }
 fn () { fm -ss ${2:-600} -i "$1" -frames:v 1 ff.png; }
 fs () { eval $(for i in $(seq 60 60 $(fd "$1")); do echo "cat <(fm -v error -ss $i -i \"$1\" -t 6 -c copy -an -f mpegts -);"; done) | fm -i - -c copy ff-fs.mp4; }
 ft () { eval $(cat $3 | while read a b; do echo "cat <(fm -v error -ss $a -i $1 ${b:+-to $b} -copyts ${@:4} -f mpegts -);"; done | tee /dev/tty) | fm -i - -c copy $2; }
 fv () { eval $(f0 "$2" | grep $1); }
-h7 () { fv ^stream_0 "$1"; a="1280/($stream_0_width./$stream_0_height)"; echo $a; b=$(ca "$a"); echo $b; echo 1280x$(ca "int(round($b/2.))*2"); }
+h7 () { fv ^stream_0 "$1"; r=$(ca "$stream_0_width/$stream_0_height"); echo 1280x$(ca "int(round(1280/$r/2))*2"); echo $(ca "int(round(720*$r/2))*2")x720; }
 sc () { unset $(compgen -v | grep ^chapter); fv chapter "$1"; i=0; while true; do s=chapter_${i}_start_time; e=chapter_${i}_end_time; t=chapter_${i}_tags_title; [ ${!s} ] || break; fm -nostdin -i "$1" -c copy -map_chapters -1 -metadata title="${!t}" ${@:2} -ss ${!s} -to ${!e} "${!t}.${1##*.}" || read; let i++; done; }
 va () { mediainfo "$1" | perl -0pe "s/.*\n(Video.*?\n\n.*?\n)\n.*/\1/s; s/ +:/:/g"; }
 wf () { while read i; do o=ff.${i##*.}; fm -nostdin -i "$i" $@ $o && rm "$i" && mv $o "$i" || break; echo; ec -; done; }
