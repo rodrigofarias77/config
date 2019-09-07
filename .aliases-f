@@ -14,7 +14,7 @@ fn () { fm -ss ${2:-600} -i "$1" -frames:v 1 ff.png; }
 fs () { eval $(for i in $(seq 60 60 $(fd "$1")); do echo "cat <(fm -v error -ss $i -i \"$1\" -t 6 -c copy -an -f mpegts -);"; done) | fm -i - -c copy ff-fs.mp4; }
 ft () { eval $(cat $3 | while read a b; do echo "cat <(fm -v error -ss $a -i $1 ${b:+-to $b} -copyts ${@:4} -f mpegts -);"; done | tee /dev/tty) | fm -i - -c copy $2; }
 fv () { eval $(f0 "$2" | grep $1); }
-h7 () { fv ^stream_0 "$1"; r=$(ca "$stream_0_width/$stream_0_height"); echo 1280x$(ca "int(round(1280/$r/2))*2"); echo $(ca "int(round(720*$r/2))*2")x720; }
+h7 () { fv ^stream_0 "$1"; r=$(ca "$stream_0_width/$stream_0_height"); echo 1280x$(ca "round(1280/$r/2)*2"); echo $(ca "round(720*$r/2)*2")x720; }
 sc () { unset $(compgen -v | grep ^chapter); fv chapter "$1"; i=0; while true; do s=chapter_${i}_start_time; e=chapter_${i}_end_time; t=chapter_${i}_tags_title; [ ${!s} ] || break; fm -nostdin -i "$1" -c copy -map_chapters -1 -metadata title="${!t}" ${@:2} -ss ${!s} -to ${!e} "${!t}.${1##*.}" || read; let i++; done; }
 va () { mediainfo "$1" | perl -0pe "s/.*\n(Video.*?\n\n.*?\n)\n.*/\1/s; s/ +:/:/g"; }
 wf () { while read i; do o=ff.${i##*.}; fm -nostdin -i "$i" $@ $o && rm "$i" && mv $o "$i" || break; echo; ec -; done; }
