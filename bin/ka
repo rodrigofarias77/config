@@ -27,6 +27,7 @@ else:
 r = '(?s)/user/(?P<user>.*?)/.*?' \
     + '/category/(?P<category>.*?)/.*?' \
     + '/subcate/(?P<subcat>.*?)/.*?' \
+    + '/torrent/(?P<id>.*?)/.*?' \
     + '"(?P<magnet>magnet:.*?)".*?' \
     + '"Size">\s*(?P<size>.*?) (?P<unit>.*?)<.*?' \
     + '"Age".*?>\s*(?P<age>.*?)<.*?' \
@@ -85,7 +86,9 @@ for p in range(1, int(o['-p']) + 1 if '-p' in o else 2):
 
 f.quit()
 
-if '-d' not in o:
+if '-d' in o:
+    l.sort(key=lambda t: int(t['id']), reverse=True)
+else:
     l.sort(key=lambda t: int(t['seed'].replace(',', '')), reverse=True)
 
 for t in reversed(l):
