@@ -50,19 +50,24 @@ D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 
 --
 adb shell settings put system screen_auto_brightness_adj 0
-adb shell settings put system screen_brightness 128
+adb shell settings put system screen_brightness 0
 bootsect /nt60 c: /mbr
 dconf load /org/gnome/settings-daemon/plugins/media-keys/ < /tmp/media-keys.conf
-dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-A-Za-z0-9,./?%&#:_=+@~"'
 docker network create -d macvlan -o parent=enp5s0 --subnet 192.168.1.0/24 --gateway 192.168.1.1 --ip-range 192.168.1.200/32 macvlan
-ffmpeg ... -c:v libvpx-vp9 -b:v 0 -crf 30 -speed 2 -threads 4
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
-mkinitcpio -p linux; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
 rsync -ahv -AX --exclude=/{dev,mnt,proc,run,sys,tmp}/* / /mnt
 rsync -e 'ssh bar ssh foo' foo :
-shuf -n 1 /usr/share/dict/words
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl mask systemd-journald-audit.socket
-systemctl --user mask tracker-store.service # tracker reset -r
 vboxmanage modifymedium disk foo.vdi --compact
-xset s off
+
+--
+mkinitcpio -p linux
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+--
+groupadd -r nonet
+iptables -A OUTPUT -m owner --gid-owner nonet -j DROP
+rodrigo ALL=(:nonet) NOPASSWD: ALL # visudo
+sudo -g nonet foo
