@@ -89,7 +89,7 @@ f.quit()
 if '-d' in o:
     l.sort(key=lambda t: int(t['id']), reverse=True)
 else:
-    l.sort(key=lambda t: int(t['seed'].replace(',', '')), reverse=True)
+    l.sort(key=lambda t: int(t['seed']), reverse=True)
 
 for t in reversed(l):
     if '-m' not in o:
