@@ -1,9 +1,10 @@
 #!/bin/bash
 
+[ "$1" = -c ] && c=1 && shift
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
 
-[ -z $1 ] && echo "Usage: $0 [-s] [-u] mail [xtra]" && exit 1
+[ -z $1 ] && echo "Usage: $0 [-c] [-s] [-u] mail [xtra]" && exit 1
 
 [ $s ] && sleep $((RANDOM%3600))
 
@@ -28,6 +29,8 @@ echo
 
 if $h -Qu | grep .; then
     [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm $x
+
+    [ $c ] && yes | $h -Scc
 
     ma # ok
 fi
