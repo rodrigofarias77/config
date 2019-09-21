@@ -111,7 +111,7 @@ us () { n2 xn du -chsx | sort -h; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
-wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | sed -n "s/^> //p" | tee -a /dev/tty | ma $3 -E $ma; a=$b; done; }
+wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | sed -n "s/^> //p" | tee -a /dev/tty | ma "$3" -E $ma; a=$b; done; }
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
 xg () { compgen -c | sort -u | grep $@; }
 xn () { xargs -d "\n" "$@"; }
