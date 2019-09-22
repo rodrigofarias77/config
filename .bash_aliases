@@ -27,6 +27,7 @@ alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
 alias sv='nu ssvncviewer -bgr233 -encodings zrle'
 alias sx='sudo xv -auth /run/lightdm/root/:0'
 alias ta='n1 tmux -2 new -AD -s 0'
+alias ti="ll -tr"
 alias tp='tar -OPx -f'
 alias uu='du -hs'
 alias vn='vi -i NONE'
