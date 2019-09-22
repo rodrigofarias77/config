@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+[ -z "$2" ] && echo "Usage: $0 x y" && exit 1
+
+x=$1
+y=$2
+
+c=($(cvt $x $y | sed -n "s/^Modeline //p" | xargs))
+
+m=${c[0]}
+
+s=$(xrandr | sed -n "s/ connected primary.*//p")
+
+set -x
+
+xrandr --newmode $m ${c[@]:1}
+xrandr --addmode $s $m
+xrandr --output $s --mode $m
