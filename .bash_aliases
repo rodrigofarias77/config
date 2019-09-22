@@ -17,7 +17,6 @@ alias hh=htop
 alias hs='python3 -m http.server'
 alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
 alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
-alias io='sudo iotop'
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
