@@ -28,7 +28,7 @@ $h -Sy
 echo
 
 if $h -Qu | grep .; then
-    [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm $x
+    [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm --removemake $x
 
     [ $c ] && yes | $h -Scc
 
