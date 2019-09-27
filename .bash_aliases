@@ -24,7 +24,7 @@ alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
 alias rm='rm -Iv'
 alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
-alias sv='nu ssvncviewer -bgr233 -encodings zrle'
+alias sv="nu ssvncviewer -bgr233 -encodings zrle -x11cursor"
 alias sx='sudo xv -auth /run/lightdm/root/:0'
 alias ta='n1 tmux -2 new -AD -s 0'
 alias ti="ll -tr"
@@ -35,7 +35,7 @@ alias vr='vi -R'
 alias wg='wget -nv --content-disposition --show-progress'
 alias wo='wget -q -O -'
 alias xd='export DISPLAY=:0'
-alias xv='x11vnc -q -cursor arrow -display :0 -usepw'
+alias xv="x11vnc -q -display :0 -usepw"
 
 alias sudo='sudo '
 
