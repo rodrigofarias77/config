@@ -16,8 +16,8 @@ ag () { sed -nr -e "s/^\[(.{10}).*started/?\1/p" -e "s/.*\] installed ([^ ]*).*/
 am () { rr -k $m; sudo reflector --country ${1:-CA} --sort rate --verbose --save $m; }
 as () { l=$($h -Ss --topdown $1 | perl -0pe "s/ *\n +/ - /g" | sed "s/\// /"); { grep Installed <<< $l && echo; grep -v Installed <<< $l; } | le -X; }
 
-# comm -3 <(pacman -Qq | sort) <(for i in $(pacman -Qgq base); do pactree -u $i; done | sort -u)
+# comm -23 <(pacman -Qq | sort) <(for i in $(pacman -Qgq base); do pactree -u $i; done | sort -u)
+# comm -23 <(pacman -Qqe | sort) <(pacman -Qqg base | sort)
 # makepkg -si # base-devel
-# pacman -Qqe | grep -v -f <(pacman -Qqg base base-devel)
 
 # vim: filetype=sh
