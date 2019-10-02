@@ -77,6 +77,7 @@ lt () { ll $1 | tail -20; }
 lu () { la -p $@ | us; }
 ma () { mail -s "$(hostname -s): $1" ${@:2}; }
 mc () { mkdir -p "$1" && cd "$1"; }
+ml () { mv "$1" "${1,,}"; }
 mo () { mv "$@" $OLDPWD; }
 mq () { mountpoint -q $1 && echo "$1 already mounted"; }
 ms () { ma $1 $ma <<< "$? - $PWD"; }
