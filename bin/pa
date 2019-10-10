@@ -1,19 +1,28 @@
 #!/bin/bash
 
 pd () { pactl info | sed -n "s/^Default $1: //p"; }
+
 sv () { sed -nr "s/^\t*Volume:.* ([0-9]*%).*/\1/p" | paste -s -d " "; }
 
-if [ "$1" = -m ]; then
+if [ "$1" == -m ]; then
     shift
 
     if [ "$1" ]; then
-        pactl set-source-volume $(pd Source) $1%
+        if [ "$1" == -t ]; then
+            pactl set-source-mute $(pd Source) toggle
+        else
+            pactl set-source-volume $(pd Source) $1%
+        fi
     else
         pactl list sources | sv
     fi
 else
     if [ "$1" ]; then
-        pactl set-sink-volume $(pd Sink) $1%
+        if [ "$1" == -t ]; then
+            pactl set-sink-mute $(pd Sink) toggle
+        else
+            pactl set-sink-volume $(pd Sink) $1%
+        fi
     else
         pactl list sinks | sv
     fi
