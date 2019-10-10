@@ -42,7 +42,7 @@ alias sudo='sudo '
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 ca () { python3 -c "print($1)"; }
-cc () { cut -c -${1:-15} | column -c $(tput cols); }
+cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
 co () { xargs -L 1 | cut -d " " -f $1; }
 cw () { wmctrl -c $1; }
@@ -75,7 +75,7 @@ lh () { ll $1 | head -20; }
 lo () { tr A-Z a-z; }
 lt () { ll $1 | tail -20; }
 lu () { la -p $@ | us; }
-ma () { mail -s "$(hostname -s): $1" ${@:2}; }
+ma () { mail -s "$HOSTNAME: $1" ${@:2}; }
 mc () { mkdir -p "$1" && cd "$1"; }
 ml () { mv "$1" "${1,,}"; }
 mo () { mv "$@" $OLDPWD; }
