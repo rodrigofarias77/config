@@ -10,9 +10,10 @@ u=30
 
 [ -z "$1" ] && echo -e "$t
 -t: trash\n
+-g: gzip
 -k: keep
 -s: sudo
--z: gzip\n
+-z: zstd\n
 -p: purge $u
 -r regex: restore" && exit 1
 
@@ -20,9 +21,10 @@ u=30
 
 mkdir -pv $t
 
+[ "$1" = -g ] && z=--gzip && shift
 [ "$1" = -k ] && k=1 && shift
 [ "$1" = -s ] && s=sudo && shift
-[ "$1" = -z ] && z=z && shift
+[ "$1" = -z ] && z=--zstd && shift
 
 case "$1" in
 -p)
@@ -39,10 +41,10 @@ case "$1" in
             echo $d
             a=${i%.*}.tar
             du -h $a
-            read -p '? ' r
+            read -p "? " r
             if [ "$r" = y ]; then
                 cd "$d"
-                $s tar -x -Pkv -f $a
+                $s tar -x -f $a -Pkv
                 rm -f ${i%.*}.*
                 break
             fi
@@ -51,7 +53,7 @@ case "$1" in
 *)
     b=$t/$(date +$f)
     pwd > $b.idx
-    $s tar -c -Pv$z -f $b.tar "$@" | tee -a $b.idx
+    $s tar -c -f $b.tar -Pv $z "$@" | tee -a $b.idx
     [ $k ] || $s rm -fr "$@"
     du -h $b.tar ;;
 esac
