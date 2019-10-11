@@ -69,7 +69,7 @@ jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
 jr () { bb -m $1 && jpegtran -copy all -rotate ${2:-90} $1-* > $1 && rr $1-*; }
 kp () { nc -w 1 -z $1 $2; }
-l2 () { la -F $1 | cc 31; }
+l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
 lh () { ll $1 | head -20; }
 lo () { tr A-Z a-z; }
