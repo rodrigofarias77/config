@@ -17,7 +17,7 @@ l=/tmp/$n.log
 
 exec > $l 2>&1
 
-ma () { tail -500 $l | tr -s " " | mail -s "$(hostname -s): $n $1" $m; }
+ma () { tail -500 $l | tr -s " " | mail -s "$HOSTNAME: $n $1" $m; }
 
 trap "ma failed; exit 1" err
 

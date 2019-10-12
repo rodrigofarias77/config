@@ -9,4 +9,4 @@ m=$3
 t=$(mtr -c 1 -ln $i | grep ^p | cut -d ' ' -f 3 | sort -n | tail -1)
 t=$((t/1000))
 
-test $t -eq 0 -o $t -gt $p && mail -s "$(hostname -s): mtr" $m <<< $t
+test $t -eq 0 -o $t -gt $p && mail -s "$HOSTNAME: mtr" $m <<< $t

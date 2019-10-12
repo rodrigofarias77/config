@@ -10,6 +10,6 @@ x=$2
 m=${@:3}
 
 [ $(df --output=avail $p | tail -1) -lt $(($x*1048576)) ] &&
-    df -h -PT $p | tail -1 | tr -s ' ' | mail -s "$(hostname -s): $n" $m
+    df -h -PT $p | tail -1 | tr -s ' ' | mail -s "$HOSTNAME: $n" $m
 
 exit 0

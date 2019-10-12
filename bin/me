@@ -12,7 +12,7 @@ l=/tmp/$c-$(date +%s).log
 
 exec > $l 2>&1
 
-te () { tail -100 $l | mail -s "$(hostname -s): $c failed" $m; exit 1; }
+te () { tail -100 $l | mail -s "$HOSTNAME: $c failed" $m; exit 1; }
 
 trap te err
 

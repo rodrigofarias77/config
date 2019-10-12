@@ -29,7 +29,7 @@ e=$?
 
 ma () {
     sed -r -e "s/^ +//" -e "s/ {2,}/ /g" -e "s/[-=]{3,}//" $l |
-        mail -s "$(hostname -s): $n $1" $m
+        mail -s "$HOSTNAME: $n $1" $m
 }
 
 trap "ma failed; exit 1" err

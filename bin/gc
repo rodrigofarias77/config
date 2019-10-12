@@ -15,4 +15,4 @@ cd $d
 git diff --quiet && exit
 git commit -a -m $(date +%s) -uno
 
-[ $t ] && git log -1 -p | mail -s "$(hostname -s): $d" $t
+[ $t ] && git log -1 -p | mail -s "$HOSTNAME: $d" $t

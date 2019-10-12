@@ -13,7 +13,7 @@ l=/tmp/$(basename $0)-$s.log
 
 exec > $l 2>&1
 
-te () { tail $l | mail -s "$(hostname -s): $0" $m; exit 1; }
+te () { tail $l | mail -s "$HOSTNAME: $0" $m; exit 1; }
 
 trap te err int
 
