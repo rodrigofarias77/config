@@ -17,7 +17,7 @@ fv () { eval $(f0 "$2" | grep $1); }
 h7 () { fv ^stream_0 "$1"; r=$(ca "$stream_0_width/$stream_0_height"); echo 1280x$(ca "round(1280/$r/2)*2"); echo $(ca "round(720*$r/2)*2")x720; }
 sc () { unset $(compgen -v | grep ^chapter); fv chapter "$1"; i=0; while true; do s=chapter_${i}_start_time; e=chapter_${i}_end_time; t=chapter_${i}_tags_title; [ ${!s} ] || break; fm -nostdin -i "$1" -c copy -map_chapters -1 -metadata title="${!t}" ${@:2} -ss ${!s} -to ${!e} "${!t}.${1##*.}" || read; let i++; done; }
 va () { mediainfo "$1" | perl -0pe "s/.*\n(Video.*?\n\n.*?\n)\n.*/\1/s; s/ +:/:/g"; }
-wf () { while read i; do o=ff.${i##*.}; fm -nostdin -i "$i" $@ $o && rm "$i" && mv $o "$i" || break; echo; ec -; done; }
+wf () { while read i; do o=ff.${i##*.}; fm -nostdin -i "$i" "$@" $o && rm "$i" && mv $o "$i" || break; echo; ec -; done; }
 yc () { eval $(for i in ${@:3}; do echo "cat <(youtube-dl -q -f $2 -o - $i | fm -v error -i - -c copy -f mpegts -);"; done | tee /dev/tty) | fm -i - -c copy $1; }
 
 # vim: filetype=sh
