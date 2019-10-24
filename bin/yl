@@ -21,4 +21,4 @@ date
 
 y=$(youtube-dl -g $u)
 
-ffmpeg -hide_banner -nostats -i $y -t $t -c copy $b-$s.mkv
+timeout $((t+5*60)) ffmpeg -hide_banner -nostats -i $y -t $t -c copy $b-$s.mkv
