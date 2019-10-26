@@ -44,9 +44,11 @@ bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 ca () { python3 -c "print($1)"; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
-co () { xargs -L 1 | cut -d " " -f $1; }
+co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d " " -f $1; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
+d1 () { sed -n 's/^< //p'; }
+d2 () { sed -n 's/^> //p'; }
 db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
 dp () { os; $s vi -d $2 ${1%/}/$2; }
@@ -111,7 +113,7 @@ us () { n2 xn du -chsx | sort -h; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
-wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | sed -n "s/^> //p" | tee -a /dev/tty | ma "$3" -E $ma; a=$b; done; }
+wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | tee /dev/tty | ma "$3" -E $ma; a=$b; done; }
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
 xg () { compgen -c | sort -u | grep $@; }
 xn () { xargs -d "\n" "$@"; }
