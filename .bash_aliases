@@ -19,7 +19,7 @@ alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
 alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
-alias oo='nu xdg-open'
+alias oo=xdg-open
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
 alias rm='rm -Iv'
@@ -91,6 +91,7 @@ nu () { "$@" &> /dev/null; }
 om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
+pm () { ca "($(ps -eF | grep -i $1 | co 6 | paste -d + -s))//1024"; }
 pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
 rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp -grab-keyboard /cert-ignore /dynamic-resolution /from-stdin /u:$2 /v:$1; }
