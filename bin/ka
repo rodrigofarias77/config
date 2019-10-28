@@ -95,7 +95,7 @@ for t in reversed(l):
     if '-m' not in o:
         print('%s\n  %s, %s %s, %s/%s, %s, %s/%s' % (
             re.sub('  +', ' ', t['magnet']),
-            t['age'],
+            t['age'].lower(),
             t['size'],
             t['unit'],
             t['seed'],
