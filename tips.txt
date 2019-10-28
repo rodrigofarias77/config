@@ -16,6 +16,9 @@ ServerAliveInterval 60
 .xinitrc
 exec budgie-desktop
 
+/etc/crontab
+@reboot root mount -t vboxsf host /mnt/host -o uid=1000,gid=1000
+
 /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet"
 GRUB_DEFAULT=saved
