@@ -99,13 +99,13 @@ re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rf () { find $@ -exec rm -iv {} +; }
 rn () { mv "$2" "$1.${2##*.}"; }
 rp () { c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "${@:3}"; ry && $c -v "$e" "${@:3}"; }
-rs () { s='rsync -ah --del'; $s -nv "$@" && ry && $s --info=progress2 "$@"; }
+rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl --plain | sed "s/ *$//" | co 1 | sort | grep -i $1; }
-sm () { s='rsync -ah --del'; $s -nv "${@:2}" && ry && for i in {1..5}; do $s --bwlimit=$1 --info=progress2 "${@:2}" && break || sleep 10m; done; ma rsync $ma <<< "${@:2}"; }
-sr () { rs "$@" && ry "rm $1? " && rm -r "$1"; }
+sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && for i in {1..5}; do $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}" && break || sleep 10m; done; ma rsync $ma <<< "${@:2}"; }
+sr () { rs "$@" && rm -r "${@:1:$#-1}"; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
 tg () { grep -i $1 $(ls -r ${2:-~/trash}/*idx) | sed "s/idx:/tar /" | while read t a; do echo $t $a; tp $t "$a" | head -100; echo; ec -; done | le; }
