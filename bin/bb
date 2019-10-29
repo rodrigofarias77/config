@@ -7,5 +7,4 @@ set -e
 [ "$1" = -s ] && s=sudo && shift
 [ "$1" = -m ] && c='mv -iv' && shift || c='cp -aiv'
 
-d=$(date +%Y%m%d -d @$(stat -c %Y "$1"))
-$s $c "$1" "${1%/}-$d"
+$s $c "$1" "${1%/}"-$(stat -c %Y "$1")
