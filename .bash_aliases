@@ -105,7 +105,7 @@ rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
-sg () { systemctl --plain | sed "s/ *$//" | co 1 | sort | grep -i $1; }
+sg () { systemctl --plain | co 1 | sort | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && for i in {1..5}; do $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}" && break || sleep 10m; done; ma rsync $ma <<< "${@:2}"; }
 sr () { rs "$@" && rm -r "${@:1:$#-1}"; }
 tb () { tp $1 | cb; }
