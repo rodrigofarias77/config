@@ -110,7 +110,7 @@ sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && for i in {1..5}; do $s --m
 sr () { rs "$@" && rm -r "${@:1:$#-1}"; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
-tg () { grep -i $1 $(ls -r ${2:-~/trash}/*idx) | sed "s/idx:/tar /" | while read t a; do echo $t $a; tp $t "$a" | head -100; echo; ec -; done | le; }
+tg () { grep -i $1 $(ls -t ${2:-~/trash}/*idx) | sed "s/idx:/tar /" | while read t a; do echo $t $a; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
 up () { uptime | xargs; }
 us () { n2 xn du -chsx | sort -h; }
