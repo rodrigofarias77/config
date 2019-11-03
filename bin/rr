@@ -30,8 +30,9 @@ case "$1" in
     for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +100k); do
         [ $(($(wc -c < $i)/1024+1024**2)) -gt $(df --output=avail $p | tail -1) ] && ls -hl $i && exit 1
 
+        ls -hl $i
         head ${i%.*}.idx
-        mv -iv ${i%.*}.* $p
+        mv -i ${i%.*}.* $p
         echo
     done ;;
 -r)
@@ -39,7 +40,6 @@ case "$1" in
         if grep -i "$2" $i; then
             d=$(head -1 $i)
             echo $d
-
             a=${i%.*}.tar
             ls -hl $a
 
