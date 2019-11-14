@@ -51,6 +51,7 @@ cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 d1 () { sed -n 's/^< //p'; }
 d2 () { sed -n 's/^> //p'; }
+d8 () { dig +short $1 @8.8.8.8; }
 db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
 dp () { os; $s vi -d $2 ${1%/}/$2; }
