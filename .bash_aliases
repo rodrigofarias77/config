@@ -63,7 +63,7 @@ et () { le $(ls /tmp/$1*log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fl () { sudo fdisk -l $@ | cat -s; }
 fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort; }
-fu () { fusermount -u ${2:+-z} /tmp/$1; }
+fu () { fusermount -u $2 /tmp/$1; }
 gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
 hg () { history | grep -i "$1"; }
 hl () { grep -E --color "$1|"; }
@@ -89,7 +89,7 @@ ms () { ma $1 $ma <<< "$? - $PWD"; }
 n1 () { "$@" 1> /dev/null; }
 n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
-nn () { n2 sudo nethogs $(ip -o l | cut -d : -f 2 | grep -v lo | head -1); }
+nn () { n2 sudo nethogs $(route -n | sed -n 's/^0.* //p'); }
 nu () { "$@" &> /dev/null; }
 om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
