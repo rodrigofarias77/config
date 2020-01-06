@@ -34,7 +34,7 @@ alias tp='tar -OPx -f'
 alias uu='du -hs'
 alias vn='vi -i NONE'
 alias vr='vi -R'
-alias wg='wget -nv --content-disposition --show-progress'
+alias wg='wget -nv --content-disposition'
 alias wo='wget -q -O -'
 alias xd='export DISPLAY=:0'
 alias xv="x11vnc -q -display :0 -usepw"
@@ -99,7 +99,6 @@ pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
 rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp -grab-keyboard /cert-ignore /dynamic-resolution /from-stdin /u:$2 /v:$1; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
-rf () { find $@ -exec rm -iv {} +; }
 rn () { mv "$2" "$1.${2##*.}"; }
 rp () { c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "${@:3}"; ry && $c -v "$e" "${@:3}"; }
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
