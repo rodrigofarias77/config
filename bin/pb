@@ -11,14 +11,15 @@ if len(sys.argv) < 2:
 -t: tor
 -z 500: size (MB)\n
 query
+-b browse
 -u user''')
 
-g = getopt.getopt(sys.argv[1:], 'dmp:r:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'bdmp:r:s:tuz:')
 o = dict(g[0])
 k = '+'.join(g[1])
 
 if '-t' in o:
-    b = 'http://uj3wazyk5u4hnvtk.onion'
+    b = 'http://piratebayztemzmv.onion'
     x = {'http': 'socks5h://127.0.0.1:9050'}
 else:
     b = 'https://thepiratebay.org'
@@ -32,10 +33,12 @@ r = '(?s)/torrent/(?P<id>.*?)/.*?' \
     + '"right">(?P<seed>.*?)<.*?' \
     + '"right">(?P<leech>.*?)<.*?'
 
-if '-d' in o:
+if '-b' in o:
+    s = '%s/browse/%s/%s/3'
+elif '-d' in o:
     s = '%s/search/%s/%s/3'
 elif '-u' in o:
-    s = '%s/user/%s/%s'
+    s = '%s/user/%s/%s/3'
 else:
     s = '%s/search/%s/%s/7'
 
