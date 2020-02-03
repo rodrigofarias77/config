@@ -42,34 +42,31 @@ elif '-u' in o:
 else:
     s = '%s/search/%s/%s/7'
 
+e = 0
 l = []
 z = ['B', 'K', 'M', 'G']
 
 for p in range(int(o['-p']) if '-p' in o else 1):
-    c = 1
     h = ''
     u = s % (b, k, p)
 
-    while True:
+    while e < 5:
         try:
             h = unicodedata.normalize('NFKD',
                 html.unescape(requests.get(u, proxies=x, timeout=5).text))
         except:
             pass
 
-        print(u, file=sys.stderr)
         open('/tmp/pb.htm', 'w').write(h)
 
         if 'magnet:' in h:
+            print(u, file=sys.stderr)
             time.sleep(1)
             break
         else:
+            e += 1
+            print('> ' + u, file=sys.stderr)
             time.sleep(5)
-
-        if c == 5:
-            sys.exit('Tried %s times.' % c)
-        else:
-            c += 1
 
     for i in re.finditer(r, h):
         t = i.groupdict()
