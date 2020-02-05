@@ -6,13 +6,16 @@ cb=/dev/clipboard
 
 alias oo=cygstart
 
+unalias cb
+
 au () { cd ~/cygwin && wg -N https://cygwin.com/$au && oo $au -M; }
-ev () { wevtutil qe ${1:-system} /c:${2:-1000} /f:text /rd:true | tr -d "\r" | perl -0pe "s/.*?Date: (.*?)T(.*?)\n.*?Level: (.*?)\n.*?Description: \n(.*?)\n+/\1 \2 - \3 - \4\n/gs" | le; }
+cb () { cat "$1" > $cb; }
+ev () { wevtutil qe ${1:-system} /c:${2:-1000} /f:text /rd:true | tr -d '\r' | perl -0pe 's/.*?Source: (.*?)\n.*?Date: (.*?)T(.*?)\n.*?Level: (.*?)\n.*?Description: \n(.*?)\n+/\2 \3 - \4 - \1 - \5\n/gs' | le; }
 ml () { mv "$1" "${1,,}"; }
 pk () { pp $1 | cut -c 27-34 | xargs -rp -n 1 taskkill /f /pid; }
 pp () { tasklist /v | grep -i $1 | cut -c 1-118,144-182; }
 up () { systeminfo | grep 'Boot Time' | tr -s ' '; }
 tb () { tp $1 > $cb; }
-vc () { t=/tmp/vc-$(date +%s).${1:-txt}; cat $cb > $t; vim $t; cat $t > $cb; rr -z $t; }
+vc () { t=/tmp/vc-$(date +%s).${1:-txt}; cat $cb > $t; vim $t; cat $t > $cb; rr -g $t; }
 
 # vim: filetype=sh
