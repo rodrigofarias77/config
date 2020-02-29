@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 [ -z "$3" ] && echo "Usage: $0 mail cmd arg..." && exit 1
 
 m=$1
