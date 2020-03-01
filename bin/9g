@@ -12,14 +12,14 @@ def fj(u):
     while True:
         f.get(u)
         h = f.page_source
-        open("/tmp/9gag.htm", "w").write(h)
+        open('/tmp/9gag.htm', 'w').write(h)
 
-        if "JSON.parse" in h:
+        if 'JSON.parse' in h:
             time.sleep(random.random() * 1)
-            s = re.search("JSON.parse..(.*)..;</", h).group(1)
-            return json.loads(bytes(s, "utf-8").decode("unicode_escape"))
+            s = re.search('JSON.parse..(.*)..;</', h).group(1)
+            return json.loads(bytes(s, 'utf-8').decode('unicode_escape'))
         else:
-            print("> " + u)
+            print('> ' + u)
             time.sleep(5)
 
 def rg(u):
@@ -28,41 +28,41 @@ def rg(u):
             time.sleep(random.random() * 1)
             return requests.get(u, stream=True, timeout=10)
         except:
-            print("> " + u)
+            print('> ' + u)
             time.sleep(5)
 
-w = os.path.expanduser("~/9gag")
+w = os.path.expanduser('~/9gag')
 
 c = 0
-d = w + "/" + str(round(time.time()))
-g = "https://9gag.com"
+d = w + '/' + str(round(time.time()))
+g = 'https://9gag.com'
 l = []
-x = [os.path.basename(i).split("-")[1] for i in sorted(glob.glob(w + "/*/*"))]
+x = [os.path.basename(i).split('-')[1] for i in sorted(glob.glob(w + '/*/*'))]
 
-j = fj(g)["data"]["posts"]
+j = fj(g)['data']['posts']
 
 while c < 25:
     for i in j:
-        if i["id"] in x or i["id"] in [i["id"] for i in l]:
+        if i['id'] in x or i['id'] in [i['id'] for i in l]:
             c += 1
-            print("> %s - %s" % (i["id"], c))
+            print('> %s - %s' % (i['id'], c))
         else:
             l.append(i)
             c = 0
-            t = time.strftime("%F %T", time.localtime(i["creationTs"]))
-            print(i["id"] + " - " + t)
+            t = time.strftime('%F %T', time.localtime(i['creationTs']))
+            print(i['id'] + ' - ' + t)
 
-    j = fj(j[-1]["url"])["data"]
+    j = fj(j[-1]['url'])['data']
 
-    if "nextPosts" in j:
-        j = j["nextPosts"]
+    if 'nextPosts' in j:
+        j = j['nextPosts']
     else:
-        print("> ?")
+        print('> ?')
         break
 
 f.quit()
 
-i = input("%s to %s (%s)\n? " % (l[-1]["id"], l[0]["id"], len(l)))
+i = input('%s to %s (%s)\n? ' % (l[-1]['id'], l[0]['id'], len(l)))
 
 if i:
     m = int(i)
@@ -73,7 +73,7 @@ else:
     m = 1000
 
 os.mkdir(d)
-gzip.open(d + ".json.gz", 'wt').write(json.dumps(l, indent=4))
+gzip.open(d + '.json.gz', 'wt').write(json.dumps(l, indent=4))
 
 j = 1
 
@@ -81,26 +81,26 @@ for i in reversed(l):
     if j > m:
         break
 
-    if i["type"] == "Photo":
-        r = rg(i["images"]["image700"]["url"])
-    elif i["type"] == "Animated":
-        r = rg(i["images"]["image460sv"]["url"])
+    if i['type'] == 'Photo':
+        r = rg(i['images']['image700']['url'])
+    elif i['type'] == 'Animated':
+        r = rg(i['images']['image460sv']['url'])
     else:
-        print('> %s - %s' % (i["url"], i["type"]))
+        print('> %s - %s' % (i['url'], i['type']))
         continue
 
     z = int(r.headers['content-length']) / 1024**2
 
     if z > 5:
-        print('> %s - %sM' % (i["url"], round(z, 1)))
+        print('> %s - %sM' % (i['url'], round(z, 1)))
         continue
 
-    t = re.sub("['‘’]", "", html.unescape(i["title"])).title()
-    t = re.sub("[^0-9A-Za-z]", "", t)[:100]
-    n = "%03d-%s-%s.%s" % (j, i["id"], t, r.url.split('.')[-1])
+    t = re.sub("['‘’]", '', html.unescape(i['title'])).title()
+    t = re.sub('[^0-9A-Za-z]', '', t)[:100]
+    n = '%03d-%s-%s.%s' % (j, i['id'], t, r.url.split('.')[-1])
 
-    open(d + "/" + n, "wb").write(r.content)
-    print(i["url"] + " - " + n)
+    open(d + '/' + n, 'wb').write(r.content)
+    print(i['url'] + ' - ' + n)
 
     j += 1
 
