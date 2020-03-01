@@ -12,12 +12,14 @@ def fj(u):
     while True:
         f.get(u)
         h = f.page_source
-        open('/tmp/9gag.htm', 'w').write(h)
+        open('/tmp/9gag.html', 'w').write(h)
 
         if 'JSON.parse' in h:
             time.sleep(random.random() * 1)
             s = re.search('JSON.parse..(.*)..;</', h).group(1)
-            return json.loads(bytes(s, 'utf-8').decode('unicode_escape'))
+            j = json.loads(bytes(s, 'utf-8').decode('unicode_escape'))
+            open('/tmp/9gag.json', 'w').write(json.dumps(j, indent=4))
+            return j
         else:
             print('> ' + u)
             time.sleep(5)
