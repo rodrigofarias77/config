@@ -1,23 +1,35 @@
 #!/usr/bin/python -u
 
-import glob, gzip, html, json, os, random, re, requests, time
+import glob, gzip, html, json, os, random, re, requests, sys, time
 
-def js(h):
-    s = re.search("JSON.parse..(.*)..;</", h).group(1)
-    return json.loads(bytes(s, "utf-8").decode("unicode_escape"))
+from selenium import webdriver
 
-def rg(u, s=1):
-    r = None
-    while not r:
-        try:
-            r = requests.get(u, stream=True, timeout=10)
-            time.sleep(random.random() * s)
-        except:
+a = webdriver.FirefoxOptions()
+a.add_argument('--headless')
+f = webdriver.Firefox(options=a, service_log_path='/tmp/geckodriver.log')
+
+def fj(u):
+    while True:
+        f.get(u)
+        h = f.page_source
+        open("/tmp/9gag.htm", "w").write(h)
+
+        if "JSON.parse" in h:
+            time.sleep(random.random() * 1)
+            s = re.search("JSON.parse..(.*)..;</", h).group(1)
+            return json.loads(bytes(s, "utf-8").decode("unicode_escape"))
+        else:
+            print("> " + u)
             time.sleep(5)
-    return r
 
-def tw(h):
-    open("/tmp/9gag.htm", "w").write(h)
+def rg(u):
+    while True:
+        try:
+            time.sleep(random.random() * 1)
+            return requests.get(u, stream=True, timeout=10)
+        except:
+            print("> " + u)
+            time.sleep(5)
 
 w = os.path.expanduser("~/9gag")
 
@@ -27,9 +39,7 @@ g = "https://9gag.com"
 l = []
 x = [os.path.basename(i).split("-")[1] for i in sorted(glob.glob(w + "/*/*"))]
 
-h = rg(g).text
-tw(h)
-j = js(h)["data"]["posts"]
+j = fj(g)["data"]["posts"]
 
 while c < 25:
     for i in j:
@@ -42,9 +52,7 @@ while c < 25:
             t = time.strftime("%F %T", time.localtime(i["creationTs"]))
             print(i["id"] + " - " + t)
 
-    h = rg(j[-1]["url"]).text
-    tw(h)
-    j = js(h)["data"]
+    j = fj(j[-1]["url"])["data"]
 
     if "nextPosts" in j:
         j = j["nextPosts"]
@@ -52,10 +60,15 @@ while c < 25:
         print("> ?")
         break
 
+f.quit()
+
 i = input("%s to %s (%s)\n? " % (l[-1]["id"], l[0]["id"], len(l)))
 
 if i:
     m = int(i)
+
+    if m < 1:
+        sys.exit()
 else:
     m = 1000
 
