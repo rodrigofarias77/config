@@ -9,6 +9,7 @@ u=30
 
 [ -z "$1" ] && echo -e "$t
 -t: trash\n
+-d: rm (-p)
 -g: gzip
 -k: keep
 -s: sudo
@@ -20,10 +21,13 @@ u=30
 
 mkdir -pv $t
 
+[ "$1" = -d ] && r=1 && shift
 [ "$1" = -g ] && z=--gzip && shift
 [ "$1" = -k ] && k=1 && shift
 [ "$1" = -s ] && s=sudo && shift
 [ "$1" = -z ] && z=--zstd && shift
+
+ry () { read -p '? ' r; [ "$r" = y ]; }
 
 case "$1" in
 -p)
@@ -32,7 +36,9 @@ case "$1" in
 
         ls -hl $i
         head ${i%.*}.idx
-        mv -i ${i%.*}.* $p
+
+        [ $r ] && ry && rm -Iv ${i%.*}.* || mv -i ${i%.*}.* $p
+
         echo
     done ;;
 -r)
@@ -43,9 +49,7 @@ case "$1" in
             a=${i%.*}.tar
             ls -hl $a
 
-            read -p '? ' r
-
-            if [ "$r" = y ]; then
+            if ry; then
                 cd "$d"
                 $s tar -x -f $a -Pkv
                 rm -I ${i%.*}.*
@@ -62,7 +66,7 @@ case "$1" in
     pwd > $b.idx
     $s tar -c -f $b.tar -Pv $z "$@" | tee -a $b.idx
 
-    [ $k ] || $s rm -r "$@"
+    [ $k ] || $s rm -fr "$@"
 
     ls -hl $b.tar ;;
 esac
