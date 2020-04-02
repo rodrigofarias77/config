@@ -62,7 +62,7 @@ er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p";
 et () { le $(ls /tmp/$1*log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fl () { sudo fdisk -l $@ | cat -s; }
-fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort; }
+fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort -V; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
 hg () { history | grep -i "$1"; }
