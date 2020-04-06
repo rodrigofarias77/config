@@ -5,11 +5,13 @@ uname -m | grep -q x86_64 && au=setup-x86_64.exe || au=setup-x86.exe
 cb=/dev/clipboard
 
 alias oo=cygstart
+alias rz='rr -g'
 
 unalias cb
 
 au () { cd ~/cygwin && wg -N https://cygwin.com/$au && oo $au -M; }
 cb () { cat "$1" > $cb; }
+dc () { vim -d "$1" <(cat $cb); }
 ev () { wevtutil qe ${1:-system} /c:${2:-1000} /f:text /rd:true | tr -d '\r' | perl -0pe 's/.*?Source: (.*?)\n.*?Date: (.*?)T(.*?)\n.*?Level: (.*?)\n.*?Description: \n(.*?)\n+/\2 \3 - \4 - \1 - \5\n/gs' | le; }
 ml () { mv "$1" "${1,,}"; }
 pk () { pp $1 | cut -c 27-34 | xargs -rp -n 1 taskkill /f /pid; }
