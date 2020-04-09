@@ -1,15 +1,17 @@
 #!/bin/bash
 
-[ -z $3 ] && echo -e "Usage: $0 path x mail...\n
-Send notification to MAIL if PATH has less than XG of free space.
+s=$(basename $0)
+
+[ -z $3 ] && echo -e "Usage: $s path x mail\n
+Notify MAIL if PATH reaches XG of free space.
 " && exit 1
 
-n=$(basename $0)
 p=$1
 x=$2
-m=${@:3}
+m=$3
 
-[ $(df --output=avail $p | tail -1) -lt $(($x*1048576)) ] &&
-    df -h -PT $p | tail -1 | tr -s ' ' | mail -s "$HOSTNAME: $n" $m
+f=$(stat -f -c '%a * %s / 1024 ^ 3' $p | bc)
+
+[ $f -le $x ] && mail -s "$HOSTNAME: $s $p" $m <<< ${f}G
 
 exit 0
