@@ -11,6 +11,8 @@ xrandr --output Virtual1 --mode 1024x600_60.00
 WordCharsExcl=:
 
 .ssh/config
+ControlMaster auto
+ControlPath ~/.ssh/%r@%h:%p
 ServerAliveInterval 60
 
 .xinitrc
@@ -53,6 +55,10 @@ vm.dirty_ratio = 10
 
 /etc/tmpfiles.d/tmp.conf
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
+
+/usr/lib/systemd/system/foo.service
+[Service]
+LogLevelMax=3
 
 --
 adb shell settings put system screen_auto_brightness_adj 0
