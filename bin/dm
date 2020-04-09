@@ -10,7 +10,7 @@ p=$1
 x=$2
 m=$3
 
-f=$(stat -f -c '%a * %s / 1024 ^ 3' $p | bc)
+f=$(($(stat -f -c '%a * %s / 1024**3' $p)))
 
 [ $f -le $x ] && mail -s "$HOSTNAME: $s $p" $m <<< ${f}G
 
