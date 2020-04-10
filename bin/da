@@ -1,0 +1,8 @@
+#!/bin/bash
+
+[ -z $2 ] && echo path gb && exit 1
+
+p=$1
+g=$2
+
+[ $(($(stat -f -c '%a * %s / 1024**3' $p))) -le $g ]
