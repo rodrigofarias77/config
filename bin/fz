@@ -12,11 +12,12 @@ z=http://ffmpeg.zeranoe.com/builds/win64/static
 set -x
 
 cd $1
-wget -N -nv --show-progress $z/$n
+wget -N $z/$n
 md5sum -c $s && exit
 
 7z x $n
 rm -fr $d
+sleep 5
 mv ${n%.*} $d
 
 md5sum $n > $s
