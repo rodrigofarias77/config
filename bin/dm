@@ -7,8 +7,8 @@ p=$1
 g=$2
 m=$3
 
-a=$(($(stat -f -c '%a * %s / 1024**3' $p)))
+a=$(($(stat -f -c '%a * %s / 1024**2' $p)))
 
-[ $a -le $g ] && mail -s "$HOSTNAME: $s $p" $m <<< ${a}G
+[ $a -lt $(($g * 1024)) ] && mail -s "$HOSTNAME: $s $p" $m <<< ${a}M
 
 exit 0
