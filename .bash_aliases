@@ -21,7 +21,7 @@ alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
 alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
-alias oo=xdg-open
+alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
 alias rm='rm -Iv'
@@ -96,7 +96,7 @@ pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pm () { ca "($(ps -eF | grep -i $1 | co 6 | paste -d + -s))//1024"; }
 pp () { ps -ef --sort=start_time | grep -i ${1:-$^} | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
-rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp +auto-reconnect /cert-ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 ${@:3}; }
+rd () { nc -z $1 3389 && n2 zenity --password | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 ${@:3}; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rn () { mv "$2" "$1.${2##*.}"; }
 rp () { c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "${@:3}"; ry && $c -v "$e" "${@:3}"; }
