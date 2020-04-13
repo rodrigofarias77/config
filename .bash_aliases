@@ -64,6 +64,7 @@ fl () { sudo fdisk -l $@ | cat -s; }
 fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort -V; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
+hb () { b=$HOME/bin; grep "$b" <<< $PATH || PATH="$PATH:$b"; }
 hg () { history | grep -i "$1"; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
