@@ -7,12 +7,12 @@ set -e
 d=ffmpeg
 n=ffmpeg-latest-win64-static.zip
 s=ffmpeg.md5
-z=http://ffmpeg.zeranoe.com/builds/win64/static
+z=https://ffmpeg.zeranoe.com/builds/win64/static
 
 set -x
 
 cd $1
-wget -N $z/$n
+curl -#O -z $n $z/$n
 md5sum -c $s && exit
 
 7z x $n

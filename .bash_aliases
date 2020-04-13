@@ -34,8 +34,6 @@ alias tp='tar -OPx -f'
 alias uu='du -hs'
 alias vn='vi -i NONE'
 alias vr='vi -R'
-alias wg='wget --content-disposition'
-alias wo='wget -q -O -'
 alias xd='export DISPLAY=:0'
 alias xv="x11vnc -q -display :0 -usepw"
 
@@ -47,6 +45,7 @@ ca () { python3 -c "print($1)"; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d " " -f $1; }
+cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 d1 () { sed -n 's/^< //p'; }
@@ -68,7 +67,7 @@ gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
 hg () { history | grep -i "$1"; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
-ii () { wo ipinfo.io/$1 && echo; }
+ii () { curl -s https://ipinfo.io/$1 && echo; }
 im () { mkdir im && cp ${@:3} im && mogrify -quality $1% -resize $2x$2 -verbose ${@:3}; }
 jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
