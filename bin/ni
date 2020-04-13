@@ -6,6 +6,6 @@ set -e
 
 h=$1
 
-i=$(wget -q -O - ipinfo.io | jq -r .ip)
+i=$(curl -s https://ipinfo.io | jq -r .ip)
 
-host $h | grep -q $i || wget -q -O - "https://dynupdate.no-ip.com/nic/update?hostname=$h"
+host $h | grep -q $i || curl -s "https://dynupdate.no-ip.com/nic/update?hostname=$h"
