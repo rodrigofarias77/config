@@ -1,17 +1,16 @@
 #!/bin/bash
 
-[ -z "$1" ] && echo "Usage: $0 sbrf" && exit 1
+[ -z $1 ] && echo sbrf && exit 1
 
-n=$(basename $0)
 i=${1^^}
 
 cd /tmp
 
 l=$i.TXT
-u=http://tgftp.nws.noaa.gov/data/observations/metar/stations/$l
+u=https://tgftp.nws.noaa.gov/data/observations/metar/stations/$l
 
 [ -s $l ] && let d=$(date -u +%s)-$(date -d "$(head -1 $l)" -u +%s) || d=9999
 
-[ $d -gt 3600 ] && wget -N -a $n.log -nv $u
+[ $d -gt 3600 ] && curl -Os $u
 
 [ -s $l ] && tail -1 $l | perl -pe 's/.*KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)\/.*/$1 $2C/' || echo '?'
