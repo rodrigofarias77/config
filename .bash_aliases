@@ -63,7 +63,7 @@ ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.
 fl () { sudo fdisk -l $@ | cat -s; }
 fr () { n2 find $2 -xdev -type f ${@:3} | grep -i "$1" | sed 's:^\./::' | sort -V; }
 fu () { fusermount -u $2 /tmp/$1; }
-gr () { fr ${3:-.} $2 | xn grep -il "$1"; }
+gr () { fr $2 ${3:-.} | xargs -d '\n' grep -il "$1"; }
 hb () { b=$HOME/bin; grep "$b" <<< $PATH || PATH="$PATH:$b"; }
 hg () { history | grep -i "$1"; }
 hl () { grep -E --color "$1|"; }
@@ -113,14 +113,14 @@ td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86
 tg () { grep -i $1 $(ls -t ${2:-~/trash}/*idx) | sed "s/idx:/tar /" | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
 up () { uptime | xargs; }
-us () { n2 xn du -chsx | sort -h | tail -${1:-100}; }
+us () { n2 xargs -d '\n' du -chsx | sort -h | tail -${1:-100}; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
 wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | tee /dev/tty | ma "$3" -E $ma; a=$b; done; }
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
+wx () { while read i; do eval $@; done; }
 xg () { compgen -c | sort -u | grep $@; }
-xn () { xargs -d "\n" "$@"; }
 
 for i in ~/.aliases-*; do . $i; done
 
