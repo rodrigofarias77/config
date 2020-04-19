@@ -69,14 +69,14 @@ if '-t' in o:
     l.sort(key=lambda t: int(t['id']), reverse=True)
 
 for i, t in reversed(list(enumerate(l))):
-    print('%s: %s\n  %s, %s %s, %s/%s, %s' % (
-        i,
+    print('%s\n  %s, %s/%s, %s, %s %s, %s' % (
         t['name'],
+        i,
+        t['seeds'],
+        t['leeches'],
         t['date'],
         t['size'],
         t['unit'],
-        t['seeds'],
-        t['leeches'],
         t['user'].lower() if '-u' not in o else a[0]))
 
 while True:
