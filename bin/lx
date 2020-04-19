@@ -1,0 +1,84 @@
+#!/usr/bin/python3
+
+import getopt, re, sys
+
+from selenium import webdriver
+
+g = getopt.getopt(sys.argv[1:], 's:tuz:')
+o = dict(g[0])
+a = g[1]
+
+b = 'https://1337x.to'
+
+if '-t' in o:
+    u = '%s/%s' % (b, a[0])
+elif '-u' in o:
+    u = '%s/user/%s/' % (b, a[0])
+else:
+    u = '%s/search/%s/1/' % (b, '+'.join(a))
+
+w = webdriver.FirefoxOptions()
+w.add_argument('--headless')
+f = webdriver.Firefox(options=w, service_log_path='/tmp/geckodriver.log')
+
+f.get(u)
+h = f.page_source
+
+print(u)
+open('/tmp/lx.htm', 'w').write(h)
+
+r = '(?s)"(?P<href>/torrent/(?P<id>.*?)/.*?)".*?' \
+    + '>(?P<name>.*?)<.*?' \
+    + 'seeds">(?P<seeds>.*?)<.*?' \
+    + 'leeches">(?P<leeches>.*?)<.*?'
+
+if '-u' in o:
+    r += 'size.*?">(?P<size>.*?) (?P<unit>.*?)<.*?' \
+        + 'vip">(?P<date>.*?)<'
+else:
+    r += 'date">(?P<date>.*?)<.*?' \
+        + 'size.*?">(?P<size>.*?) (?P<unit>.*?)<.*?' \
+        + '/user/(?P<user>.*?)/'
+
+l = []
+z = ['K', 'M', 'G']
+
+for i in re.finditer(r, h):
+    t = i.groupdict()
+
+    t['size'] = t['size'].replace(',', '')
+
+    m = float(t['size']) * 1024 ** (z.index(t['unit'][0]) - 1)
+
+    if '-s' in o and int(t['seeds']) < int(o['-s']) \
+            or '-z' in o and m < float(o['-z']):
+        continue
+
+    l.append(t)
+
+if '-t' in o:
+    l.sort(key=lambda t: int(t['id']), reverse=True)
+
+for i, t in reversed(list(enumerate(l))):
+    print('%s: %s\n  %s, %s %s, %s/%s, %s' % (
+        i,
+        t['name'],
+        t['date'],
+        t['size'],
+        t['unit'],
+        t['seeds'],
+        t['leeches'],
+        t['user'].lower() if '-u' not in o else a[0]))
+
+while True:
+    try:
+        i = int(input('? '))
+    except:
+        break
+
+    f.get(b + l[i]['href'])
+    h = f.page_source
+
+    print(re.findall('magnet:[^"]*', h)[0])
+
+f.quit()
