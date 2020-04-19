@@ -4,9 +4,17 @@ import getopt, re, sys
 
 from selenium import webdriver
 
-g = getopt.getopt(sys.argv[1:], 's:tuz:')
+g = getopt.getopt(sys.argv[1:], 'r:s:tuz:')
 o = dict(g[0])
 a = g[1]
+
+if not a:
+    sys.exit('''-r regex: in name
+-s 100: seeds
+-z 500: size (MB)\n
+search
+-t popular-tv
+-u user''')
 
 b = 'https://1337x.to'
 
@@ -50,7 +58,8 @@ for i in re.finditer(r, h):
 
     m = float(t['size']) * 1024 ** (z.index(t['unit'][0]) - 1)
 
-    if '-s' in o and int(t['seeds']) < int(o['-s']) \
+    if '-r' in o and not re.search('(?i)' + o['-r'], t['name']) \
+            or '-s' in o and int(t['seeds']) < int(o['-s']) \
             or '-z' in o and m < float(o['-z']):
         continue
 
