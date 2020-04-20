@@ -23,12 +23,13 @@ elif '-u' in o:
 else:
     u = '%s/search/%s/1/' % (b, '+'.join(a))
 
-h = requests.get(u, headers={'User-Agent': 'Mozilla/5.0'}).text
+h = requests.get(u, headers={'User-Agent': 'Mozilla/5.0'}).content.decode('ascii', 'ignore')
 
 print(u)
 open('/tmp/lx.htm', 'w').write(h)
 
-r = '(?s)"(?P<href>/torrent/(?P<id>.*?)/(?P<name>.*?)/).*?' \
+r = '(?s)"(?P<href>/torrent/(?P<id>.*?)/.*?)"' \
+    + '>(?P<name>.*?)<.*?' \
     + 'seeds">(?P<seeds>.*?)<.*?' \
     + 'leeches">(?P<leeches>.*?)<.*?'
 
