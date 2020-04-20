@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
-import getopt, re, sys
-
-from selenium import webdriver
+import getopt, re, requests, sys
 
 g = getopt.getopt(sys.argv[1:], 'r:s:tuz:')
 o = dict(g[0])
@@ -25,12 +23,7 @@ elif '-u' in o:
 else:
     u = '%s/search/%s/1/' % (b, '+'.join(a))
 
-w = webdriver.FirefoxOptions()
-w.add_argument('--headless')
-f = webdriver.Firefox(options=w, service_log_path='/tmp/geckodriver.log')
-
-f.get(u)
-h = f.page_source
+h = requests.get(u, headers={'User-Agent': 'Mozilla/5.0'}).text
 
 print(u)
 open('/tmp/lx.htm', 'w').write(h)
@@ -84,9 +77,6 @@ while True:
     except:
         break
 
-    f.get(b + l[i]['href'])
-    h = f.page_source
+    h = requests.get(b + l[i]['href']).text
 
     print(re.search('magnet:[^"]*', h).group())
-
-f.quit()
