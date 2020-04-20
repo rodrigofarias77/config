@@ -35,8 +35,7 @@ h = f.page_source
 print(u)
 open('/tmp/lx.htm', 'w').write(h)
 
-r = '(?s)"(?P<href>/torrent/(?P<id>.*?)/.*?)".*?' \
-    + '>(?P<name>.*?)<.*?' \
+r = '(?s)"(?P<href>/torrent/(?P<id>.*?)/(?P<name>.*?)/).*?' \
     + 'seeds">(?P<seeds>.*?)<.*?' \
     + 'leeches">(?P<leeches>.*?)<.*?'
 
@@ -88,6 +87,6 @@ while True:
     f.get(b + l[i]['href'])
     h = f.page_source
 
-    print(re.findall('magnet:[^"]*', h)[0])
+    print(re.search('magnet:[^"]*', h).group())
 
 f.quit()
