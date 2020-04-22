@@ -2,12 +2,13 @@
 
 import getopt, re, requests, sys
 
-g = getopt.getopt(sys.argv[1:], 'r:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'dr:s:tuz:')
 o = dict(g[0])
 a = g[1]
 
 if not a:
-    sys.exit('''-r regex: in name
+    sys.exit('''-d: sort by date
+-r regex: in name
 -s 100: seeds
 -z 500: size (MB)\n
 search
@@ -58,16 +59,16 @@ for i in re.finditer(r, h):
 
     l.append(t)
 
-if '-t' in o:
+if '-t' in o or '-d' in o:
     l.sort(key=lambda t: int(t['id']), reverse=True)
 
 for i, t in reversed(list(enumerate(l))):
-    print('%s\n  %s, %s/%s, %s, %s %s, %s' % (
+    print('%s\n  %s, %s, %s/%s, %s %s, %s' % (
         t['name'],
         i,
+        t['date'],
         t['seeds'],
         t['leeches'],
-        t['date'],
         t['size'],
         t['unit'],
         t['user'].lower() if '-u' not in o else a[0]))
