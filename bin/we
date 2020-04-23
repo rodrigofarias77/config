@@ -2,15 +2,15 @@
 
 [ -z $1 ] && echo sbrf && exit 1
 
-i=${1^^}
-
 cd /tmp
 
-l=$i.TXT
+l=${1^^}.TXT
 u=https://tgftp.nws.noaa.gov/data/observations/metar/stations/$l
 
-[ -s $l ] && let d=$(date -u +%s)-$(date -d "$(head -1 $l)" -u +%s) || d=9999
+[ -s $l ] && d=$(date -d "$(head -1 $l)" -u +%s) || d=0
 
-[ $d -gt 3600 ] && curl -Os $u
+[ $(($(date -u +%s) - $d)) -gt 3600 ] && wget -N -a $(basename $0).log -nv $u
 
-[ -s $l ] && tail -1 $l | perl -pe 's/.*KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)\/.*/$1 $2C/' || echo '?'
+[ ! -s $l ] && echo ! && exit 1
+
+perl -0ne 'print /KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)\// ? "$1 $2C\n" : "?\n"' $l
