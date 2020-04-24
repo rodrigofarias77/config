@@ -11,7 +11,7 @@ PS1='\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ '
 
 jj=crond
 
-alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv'
+alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
 alias cb="xsel -b"
 alias bi="bind -f ~/.inputrc"
@@ -24,7 +24,6 @@ alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
-alias rm='rm -Iv'
 alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
 alias sv="nu ssvncviewer -bgr233 -encodings zrle -x11cursor"
 alias sx='sudo xv -auth /run/lightdm/root/:0'
