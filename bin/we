@@ -9,7 +9,7 @@ u=https://tgftp.nws.noaa.gov/data/observations/metar/stations/$l
 
 [ -s $l ] && d=$(date -d "$(head -1 $l)" -u +%s) || d=0
 
-[ $(($(date -u +%s) - $d)) -gt 3600 ] && wget -N -a $(basename $0).log -nv $u
+[ $(($(date -u +%s) - $d)) -gt 3600 ] && curl -Os -z $l $u
 
 [ ! -s $l ] && echo ! && exit 1
 
