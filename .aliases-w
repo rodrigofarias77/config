@@ -7,8 +7,6 @@ cb=/dev/clipboard
 alias oo=cygstart
 alias rz='rr -g'
 
-unalias cb
-
 au () { cd ~/cygwin && curl -Os -z $au https://cygwin.com/$au && oo $au -M; }
 cb () { [ -e "$1" ] && cat "$1" > $cb || cat $cb > "$1"; }
 dc () { vim -d "$1" <(cat $cb); }

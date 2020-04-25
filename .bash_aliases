@@ -13,7 +13,6 @@ jj=crond
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
-alias cb="xsel -b"
 alias bi="bind -f ~/.inputrc"
 alias hh=htop
 alias hs='python3 -m http.server'
@@ -41,6 +40,7 @@ alias sudo='sudo '
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 ca () { python3 -c "print($1)"; }
+cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d " " -f $1; }
