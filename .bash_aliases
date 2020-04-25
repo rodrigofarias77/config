@@ -14,11 +14,8 @@ jj=crond
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
-alias bi="bind -f ~/.inputrc"
 alias hh=htop
 alias hs='python3 -m http.server'
-alias ia="ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'"
-alias il="ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'"
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
@@ -40,6 +37,7 @@ alias sudo='sudo '
 
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
+bi () { bind -f ~/.inputrc; }
 ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
@@ -68,7 +66,9 @@ hb () { b=$HOME/bin; grep "$b" <<< $PATH || PATH="$PATH:$b"; }
 hg () { history | grep -i "$1"; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
+ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
+il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
 im () { mkdir im && cp ${@:3} im && mogrify -quality $1% -resize $2x$2 -verbose ${@:3}; }
 jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
