@@ -1,5 +1,7 @@
 uname -o | grep -q Cygwin || return
 
+export CYGWIN=winsymlinks:nativestrict
+
 uname -m | grep -q x86_64 && au=setup-x86_64.exe || au=setup-x86.exe
 
 cb=/dev/clipboard
