@@ -1,36 +1,35 @@
 #!/bin/bash
 
 case $1 in
--0)
-    $0 -r | grep . && read && $0 -r | cut -d " " -f 1 | xargs -n 1 $0 -s ;;
--b)
-    vboxmanage controlvm $2 acpipowerbutton ;;
--d)
-    vboxmanage startvm $2 --type separate ;;
--e)
-    vboxmanage snapshot $2 restore "$3" ;;
--g)
-    vboxmanage startvm $2 --type gui ;;
--h)
-    vboxmanage startvm $2 --type headless ;;
--i)
-    vboxmanage showvminfo $2 ;;
--l)
-    vboxmanage list vms | sort ;;
--p)
-    vboxmanage controlvm $2 poweroff ;;
--r)
-    vboxmanage list runningvms | sort ;;
--s)
-    vboxmanage controlvm $2 savestate ;;
--t)
-    vboxmanage snapshot $2 take ${3:-$(date +%Y%m%d)} ;;
--x)
-    sudo vboxmanage extpack install --replace $2 ;;
-*)
-    echo '-0: save running
+    -0)
+        $0 -r | grep . && read && $0 -r | cut -d ' ' -f 1 | xargs -n 1 $0 -s ;;
+    -b)
+        vboxmanage controlvm $2 acpipowerbutton ;;
+    -d)
+        vboxmanage snapshot $2 delete "$3" ;;
+    -e)
+        vboxmanage snapshot $2 restore "$3" ;;
+    -g)
+        vboxmanage startvm $2 --type gui ;;
+    -h)
+        vboxmanage startvm $2 --type headless ;;
+    -i)
+        vboxmanage showvminfo $2 | less ;;
+    -l)
+        vboxmanage list vms | sort ;;
+    -p)
+        vboxmanage controlvm $2 poweroff ;;
+    -r)
+        vboxmanage list runningvms | sort ;;
+    -s)
+        vboxmanage controlvm $2 savestate ;;
+    -t)
+        d=$(date +%Y%m%d)
+        vboxmanage snapshot $2 take ${3:-$d} ;;
+    *)
+        echo '-0: save running
 -b vm: powerbutton
--d vm: detach
+-d vm snapshot: delete
 -e vm snapshot: restore
 -g vm: gui
 -h vm: headless
@@ -39,6 +38,6 @@ case $1 in
 -p vm: poweroff
 -r: running
 -s vm: save
--t vm: take snapshot
--x extpack: install'; exit 1 ;;
+-t vm: take snapshot'
+        exit 1 ;;
 esac
