@@ -42,7 +42,7 @@ ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
-co () { xargs -L 1 | cut -d ' ' -f $1; }
+co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
@@ -106,7 +106,7 @@ rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
-sg () { systemctl --plain | sed 's/ *$//' | co 1 | sort | grep -i $1; }
+sg () { systemctl --plain | co 1 | sort | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
 sr () { rs "$@" && rm -r "${@:1:$#-1}"; }
 tb () { tp $1 | cb; }
