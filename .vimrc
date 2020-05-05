@@ -1,21 +1,17 @@
 " set clipboard+=unnamedplus
 " set formatoptions-=tc
 set guicursor+=a:blinkon1
-set history=1000
 set ignorecase
-set nojoinspaces
 set linebreak
 set mouse=
-set ruler
-set showcmd
+set nojoinspaces
 set nostartofline
+set showbreak=...\ 
 set title
 set wildignorecase
 
 map <CR> :let z=winsaveview()<CR>*:call winrestview(z)<CR>
 map <C-Down> <C-E>
-map <C-End> G<End>
-map <C-Home> gg<Home>
 map <C-Up> <C-Y>
 map <F2> :tabedit<CR>:e<Space>
 " map <F3>
