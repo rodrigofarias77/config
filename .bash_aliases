@@ -114,7 +114,7 @@ td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86
 tg () { grep -i $1 $(ls -t ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
 up () { uptime | xargs; }
-us () { n2 xargs -d '\n' du -chsx | sort -h | tail -${1:-100}; }
+us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -${1:-100}; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
