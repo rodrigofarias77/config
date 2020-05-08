@@ -2,9 +2,9 @@
 
 [ -x /usr/bin/dnf ] && c=dnf || c=yum
 
-[ $EUID != 0 ] && s="sudo "
+[ $UID != 0 ] && s='sudo '
 
-wd="--setopt=install_weak_deps=0"
+wd='--setopt=install_weak_deps=0'
 
 alias ac="$s$c clean all"
 alias ai="$s$c install"
@@ -12,9 +12,7 @@ alias an="$c info"
 alias ar="$s$c autoremove"
 alias au="$s$c upgrade"
 
-_l () { $c -C list $2 "*$1*" | grep -E "i686|noarch|x86_64" | sort -u | sed -e "s/  \+/ /g" -e "s/ \+$//"; }
-
-al () { _l $1 installed; }
-as () { l=$(_l $1 --showduplicates); (grep @ <<< "$l" && echo; grep -v @ <<< "$l") | le -X; }
+al () { rpm -qa | grep -i $1; }
+as () { l=$($c -C --showduplicates list "*$1*" | grep '  ' | sort -u | sed 's/  \+/ /g'); (grep @ <<< "$l" && echo; grep -v @ <<< "$l") | le -X; }
 
 # vim: filetype=sh
