@@ -5,10 +5,11 @@ ar=--no-install-recommends
 alias ac='sudo apt clean'
 alias ai='sudo apt install'
 alias an='apt show'
-alias ar='sudo apt --purge autoremove'
+alias ar='sudo apt autoremove --purge'
 
 ag () { ls -rt /var/log/apt/history.log* | xargs zgrep "^Install.*$1" | sed -e 's/.*: //' -e 's/ ([^)]*),\?//g'; }
-as () { l=$(n2 apt search $1 | tail -n +3 | perl -0pe 's/(.*?)\/(.*)\n  (.*)\n/$1 $2 - $3/g'); (grep installed <<< $l && echo; grep -v installed <<< $l) | le -X; }
+al () { dpkg -l | grep $1 | co 2-3; }
+as () { l=$(n2 apt list | grep $1 | sed 's:/: :'); (grep installed <<< $l && echo; grep -v installed <<< $l) | le -X; }
 au () { sudo apt update; sudo apt full-upgrade $1; }
 
 # vim: filetype=sh
