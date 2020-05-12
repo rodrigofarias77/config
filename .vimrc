@@ -23,8 +23,6 @@ map <F8> :set wrap! wrap?<CR>
 map <F9> :set et sw=4 ts=4<CR>
 map <F10> :set et& sw& ts&<CR>
 map <F12> :windo set syntax&<CR>
-map <PageDown> Lzt
-map <PageUp> Hzb
 map <Space> :nohlsearch<CR>
 map <Tab> gt
 map <S-Tab> gT
