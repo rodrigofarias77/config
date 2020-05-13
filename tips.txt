@@ -56,10 +56,6 @@ vm.dirty_ratio = 10
 /etc/tmpfiles.d/tmp.conf
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 
-/usr/lib/systemd/system/foo.service
-[Service]
-LogLevelMax=3
-
 --
 adb shell settings put system screen_auto_brightness_adj 0
 adb shell settings put system screen_brightness 0
@@ -70,6 +66,7 @@ docker network create -d macvlan -o parent=enp5s0 --subnet 192.168.1.0/24 --gate
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
 rsync -ahv -AX --exclude=/{dev,mnt,proc,run,sys,tmp}/* / /mnt
 rsync -e 'ssh bar ssh foo' foo :
+ssh -MY foo
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl mask systemd-journald-audit.socket
 systemctl --user mask tracker-miner-fs.service
