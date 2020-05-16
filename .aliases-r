@@ -8,11 +8,13 @@ wd='--setopt=install_weak_deps=0'
 
 alias ac="$s$c clean all"
 alias ai="$s$c install"
-alias an="$c info"
+alias an="$c -C info"
 alias ar="$s$c autoremove"
 alias au="$s$c upgrade"
 
-al () { rpm -qa | grep -i $1; }
-as () { l=$($c -C --showduplicates list "*$1*" | grep '  ' | sort -u | sed 's/  \+/ /g'); (grep @ <<< "$l" && echo; grep -v @ <<< "$l") | le -X; }
+_l () { grep '  ' | sort | sed 's/  \+/ /g'; }
+
+al () { $c list --installed "*$1*" | _l; }
+as () { l=$($c -C --showduplicates list "*$1*" | _l); (grep @ <<< "$l" && echo; grep -v @ <<< "$l") | le -X; }
 
 # vim: filetype=sh
