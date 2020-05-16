@@ -47,7 +47,7 @@ co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
-cz () { sudo compsize $1 | grep ^zstd; }
+cz () { sudo compsize $1 | grep ^TOTAL | co 2-4; }
 d1 () { sed -n 's/^< //p'; }
 d2 () { sed -n 's/^> //p'; }
 d8 () { dig +short $1 @8.8.8.8; }
