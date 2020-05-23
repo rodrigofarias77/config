@@ -7,7 +7,16 @@ p=/tmp
 t=~/trash
 u=30
 
-[ -z "$1" ] && echo -e "$t\n-t: trash\n\n-d: rm (-p)\n-g: gzip\n-k: keep\n-s: sudo\n-z: zstd\n\n-p: purge $u\n-r regex: restore" && exit 1
+[ -z "$1" ] && echo -e "$t
+-t: trash\n
+-d: rm (-p)
+-g: gzip
+-k: keep
+-s: sudo
+-z: zstd\n
+-p: purge $u
+-r regex: restore
+" && exit 1
 
 [ "$1" = -t ] && t=$2 && shift 2
 
@@ -22,29 +31,39 @@ mkdir -pv $t
 ry () { read -p '? ' r; [ "$r" = y ]; }
 
 case "$1" in
--p)
-    for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +100k); do
-        [ $(($(wc -c < $i)/1024+1024**2)) -gt $(df --output=avail $p | tail -1) ] && ls -hl $i && exit 1
-        ls -hl $i
-        head ${i%.*}.idx
-        [ $r ] && ry && rm -Iv ${i%.*}.* || mv -i ${i%.*}.* $p
-        echo
-    done ;;
--r)
-    for i in $(ls -t $t/*.idx) $(ls -t $p/*.idx); do
-        if grep -i "$2" $i; then
-            d=$(head -1 $i)
-            echo $d
-            a=${i%.*}.tar
-            ls -hl $a
-            ry && cd "$d" && $s tar -x -f $a -Pkv && rm -I ${i%.*}.* && break
-        fi
-    done ;;
-*)
-    b=$t/$(date +%s)
-    trap "rm -Iv $b.*; exit 1" err int
-    pwd > $b.idx
-    $s tar -c -f $b.tar -Pv $z "$@" | tee -a $b.idx
-    [ $k ] || $s rm -fr "$@"
-    ls -hl $b.tar ;;
+    -p)
+        for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +100k); do
+            [ $(($(wc -c < $i) + 1024**3)) -gt $(($(stat -f -c '%a * %s' $p))) ] && ls -hl $i && exit 1
+
+            ls -hl $i
+            head ${i%.*}.idx
+
+            [ $r ] && ry && rm -Iv ${i%.*}.* || mv -i ${i%.*}.* $p
+
+            echo
+        done ;;
+    -r)
+        for i in $(ls -t $t/*.idx) $(ls -t $p/*.idx); do
+            if grep -i "$2" $i; then
+                d=$(head -1 $i)
+                a=${i%.*}.tar
+
+                echo $d
+                ls -hl $a
+
+                ry && cd "$d" && $s tar -x -f $a -Pkv && rm -I ${i%.*}.* && break
+            fi
+        done ;;
+    *)
+        b=$t/$(date +%s)
+
+        trap "rm -Iv $b.*; exit 1" err int
+
+        pwd > $b.idx
+
+        $s tar -c -f $b.tar -Pv $z "$@" | tee -a $b.idx
+
+        [ $k ] || $s rm -fr "$@"
+
+        ls -hl $b.tar ;;
 esac
