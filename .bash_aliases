@@ -21,17 +21,12 @@ alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
-alias ss="sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'"
-alias sv="nu ssvncviewer -bgr233 -encodings zrle -x11cursor"
-alias sx='sudo xv -auth /run/lightdm/root/:0'
-alias ta="n1 tmux -2 attach -d"
-alias ti="ll -tr"
+alias ti='ll -tr'
 alias tp='tar -OPx -f'
 alias uu='du -hs'
 alias vn='vi -i NONE'
 alias vr='vi -R'
 alias xd='export DISPLAY=:0'
-alias xv="x11vnc -q -display :0 -usepw"
 
 alias sudo='sudo '
 
@@ -60,7 +55,6 @@ ef () { mq $2 && return; encfs -i 60 ${@:3} $(rl $1) $2; }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 et () { le $(ls /tmp/$1*log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
-fl () { sudo fdisk -l $@ | cat -s; }
 fr () { n2 find -xdev -type f ${@:2} -printf '%P\n' | grep -i "$1" | sort -V; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fr $2 | xargs -d '\n' grep -il "$1"; }
@@ -110,6 +104,10 @@ sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl --plain | co 1 | sort | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
 sr () { rs "$@" && rm -r "${@:1:$#-1}"; }
+ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
+sv () { nu ssvncviewer -bgr233 -encodings zrle -x11cursor $@; }
+sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
+ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
 tg () { grep -i $1 $(ls -t ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
@@ -123,6 +121,7 @@ wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
 wx () { while read i; do eval $@; done; }
 xg () { compgen -c | sort -u | grep $@; }
+xv () { x11vnc -q -display :0 -usepw $@; }
 
 for i in ~/.aliases-*; do . $i; done
 
