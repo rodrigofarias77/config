@@ -26,8 +26,11 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet"
 GRUB_DEFAULT=saved
 GRUB_SAVEDEFAULT=true
 
+/etc/environment
+QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
+
 /etc/fstab
-btrfs autodefrag,compress-force=zstd
+btrfs autodefrag,compress=zstd
 fuse.sshfs allow_other,delay_connect,reconnect
 ntfs dmask=022,fmask=133,gid=1000,uid=1000
 
@@ -37,9 +40,6 @@ autologin-user=foo # gpasswd -a foo autologin
 
 /etc/lightdm/lightdm-gtk-greeter.conf
 indicators=~host;~spacer;~clock;~spacer;~language;~session;~a11y;~power
-
-/etc/environment
-QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 
 /etc/samba/smb.conf
 map to guest = Bad User
