@@ -10,6 +10,7 @@ HISTTIMEFORMAT='%F %T '
 PROMPT_COMMAND='history -a'
 PS1='\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ '
 
+dt=%y%m%d-%H%M%S
 jj=crond
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
@@ -85,7 +86,7 @@ ms () { ma $1 $ma <<< "$? - $PWD"; }
 n1 () { "$@" 1> /dev/null; }
 n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
-nn () { n2 sudo nethogs $(route -n | sed -n 's/^0.* //p'); }
+nn () { n2 sudo nethogs $(route -n | sed -n '3s/.* //p'); }
 nu () { "$@" &> /dev/null; }
 om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
