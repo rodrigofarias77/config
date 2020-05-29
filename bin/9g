@@ -12,6 +12,7 @@ def fj(u):
     while True:
         f.get(u)
         h = f.page_source
+        f.delete_all_cookies()
         open('/tmp/9gag.html', 'w').write(h)
 
         if 'JSON.parse' in h:
