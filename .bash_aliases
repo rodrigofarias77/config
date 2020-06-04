@@ -113,6 +113,7 @@ tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
 tg () { grep -i $1 $(ls -t ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
+tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -${1:-100}; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
