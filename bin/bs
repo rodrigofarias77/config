@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ -z $4 ] && echo 'subvolume dir keep mail' && exit 1
+[ -z $3 ] && echo 'subvolume dir keep [mail]' && exit 1
 
 s=$1
 d=$2
@@ -11,11 +11,9 @@ n=$(date +%y%m%d-%H%M%S)
 
 l=/tmp/$(basename $0)-$n.log
 
-exec > $l 2>&1
-
 te () { mail -s "$HOSTNAME: $0 failed" $m < $l; exit 1; }
 
-trap te err
+[ $m ] && exec > $l 2>&1 && trap te err || trap 'exit 1' err
 
 cd $d
 
