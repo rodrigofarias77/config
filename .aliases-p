@@ -12,9 +12,9 @@ alias ar="$h -Rs"
 alias au="$h -Syu --devel"
 
 aa () { rr -k $m; echo "Server = https://archive.archlinux.org/repos/$(date +%Y/%m/%d)/\$repo/os/\$arch" | sudo tee $m; }
-ag () { sed -nr -e "s/^\[(.{10}).*started/?\1/p" -e "s/.*\] installed ([^ ]*).*/\1/p" /var/log/pacman.log | tr "\n" " " | tr "?" "\n" | grep -E ".{12}" | grep $1; }
+ag () { sed -nr -e 's/^\[(.{10}).*started/?\1/p' -e 's/.*\] installed ([^ ]*).*/\1/p' /var/log/pacman.log | tr '\n' ' ' | tr '?' '\n' | grep $1; }
 am () { rr -k $m; reflector --country ${1:-CA} --sort rate | grep ^Server | sudo tee $m; }
-as () { l=$($h -Ss --topdown $1 | perl -0pe "s/ *\n +/ - /g" | sed "s/\// /"); (grep Installed <<< $l && echo; grep -v Installed <<< $l) | le -X; }
+as () { l=$($h -Ss --topdown $1 | perl -0pe "s/ *\n +/ - /g" | sed "s/\// /"); { grep Installed <<< $l && echo; grep -v Installed <<< $l; } | le -X; }
 
 # comm -23 <(pacman -Qqe | sort) <(for i in base $(pacman -Qgq base-devel); do pactree -u $i; done | sort -u)
 # makepkg -si # base-devel
