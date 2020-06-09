@@ -9,7 +9,7 @@ alias ar='sudo apt autoremove --purge'
 
 ag () { ls -rt /var/log/apt/history.log* | xargs zgrep "^Install.*$1" | sed -e 's/.*: //' -e 's/ ([^)]*),\?//g'; }
 al () { dpkg -l | grep $1 | co 2-3; }
-as () { l=$(n2 apt list | grep $1 | sed 's:/: :'); (grep installed <<< $l && echo; grep -v installed <<< $l) | le -X; }
+as () { l=$(n2 apt list | grep $1 | sed 's:/: :'); { grep installed <<< $l && echo; grep -v installed <<< $l; } | le -X; }
 au () { sudo apt update; sudo apt full-upgrade $1; }
 
 # vim: filetype=sh
