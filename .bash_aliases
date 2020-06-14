@@ -33,7 +33,7 @@ alias sudo='sudo '
 
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
-bh () { ls ~/backup/bash/*gz | tail -$1 | xargs zcat | perl -0pe 's/^#(.*)\n(.*)/\1 \2/gm' | sort -u | le; }
+bh () { ls ~/backup/bash/*gz | tail -${1:-5} | xargs zcat | perl -0pe 's/^#(.*)\n(.*)/\1 \2/gm' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
 ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
