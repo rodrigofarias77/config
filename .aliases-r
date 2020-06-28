@@ -14,7 +14,7 @@ alias au="$s$c upgrade"
 
 _l () { grep '  ' | sort | sed 's/  \+/ /g'; }
 
-al () { $u$c list --installed "*$1*" | _l; }
+al () { $u$c list installed "*$1*" | _l; }
 as () { l=$($u$c -C list "*$1*" | _l); { grep @ <<< "$l" && echo; grep -v @ <<< "$l"; } | le -X; }
 
 # vim: filetype=sh
