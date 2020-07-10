@@ -31,6 +31,7 @@ alias xd='export DISPLAY=:0'
 
 alias sudo='sudo '
 
+ap () { PATH="$HOME/bin:/usr/local/bin:$PATH"; }
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 bh () { ls ~/backup/bash/*gz | tail -${1:-5} | xargs zcat | perl -0pe 's/^#(.*)\n(.*)/\1 \2/gm' | sort -u | le; }
@@ -59,7 +60,6 @@ ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.
 fr () { n2 find -xdev -type f ${@:2} -printf '%P\n' | grep -i "$1" | sort -V; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fr $2 | xargs -d '\n' grep -il "$1"; }
-hb () { b=$HOME/bin; grep "$b" <<< $PATH || PATH="$PATH:$b"; }
 hg () { history | grep -i "$1"; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
