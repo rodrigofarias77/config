@@ -64,8 +64,9 @@ rsync -e 'ssh bar ssh foo' foo :
 ssh -CMY foo
 ssh -O cancel -L ...
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
+systemctl disable apt-daily.timer apt-daily-upgrade.timer
 systemctl mask systemd-journald-audit.socket
-systemctl --user mask tracker-miner-fs.service
+systemctl --user mask tracker-store.service # tracker reset -r
 vboxmanage modifymedium disk foo.vdi --compact
 
 --
