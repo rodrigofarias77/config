@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 [ "$1" = -c ] && c=1 && shift
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
@@ -17,20 +19,20 @@ l=/tmp/$n.log
 
 exec > $l 2>&1
 
-ma () { tail -500 $l | tr -s " " | mail -s "$HOSTNAME: $n $1" $m; }
+send () { tail -500 $l | tr -s ' ' | sed 's/\x1b\[.m//g' | mail -s "$HOSTNAME: $n $1" $m; }
 
-trap "ma failed; exit 1" err
+trap 'send failed' err
 
 date
-uptime | sed -r "s/.*(up [^,]*).*/\u\1/"
+uptime | sed -r 's/.*(up [^,]*).*/\u\1/'
 
 $h -Sy
 echo
 
 if $h -Qu | grep .; then
-    [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm --removemake $x
+    [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x
 
     [ $c ] && yes | $h -Scc
 
-    ma # ok
+    send # okay
 fi
