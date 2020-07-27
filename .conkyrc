@@ -20,7 +20,7 @@ ${color grey}REC $color${texeci 300 we sbrf} \
 ${color grey}MX $color$pa_sink_volume%
 ${color grey}CPU $color$cpu% ${color grey}${cpugraph 8, 15} $color${execi 10 te}C \
 ${color grey}RAM $color$memperc% \
-${color grey}/ $color${fs_free /} \
 ${color grey}IO $color$diskio \
+${color grey}/ $color${fs_free /} \
 ${color grey}DL $color${downspeed enp2s0} ${color grey}${downspeedgraph enp2s0 8, 15} \
 UL $color${upspeed enp2s0} ${color grey}${upspeedgraph enp2s0 8, 15}
