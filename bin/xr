@@ -2,12 +2,9 @@
 
 set -e
 
-[ -z "$2" ] && echo "Usage: $0 x y" && exit 1
+[ -z $2 ] && echo x y && exit 1
 
-x=$1
-y=$2
-
-c=($(cvt $x $y | sed -n "s/^Modeline //p" | xargs))
+c=($(cvt $1 $2 | sed -n "s/^Modeline //p" | xargs))
 
 m=${c[0]}
 
@@ -17,4 +14,7 @@ set -x
 
 xrandr --newmode $m ${c[@]:1}
 xrandr --addmode $s $m
+
+sleep 1
+
 xrandr --output $s --mode $m
