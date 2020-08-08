@@ -2,12 +2,13 @@
 
 import getopt, re, requests, sys
 
-g = getopt.getopt(sys.argv[1:], 'dr:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'dlr:s:tuz:')
 o = dict(g[0])
 a = g[1]
 
 if not a:
     sys.exit('''-d: sort by date
+-l: list only
 -r regex: in name
 -s 100: seeds
 -z 500: size (MB)\n
@@ -36,7 +37,7 @@ r = '(?s)"(?P<href>/torrent/(?P<id>.*?)/.*?)"' \
 
 if '-u' in o:
     r += 'size.*?">(?P<size>.*?) (?P<unit>.*?)<.*?' \
-        + 'vip">(?P<date>.*?)<'
+        + 'coll-5.*?>(?P<date>.*?)<'
 else:
     r += 'date">(?P<date>.*?)<.*?' \
         + 'size.*?">(?P<size>.*?) (?P<unit>.*?)<.*?' \
@@ -63,21 +64,30 @@ if '-t' in o or '-d' in o:
     l.sort(key=lambda t: int(t['id']), reverse=True)
 
 for i, t in reversed(list(enumerate(l))):
-    print('%s\n  %s, %s, %s/%s, %s %s, %s' % (
-        t['name'],
-        i,
-        t['date'],
-        t['seeds'],
-        t['leeches'],
-        t['size'],
-        t['unit'],
-        t['user'].lower() if '-u' not in o else a[0]))
+    u = t['user'].lower() if '-u' not in o else a[0]
 
-while True:
+    if '-l' not in o:
+        print('%s\n  %s, %s, %s/%s, %s %s, %s' % (
+            t['name'],
+            i,
+            t['date'],
+            t['seeds'],
+            t['leeches'],
+            t['size'],
+            t['unit'],
+            u))
+    else:
+        print('%s\n  %s %s, %s' % (
+            t['name'],
+            t['size'],
+            t['unit'],
+            u))
+
+if '-l' not in o:
     try:
         i = int(input('? '))
     except:
-        break
+        sys.exit(1)
 
     h = requests.get(b + l[i]['href']).text
 
