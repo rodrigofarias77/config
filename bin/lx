@@ -18,7 +18,9 @@ search
 
 b = 'https://1337x.to'
 
-if '-t' in o:
+if '-d' in o:
+    u = '%s/sort-search/%s/time/desc/1/' % (b, '+'.join(a))
+elif '-t' in o:
     u = '%s/%s' % (b, a[0])
 elif '-u' in o:
     u = '%s/user/%s/' % (b, a[0])
@@ -60,7 +62,7 @@ for i in re.finditer(r, h):
 
     l.append(t)
 
-if '-t' in o or '-d' in o:
+if '-t' in o:
     l.sort(key=lambda t: int(t['id']), reverse=True)
 
 for i, t in reversed(list(enumerate(l))):
