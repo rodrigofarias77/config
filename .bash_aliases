@@ -88,7 +88,7 @@ n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
 nn () { n2 sudo nethogs $(route -n | sed -n '3s/.* //p'); }
 nu () { "$@" &> /dev/null; }
-om () { sudo chown --reference=$1 ${@:2} && sudo chmod --reference=$1 ${@:2}; }
+om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pm () { ca "($(ps -eF | grep -i $1 | co 6 | paste -d + -s))//1024"; }
