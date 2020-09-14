@@ -11,7 +11,7 @@ fb () { fs "$1"; echo; ec -; r=23; while true; do o=ff-$r.mp4; fm -n -i ff-fs.mp
 fd () { fv duration "$1"; echo ${format_duration%.*}; }
 fn () { fm -ss ${2:-600} -i "$1" -frames:v 1 ff.png; }
 fs () { for i in $(seq 60 60 $(fd "$1")); do fm -v error -ss $i -i "$1" -t 6 -c copy -an -f mpegts -; done | fm -i - -c copy ff-fs.mp4; }
-ft () { while read a b; do fm -v error -nostdin -ss $a -i $1 ${b:+-to $b} -copyts ${@:4} -f mpegts -; done < $3 | fm -i - -c copy $2; }
+ft () { while read a b; do fm -v error -nostdin -ss $a -i "$1" ${b:+-to $b} -copyts ${@:4} -f mpegts -; done < "$3" | fm -i - -c copy "$2"; }
 fv () { eval $(ffprobe -v error -show_chapters -show_format -show_streams -of 'flat=h=0:s=_' "$2" | grep $1); }
 h7 () { fv ^stream_0 "$1"; r=$(ca "$stream_0_width/$stream_0_height"); echo 1280x$(ca "round(1280/$r/2)*2"); echo $(ca "round(720*$r/2)*2")x720; }
 mm () { mediainfo "$1" | sed '/^Complete name/d; s/ \+:/:/' | head -n -2; }
