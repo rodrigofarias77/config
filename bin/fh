@@ -1,13 +1,11 @@
 #!/bin/bash
 
-p=~/.mozilla/firefox/*.default
+p=~/.mozilla/firefox/*.default-release
 
 ry () { read -p "? " r; [ "$r" = y ]; }
 sd () { s="sqlite3 $p/${1}.sqlite"; $s "select * $2" && ry && $s "delete $2"; }
 
 sd places "from moz_places where foreign_count = 0 and ifnull(last_visit_date, 0) < $(date -d '-30 days' +%s)000000"
-sd places "from moz_origins"
+sd places "from moz_origins where id not in (select origin_id from moz_places)"
 
-sd cookies "from moz_cookies where lastaccessed < $(date -d '-7 days' +%s)000000"
-
-du -hs $p/storage && ry && rr -z $p/storage
+sd cookies "from moz_cookies where lastaccessed < $(date -d '-30 days' +%s)000000"
