@@ -60,7 +60,7 @@ ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.
 fr () { n2 find -xdev -type f ${@:2} -printf '%P\n' | grep -i "$1" | sort -V; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fr $2 | xargs -d '\n' grep -il "$1"; }
-hg () { history | grep -i "$1"; }
+hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
