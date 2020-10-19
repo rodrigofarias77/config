@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ -z $3 ] && echo path gb mail && exit 1
+[ -z $3 ] && echo "Usage: $0 path gb mail" && exit 1
 
 s=$(basename $0)
 p=$1
