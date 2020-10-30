@@ -101,6 +101,7 @@ rp () { c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 sb () { unalias -a; . ~/.bashrc; }
+sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl --plain | co 1 | sort | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
