@@ -75,6 +75,7 @@ l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
 lh () { ll $1 | head -20; }
 lo () { tr A-Z a-z; }
+lr () { ll -d $2**/*$1*; }
 lt () { ll $1 | tail -20; }
 lu () { la -p | us $1; }
 ma () { mail -s "$HOSTNAME: $1" ${@:2}; }
