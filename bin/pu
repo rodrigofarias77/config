@@ -14,12 +14,12 @@ n=$(basename $0)
 m=$1
 x=${@:2}
 
-h=yay
+h=paru
 l=/tmp/$n.log
 
 exec > $l 2>&1
 
-send () { tail -500 $l | tr -s ' ' | sed 's/\x1b\[.m//g' | mail -s "$HOSTNAME: $n $1" $m; }
+send () { tail -500 $l | mail -s "$HOSTNAME: $n $1" $m; }
 
 trap 'send failed' err
 
