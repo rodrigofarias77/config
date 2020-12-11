@@ -3,7 +3,7 @@
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
 
-[ -z $1 ] && echo -e "Usage: $0 [-s] [-u] mail [xtra]
+[ -z "$1" ] && echo -e "Usage: $0 [-s] [-u] mail [xtra]
   -s: sleep before
   -u: apply updates\n
 Notify software updates to MAIL.
