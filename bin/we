@@ -13,4 +13,4 @@ u=https://tgftp.nws.noaa.gov/data/observations/metar/stations/$l
 
 [ ! -s $l ] && echo ! && exit 1
 
-perl -0ne 'print /KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)\// ? "$1 $2C\n" : "?\n"' $l
+perl -0ne 'print /KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)\// ? "$1 $2 C\n" : "?\n"' $l
