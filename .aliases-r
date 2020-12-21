@@ -2,8 +2,6 @@
 
 [ -x /usr/bin/dnf ] && c=dnf || c=yum
 
-[ -x /usr/bin/unbuffer ] && u='unbuffer '
-
 [ $UID != 0 ] && s='sudo '
 
 alias ac="$s$c clean all"
@@ -12,9 +10,9 @@ alias an="$c -C info"
 alias ar="$s$c autoremove"
 alias au="$s$c upgrade"
 
-_l () { grep '  ' | sort | sed 's/  \+/ /g'; }
+_l () { grep '\.[inx]' | sort | tr -s ' '; }
 
-al () { $u$c list installed "*$1*" | _l; }
-as () { l=$($u$c -C list "*$1*" | _l); { grep @ <<< "$l" && echo; grep -v @ <<< "$l"; } | le -X; }
+al () { $c list installed "*$1*" | _l; }
+as () { l=$($c -C list --showduplicates "*$1*" | _l); { grep @ <<< "$l" && echo; grep -v @ <<< "$l"; } | le -X; }
 
 # vim: filetype=sh
