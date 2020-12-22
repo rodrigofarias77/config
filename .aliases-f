@@ -3,7 +3,7 @@ export AV_LOG_FORCE_NOCOLOR=1
 fa='-c:a aac -b:a 128k'
 fv='-c:v libx264 -level 4.1 -preset veryslow'
 
-alias fm='nice -n 15 ffmpeg -hide_banner'
+alias fm='ffmpeg -hide_banner'
 alias fp='ffprobe -hide_banner'
 
 bp () { mediainfo "$1" | sed -n "s/^Bits.*: //p"; }
