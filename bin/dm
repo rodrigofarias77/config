@@ -9,6 +9,6 @@ m=$3
 
 a=$(($(stat -f -c '%a * %s / 1024**2' $p)))
 
-[ $a -lt $(($g * 1024)) ] && mail -s "$HOSTNAME: $s $p" $m <<< ${a}M
+[ $a -lt $(($g * 1024)) ] && printf "%'dM" $a | mail -s "$HOSTNAME: $s $p" $m
 
 exit 0
