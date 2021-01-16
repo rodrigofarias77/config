@@ -13,9 +13,6 @@ ServerAliveInterval 60
 .xinitrc
 exec budgie-desktop
 
-/etc/crontab
-@reboot root mount -t vboxsf host /mnt/host -o uid=1000,gid=1000
-
 /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet"
 GRUB_DEFAULT=saved
@@ -66,7 +63,7 @@ ssh -O cancel -L ...
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl disable apt-daily.timer apt-daily-upgrade.timer
 systemctl mask systemd-journald-audit.socket
-systemctl --user mask tracker-store.service # tracker reset -r
+systemctl --user mask tracker-store.service # tracker3 reset -rs
 vboxmanage modifymedium disk foo.vdi --compact
 
 --
