@@ -7,7 +7,6 @@ uname -m | grep -q x86_64 && au=setup-x86_64.exe || au=setup-x86.exe
 cb=/dev/clipboard
 
 alias oo=cygstart
-alias rz='rr -g'
 
 au () { cd ~/cygwin && curl -Os -z $au https://cygwin.com/$au && oo $au -M; }
 cb () { [ -e "$1" ] && cat "$1" > $cb || cat $cb > "$1"; }
