@@ -3,13 +3,12 @@ export AV_LOG_FORCE_NOCOLOR=1
 fa='-c:a aac -b:a 128k'
 fv='-c:v libx264 -level 4.1 -preset veryslow'
 
-alias fm='ffmpeg -hide_banner'
-alias fp='ffprobe -hide_banner'
-
 bp () { mediainfo "$1" | sed -n "s/^Bits.*: //p"; }
 fb () { fs "$1"; echo; ec -; r=23; while true; do o=ff-$r.mp4; fm -n -i ff-fs.mp4 $2 $fv -crf $r $o || break; echo; ec -; b=$(ca "int(round($(bp $o)*1000))"); [ $b -gt 55 ] && let r++ || let r--; [ $r -gt 27 -o $r -lt 19 ] && break; done; for i in ff-*; do echo "$i $(bp $i)"; done | ma ffmpeg $ma; read -p '? ' r; fm -i "$1" $3 $2 $fv -crf $r -ac 2 $fa -sn -map_metadata -1 ff.mp4; ms ffmpeg; }
 fd () { fv duration "$1"; echo ${format_duration%.*}; }
+fm () { ffmpeg -hide_banner "$@"; }
 fn () { fm -ss ${2:-600} -i "$1" -frames:v 1 ff.png; }
+fp () { ffprobe -hide_banner "$@"; }
 fs () { for i in $(seq 60 60 $(fd "$1")); do fm -v error -ss $i -i "$1" -t 6 -c copy -an -f mpegts -; done | fm -i - -c copy ff-fs.mp4; }
 ft () { while read a b; do fm -v error -nostdin -ss $a -i "$1" ${b:+-to $b} -copyts ${@:4} -f mpegts -; done < "$3" | fm -i - -c copy "$2"; }
 fv () { eval $(ffprobe -v error -show_chapters -show_format -show_streams -of 'flat=h=0:s=_' "$2" | grep $1); }
