@@ -15,6 +15,7 @@ jj=crond
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
+alias cu='curl -#LO'
 alias fd='fd -H -c never'
 alias hh=htop
 alias hs='python3 -m http.server'
