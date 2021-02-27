@@ -79,7 +79,7 @@ lh () { ll $1 | head -20; }
 lo () { tr A-Z a-z; }
 lr () { ll -d $2**/*$1*; }
 lt () { ll $1 | tail -20; }
-lu () { la -p | us $1; }
+lu () { la -p | us; }
 ma () { mail -s "$HOSTNAME: $1" ${@:2}; }
 mc () { mkdir -p "$1" && cd "$1"; }
 ml () { mv "$1" "${1,,}"; }
@@ -119,7 +119,7 @@ tg () { grep -i $1 $(ls -t ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; 
 tt () { cd ~/tmp && ll; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 up () { uptime | xargs; }
-us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -${1:-100}; }
+us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
