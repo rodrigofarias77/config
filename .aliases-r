@@ -4,6 +4,8 @@
 
 [ $UID != 0 ] && s='sudo '
 
+wd='--setopt=install_weak_deps=0'
+
 alias ac="$s$c clean all"
 alias ai="$s$c install"
 alias an="$c -C info"
