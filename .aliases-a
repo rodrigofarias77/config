@@ -1,6 +1,6 @@
 [ -x /usr/bin/apt ] || return
 
-ar=--no-install-recommends
+ir=--no-install-recommends
 
 alias ac='sudo apt clean'
 alias ai='sudo apt install'
