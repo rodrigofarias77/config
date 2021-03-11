@@ -3,16 +3,14 @@ alias gb='git branch -v | cut -c -$COLUMNS'
 alias gc='gd --cached'
 alias gd='git diff'
 alias ge='gl --relative'
+alias gg='git status -s'
 alias gk='git checkout'
 alias gl='git log -M --no-color --date-order --decorate --graph --numstat'
 alias gn='gd --name-status'
 alias go='git log --no-color --date-order --graph --format="%h%d %s (%ar)"'
 alias gp='git log -M -p --decorate'
-alias gu='git pull'
-alias gw='git diff -U0 --color-words'
 
 ct () { cd $(git rev-parse --show-toplevel); }
-gg () { git status -s $1 | grep -v swp$; }
 gs () { git stash && git fetch --depth=1 $1 && git reset --hard FETCH_HEAD && git stash pop; }
 gt () { gg $2 | grep "$1" | cut -c 4-; }
 
