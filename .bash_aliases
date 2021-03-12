@@ -15,6 +15,7 @@ jj=crond
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
+alias cn='cp --no-preserve=all'
 alias cu='curl -#LO'
 alias fd='fd -H -c never'
 alias hh=htop
@@ -61,6 +62,7 @@ er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p";
 et () { le $(ls /tmp/$1*log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fu () { fusermount -u $2 /tmp/$1; }
+gr () { fd -t f ${3:-.} ${2:-.} -X grep -il "$1"; }
 hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
