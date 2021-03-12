@@ -17,7 +17,7 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 
 alias cn='cp --no-preserve=all'
 alias cu='curl -#LO'
-alias fd='fd -H -c never'
+alias fd='fd -c never'
 alias hh=htop
 alias hs='python3 -m http.server'
 alias lg='la -F | grep'
@@ -122,6 +122,7 @@ tt () { cd ~/tmp && ll; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
+ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
