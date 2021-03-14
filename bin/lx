@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import getopt, re, requests, sys
+import getopt, os, re, requests, sys
 
 g = getopt.getopt(sys.argv[1:], 'dlr:s:tuz:')
 o = dict(g[0])
@@ -93,4 +93,7 @@ if '-l' not in o:
 
     h = requests.get(b + l[i]['href']).text
 
-    print(re.search('magnet:[^"]*', h).group())
+    m = re.search('magnet:[^"]*', h).group()
+    print(m)
+
+    os.system('transmission-remote -a "%s"' % m)
