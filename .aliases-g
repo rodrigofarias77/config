@@ -1,3 +1,5 @@
+cw='-U0 --color-words'
+
 alias ga='git add'
 alias gb='git branch -v | cut -c -$COLUMNS'
 alias gc='gd --cached'
