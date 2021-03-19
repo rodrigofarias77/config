@@ -3,12 +3,15 @@
 set -e
 
 [ "$1" = -c ] && c=1 && shift
+[ "$1" = -l ] && a=1 && shift
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
 
-[ -z $1 ] && echo "Usage: $0 [-c] [-s] [-u] mail [xtra]" && exit 1
+[ -z $1 ] && echo "Usage: $0 [-c] [-l] [-s] [-u] mail [xtra]" && exit 1
 
 [ $s ] && sleep $((RANDOM%3600))
+
+[ $a ] && while [ $(sed -r 's/ .*//; s/\.//; s/^0{,2}//' /proc/loadavg) -gt 100 ]; do sleep 5m; done
 
 n=$(basename $0)
 m=$1
