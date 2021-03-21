@@ -39,6 +39,7 @@ ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -${1:-5} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
+bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
 ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
