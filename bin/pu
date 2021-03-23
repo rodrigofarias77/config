@@ -9,10 +9,6 @@ set -e
 
 [ -z $1 ] && echo "Usage: $0 [-c] [-l] [-s] [-u] mail [xtra]" && exit 1
 
-[ $s ] && sleep $((RANDOM%3600))
-
-[ $a ] && while [ $(sed -r 's/ .*//; s/\.//; s/^0{,2}//' /proc/loadavg) -gt 100 ]; do sleep 5m; done
-
 n=$(basename $0)
 m=$1
 x=${@:2}
@@ -25,6 +21,10 @@ exec > $l 2>&1
 send () { { grep -e ^error -e ^warning $l && echo; tail -500 $l; } | mail -s "$HOSTNAME: $n $1" $m; }
 
 trap 'send failed' err
+
+[ $s ] && date && sleep $((RANDOM%3600))
+
+[ $a ] && while [ $(sed -r 's/ .*//; s/\.//; s/^0{,2}//' /proc/loadavg) -gt 100 ]; do date; sleep 5m; done
 
 date
 uptime | sed -r 's/.*(up [^,]*).*/\u\1/'
