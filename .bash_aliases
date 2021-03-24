@@ -58,6 +58,7 @@ db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
 dp () { os; $s vi -d $2 ${1%/}/$2; }
 ds () { os; $s vi -d $2 scp://$1/$2; }
+dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i 60 ${@:3} $(rl $1) $2; }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
