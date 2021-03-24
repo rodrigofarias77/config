@@ -17,6 +17,6 @@ pk () { pp $1 | cut -c 27-34 | xargs -rp -n 1 taskkill /f /pid; }
 pp () { tasklist /v | grep -i $1 | cut -c 1-118,144-182; }
 up () { systeminfo | grep 'Boot Time' | tr -s ' '; }
 tb () { tp $1 > $cb; }
-vc () { t=/tmp/vc-$(date +%s).${1:-txt}; cat $cb > $t; vim $t; cat $t > $cb; rr -g $t; }
+vc () { t=/tmp/vc-$(date +%s).${1:-txt}; cat $cb > $t; vim $t; cat $t > $cb; rr -z $t; }
 
 # vim: filetype=sh

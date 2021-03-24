@@ -25,11 +25,12 @@ alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias rl='readlink -f'
+alias rt='rr -t /tmp'
+alias rz='rr -z'
 alias ti='ll -tr'
 alias tp='tar -OPx -f'
 alias uu='du -hs'
 alias vn='vi -i NONE'
-alias vr='vi -R'
 alias xd='export DISPLAY=:0'
 
 alias sudo='sudo '
@@ -37,7 +38,7 @@ alias sudo='sudo '
 ap () { PATH="$HOME/bin:/usr/local/bin:$PATH"; }
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
-bh () { ls ~/backup/bash/*.gz | tail -${1:-5} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
+bh () { ls ~/backup/bash/*.gz | tail -${1:-10} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
 ca () { python3 -c "print($1)"; }
@@ -74,7 +75,6 @@ il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
 im () { mkdir im && cp ${@:3} im && mogrify -quality $1% -resize $2x$2 -verbose ${@:3}; }
 jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
-jr () { bb -m $1 && jpegtran -copy all -rotate ${2:-90} $1-* > $1 && rr $1-*; }
 kp () { nc -w 1 -z $1 $2; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
@@ -124,7 +124,7 @@ tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
 ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
-vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -g $t; }
+vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
 wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | tee /dev/tty | ma "$3" -E $ma; a=$b; done; }
