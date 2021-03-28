@@ -107,6 +107,8 @@ rn () { mv "$2" "$1.${2##*.}"; }
 rp () { local c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "${@:3}"; ry && $c -iv "$e" "${@:3}"; }
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
+s0 () { docker stop $(docker ps -q | head -1); }
+s1 () { systemctl is-active docker || sudo systemctl start docker; docker run -d -v $1:/home/pirate -p 666:22 --pull=always --rm atmoz/sftp pirate:$(pw 1 1 1 5 | tee /dev/tty); }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
@@ -114,7 +116,7 @@ sg () { systemctl list-unit-files | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
 sr () { rs "$@" && rm -r "${@:1:$#-1}"; }
 ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
-sv () { nu ssvncviewer -bgr233 -encodings zrle -x11cursor $@; }
+sv () { n2 ssvncviewer -bgr233 -encodings zrle -x11cursor $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
