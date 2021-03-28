@@ -4,13 +4,24 @@ import sys
 
 from selenium import webdriver
 
+p = webdriver.FirefoxProfile()
+
+if sys.argv[1] == '-t':
+    p.set_preference("network.proxy.type", 1)
+    p.set_preference("network.proxy.socks", 'localhost')
+    p.set_preference("network.proxy.socks_port", 9050)
+
+    u = sys.argv[2]
+else:
+    u = sys.argv[1]
+
 o = webdriver.FirefoxOptions()
 o.add_argument('--headless')
 
-d = webdriver.Firefox(options=o, service_log_path='/tmp/geckodriver.log')
+d = webdriver.Firefox(firefox_profile=p, options=o, service_log_path='/tmp/geckodriver.log')
 
 try:
-    d.get(sys.argv[1])
+    d.get(u)
     print(d.page_source)
 finally:
     d.quit()
