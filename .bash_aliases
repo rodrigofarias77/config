@@ -44,10 +44,10 @@ bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done;
 ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
-cl () { cd $(find -maxdepth 1 -type d | sort | tail -1); }
 cm () { ca "$2*$3/$1"; }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
+ct () { cd $(fd -d 1 -t d | sort | tail -1); }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 cz () { sudo compsize $1 | grep ^TOTAL | co 2-4; }

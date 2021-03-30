@@ -12,9 +12,9 @@ alias gn='gd --name-status'
 alias go='git log --no-color --date-order --graph --format="%h%d %s (%ar)"'
 alias gp='git log -M -p --decorate'
 
-ct () { cd $(git rev-parse --show-toplevel); }
 gs () { git stash && git fetch --depth=1 $1 && git reset --hard FETCH_HEAD && git stash pop; }
 gt () { gg $2 | grep "$1" | cut -c 4-; }
+ro () { cd $(git rev-parse --show-toplevel); }
 
 # git push origin refs/remotes/origin/*:refs/heads/*
 
