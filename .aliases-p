@@ -7,7 +7,7 @@ alias ac="$h -Sc"
 alias ai="$h -S --needed"
 alias al="pacman -Q | grep -i"
 alias an="$h -Si"
-alias ao="$h -c"
+alias ao="$h -cc"
 alias ar="$h -Rs"
 alias au="$h -Syu --devel"
 
