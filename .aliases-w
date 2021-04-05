@@ -6,6 +6,7 @@ uname -m | grep -q x86_64 && au=setup-x86_64.exe || au=setup-x86.exe
 
 cb=/dev/clipboard
 
+alias fd='fd -c never --path-separator=/'
 alias oo=cygstart
 
 au () { cd ~/cygwin && curl -Os -z $au https://cygwin.com/$au && oo $au -M; }
