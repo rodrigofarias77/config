@@ -108,7 +108,7 @@ rp () { local c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n 
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 s0 () { docker ps -f ancestor=atmoz/sftp -q | xargs docker stop; }
-s1 () { systemctl is-active docker || sudo systemctl start docker; docker run -d -v $1:/home/pirate -p 666:22 --pull=always --rm atmoz/sftp pirate:$(pw 1 1 1 5 | tee /dev/tty); }
+s1 () { docker run -d -v $1:/home/pirate -p 666:22 --pull always --rm atmoz/sftp pirate:$(pw 1 1 1 5 | tee /dev/tty); }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
