@@ -13,11 +13,6 @@ ServerAliveInterval 60
 .xinitrc
 exec budgie-desktop
 
-/etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="quiet"
-GRUB_DEFAULT=saved
-GRUB_SAVEDEFAULT=true
-
 /etc/environment
 QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 
@@ -46,7 +41,6 @@ D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 --
 adb shell settings put system screen_auto_brightness_adj 0
 adb shell settings put system screen_brightness 0
-bootsect /nt60 c: /mbr
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
 rsync -ahv -AHX --exclude=/{dev,mnt,proc,run,sys,tmp}/* / /mnt
