@@ -5,7 +5,6 @@ set -o pipefail
 
 p=/tmp
 t=~/trash
-u=30
 
 [ -z "$1" ] && echo -e "$t
 -t: trash\n
@@ -13,7 +12,7 @@ u=30
 -k: keep
 -s: sudo
 -z: zstd\n
--p: purge $u
+-p: purge
 -r regex: restore
 " && exit 1
 
@@ -30,7 +29,7 @@ ry () { read -p '? ' r; [ "$r" = y ]; }
 
 case "$1" in
     -p)
-        for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +100k); do
+        for i in $(find $t/*.tar -mtime +365 -or -mtime +30 -size +1M); do
             [ $(($(wc -c < $i) + 1024**3)) -gt $(($(stat -f -c '%a * %s' $p))) ] && ls -hl $i && exit 1
 
             ls -hl $i
