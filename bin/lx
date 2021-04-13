@@ -97,3 +97,5 @@ if '-l' not in o:
     print(m)
 
     os.system('transmission-remote -a "%s"' % m)
+
+    print(re.search('http[^"]*\.torrent(?=")', h).group())
