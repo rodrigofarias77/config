@@ -22,8 +22,6 @@ u=30
 [ "$1" = -w ] && w=1 && shift
 [ "$1" = -z ] && z=--zstd && shift
 
-ry () { read -p '? ' r; [ "$r" = y ]; }
-
 case "$1" in
     -p)
         for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +1M); do
@@ -40,7 +38,8 @@ case "$1" in
 
                 echo $d
                 ls -hl $a
-                ry && cd "$d" && $s tar -x -f $a -Pkv && rm -fv ${i%.*}.* && break
+                read -p '? ' r && [ "$r" = y ] && cd "$d" &&
+                    $s tar -x -f $a -Pkv && rm -fv ${i%.*}.* && break
             fi
         done ;;
     *)
