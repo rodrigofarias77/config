@@ -4,6 +4,9 @@ import sys
 
 from selenium import webdriver
 
+if len(sys.argv) < 2:
+    sys.exit('[-s] url')
+
 p = webdriver.FirefoxProfile()
 
 if sys.argv[1] == '-s':
