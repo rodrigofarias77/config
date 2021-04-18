@@ -2,13 +2,14 @@
 
 import getopt, os, re, requests, sys
 
-g = getopt.getopt(sys.argv[1:], 'dlr:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'dlpr:s:tuz:')
 o = dict(g[0])
 a = g[1]
 
 if not a:
     sys.exit('''-d: sort by date
 -l: list only
+-p: socks
 -r regex: in name
 -s 100: seeds
 -z 500: size (MB)\n
@@ -27,7 +28,10 @@ elif '-u' in o:
 else:
     u = '%s/search/%s/1/' % (b, '+'.join(a))
 
-h = requests.get(u, headers={'User-Agent': 'Mozilla/5.0'}).content.decode('ascii', 'ignore')
+e = {'User-Agent': 'Mozilla/5.0'}
+s = {'https': 'socks5h://localhost:1080'} if '-p' in o else None
+
+h = requests.get(u, headers=e, proxies=s).content.decode('ascii', 'ignore')
 
 print(u)
 open('/tmp/lx.htm', 'w').write(h)
@@ -91,7 +95,7 @@ if '-l' not in o:
     except:
         sys.exit(1)
 
-    h = requests.get(b + l[i]['href']).text
+    h = requests.get(b + l[i]['href'], headers=e, proxies=s).text
 
     m = re.search('magnet:[^"]*', h).group()
     print(m)
