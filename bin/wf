@@ -6,10 +6,10 @@ from selenium import webdriver
 
 p = webdriver.FirefoxProfile()
 
-if sys.argv[1] == '-t':
+if sys.argv[1] == '-s':
     p.set_preference("network.proxy.type", 1)
     p.set_preference("network.proxy.socks", 'localhost')
-    p.set_preference("network.proxy.socks_port", 9050)
+    p.set_preference("network.proxy.socks_port", 1080)
 
     u = sys.argv[2]
 else:
