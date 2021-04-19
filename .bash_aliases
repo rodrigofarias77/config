@@ -120,7 +120,7 @@ sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
-tg () { grep -i $1 $(ls -t ~/trash/*idx) | sed "s/idx:/tar /" | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
+tg () { cd ~/trash; fd --changed-within 1y 'idx$' | xargs grep -i "$1" | sort -r | sed 's/idx:/tar /' | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; cd -; }
 tt () { cd ~/tmp && ll; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 up () { uptime | xargs; }
