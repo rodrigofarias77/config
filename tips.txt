@@ -35,7 +35,7 @@ guest ok = yes
 /etc/sudoers
 foo ALL=(ALL) NOPASSWD: /bin/foo, /bin/bar
 
-/etc/sysctl.d/swappiness.conf
+/etc/sysctl.d/50-swappiness.conf
 vm.swappiness=10
 
 /etc/tmpfiles.d/tmp.conf
