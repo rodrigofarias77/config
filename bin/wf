@@ -5,11 +5,11 @@ import sys
 from selenium import webdriver
 
 if len(sys.argv) < 2:
-    sys.exit('[-s] url')
+    sys.exit('[-p] url')
 
 p = webdriver.FirefoxProfile()
 
-if sys.argv[1] == '-s':
+if sys.argv[1] == '-p':
     p.set_preference("network.proxy.type", 1)
     p.set_preference("network.proxy.socks", 'localhost')
     p.set_preference("network.proxy.socks_port", 1080)

@@ -9,7 +9,7 @@ a = g[1]
 if not a:
     sys.exit('''-d: sort by date
 -l: list only
--p: socks
+-p: proxy
 -r regex: in name
 -s 100: seeds
 -z 500: size (MB)\n
