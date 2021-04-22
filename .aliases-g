@@ -1,7 +1,6 @@
 cw='-U0 --color-words'
 
 alias ga='git add'
-alias gb='git branch -v | cut -c -$COLUMNS'
 alias gc='gd --cached'
 alias gd='git diff'
 alias ge='gl --relative'
@@ -12,6 +11,7 @@ alias gn='gd --name-status'
 alias go='git log --no-color --date-order --graph --format="%h%d %s (%ar)"'
 alias gp='git log -M -p --decorate'
 
+gb () { git branch -v --sort=authordate; }
 gs () { git stash && git fetch --depth=1 $1 && git reset --hard FETCH_HEAD && git stash pop; }
 gt () { gg $2 | grep "$1" | cut -c 4-; }
 ro () { cd $(git rev-parse --show-toplevel); }
