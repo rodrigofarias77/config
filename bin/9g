@@ -73,7 +73,7 @@ if i:
     if m < 1:
         sys.exit()
 else:
-    m = 1000
+    m = 500
 
 os.mkdir(d)
 gzip.open(d + '.json.gz', 'wt').write(json.dumps(l, indent=4))
