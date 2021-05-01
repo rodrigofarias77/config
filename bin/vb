@@ -6,15 +6,17 @@ case $1 in
     -b)
         vboxmanage controlvm $2 acpipowerbutton ;;
     -d)
-        vboxmanage snapshot $2 delete "$3" ;;
+        $0 -n $2; read -p '> ' s; vboxmanage snapshot $2 delete $s ;;
     -g)
         vboxmanage startvm $2 --type gui ;;
     -h)
         vboxmanage startvm $2 --type headless ;;
     -i)
         vboxmanage showvminfo $2 | less ;;
+    -n)
+        vboxmanage snapshot $2 list ;;
     -l)
-        vboxmanage list vms | sort ;;
+        vboxmanage list -s vms ;;
     -p)
         vboxmanage controlvm $2 poweroff ;;
     -r)
@@ -22,16 +24,16 @@ case $1 in
     -s)
         vboxmanage controlvm $2 savestate ;;
     -t)
-        d=$(date +%Y%m%d)
-        vboxmanage snapshot $2 take ${3:-$d} ;;
+        vboxmanage snapshot $2 take $(date +%F) ;;
     *)
         echo '-0: save running
 -b vm: powerbutton
--d vm snapshot: delete
+-d vm: delete snapshot
 -g vm: gui
 -h vm: headless
 -i vm: info
 -l: list
+-n vm: list snapshots
 -p vm: poweroff
 -r: running
 -s vm: save
