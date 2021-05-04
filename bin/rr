@@ -27,7 +27,7 @@ case "$1" in
         for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +1M); do
             ls -hl $i
             head ${i%.*}.idx
-            rm -fv ${i%.*}.*
+            rm -f ${i%.*}.*
             echo
         done ;;
     -r)
