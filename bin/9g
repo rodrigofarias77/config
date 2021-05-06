@@ -40,17 +40,18 @@ c = 0
 d = w + '/' + str(round(time.time()))
 g = 'https://9gag.com'
 l = []
-x = [os.path.basename(i).split('-')[1] for i in sorted(glob.glob(w + '/*/*'))]
+x = [j['id'] for i in glob.glob(w + '/*.gz') for j in json.loads(gzip.open(i).read())]
 
 j = fj(g)['data']['posts']
 
 while c < 25:
     for i in j:
-        if i['id'] in x or i['id'] in [i['id'] for i in l]:
+        if i['id'] in x:
             c += 1
             print('> %s - %s' % (i['id'], c))
         else:
             l.append(i)
+            x.append(i['id'])
             c = 0
             t = time.strftime('%F %T', time.localtime(i['creationTs']))
             print(i['id'] + ' - ' + t)
