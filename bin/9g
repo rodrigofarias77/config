@@ -77,8 +77,8 @@ else:
     m = 500
 
 os.mkdir(d)
-gzip.open(d + '.json.gz', 'wt').write(json.dumps(l, indent=4))
 
+f = []
 j = 1
 
 for i in reversed(l):
@@ -104,8 +104,11 @@ for i in reversed(l):
     n = '%03d-%s-%s.%s' % (j, i['id'], t, r.url.split('.')[-1])
 
     open(d + '/' + n, 'wb').write(r.content)
-    print(i['url'] + ' - ' + n)
+    f.append(i)
 
+    print(i['url'] + ' - ' + n)
     j += 1
+
+gzip.open(d + '.json.gz', 'wt').write(json.dumps(f, indent=4))
 
 print(d)
