@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+h=https://github.com
+
+[ -z $1 ] && echo -e "Usage: $0 docker/compose\n
+Update or install /usr/local/bin/docker-compose from $h/docker/compose
+" && exit 1
+
+p=$(uname -s)-$(uname -m)
+
+u=$(curl -Ls $h/$1/releases/latest | sed -nr "s/.*href=\"(.*)-$p\".*/\1/p")
+
+n=${u##*/}
+
+[ -z $n ] && echo "Unable to find binary in $h/$1" && exit 1
+
+b=/usr/local/bin/$n
+t=/tmp/$n
+
+curl -Ls -C - $h/$u-$p -o $t
+
+diff -s $t $b || sudo install -v $t $b
