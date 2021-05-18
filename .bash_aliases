@@ -68,7 +68,7 @@ gr () { fd -t f ${3:-.} ${2:-.} -X grep -il "$1"; }
 hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
-hr () { curl -s $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
+hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
 il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
