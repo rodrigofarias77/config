@@ -9,7 +9,7 @@ cb=/dev/clipboard
 alias fd='fd -c never --path-separator=/'
 alias oo=cygstart
 
-au () { cd ~/cygwin && curl -Os -z $au https://cygwin.com/$au && oo $au -M; }
+au () { cd ~/cygwin || return; curl -Os -C - https://cygwin.com/$au; oo $au -M; }
 cb () { [ -e "$1" ] && cat "$1" > $cb || cat $cb > "$1"; }
 dc () { vim -d "$1" <(cat $cb); }
 ev () { l=$(wevtutil qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d '\r' | perl -0pe 's/.*?Source: (.*?)\n.*?Date: (.*?)T(.*?)\n.*?Level: (.*?)\n.*?Description: \n(.*?)\n+/\2 \3 - \4 - \1 - \5\n/gs'); echo "$l" | le; }
