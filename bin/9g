@@ -44,7 +44,7 @@ x = [j['id'] for i in glob.glob(w + '/*.gz') for j in json.loads(gzip.open(i).re
 
 j = fj(g)['data']['posts']
 
-while c < 25:
+while c < 50:
     for i in j:
         if i['id'] in x:
             c += 1
