@@ -72,7 +72,6 @@ hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
 il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
-im () { mkdir im && cp ${@:3} im && mogrify -quality $1% -resize $2x$2 -verbose ${@:3}; }
 jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
 kp () { nc -w 1 -z $1 $2; }
