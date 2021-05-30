@@ -5,19 +5,19 @@ set -e
 [ -z "$1" ] && echo "Usage: $0 dir" && exit 1
 
 d=ffmpeg
-n=ffmpeg-latest-win64-static.zip
+n=ffmpeg-release-essentials.7z
 s=ffmpeg.md5
-z=https://ffmpeg.zeranoe.com/builds/win64/static
+z=https://www.gyan.dev/ffmpeg/builds/$n
 
 set -x
 
 cd $1
-curl -#O -z $n $z/$n
+curl -LOs -z $n $z
 md5sum -c $s && exit
 
-7z x $n
+bsdtar -xvf $n
 rm -fr $d
 sleep 5
-mv ${n%.*} $d
+mv ffmpeg-*-essentials_build $d
 
 md5sum $n > $s
