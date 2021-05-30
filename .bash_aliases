@@ -34,7 +34,7 @@ alias xd='export DISPLAY=:0'
 
 alias sudo='sudo '
 
-ap () { PATH="$HOME/bin:/usr/local/bin:$PATH"; }
+ap () { echo "$PATH" | grep -Fq "$1" || PATH="$1:$PATH"; }
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -${1:-10} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
