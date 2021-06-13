@@ -44,7 +44,7 @@ ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cf () { fd -HI -d 1 -t d | while read i; do l=$(fd -t f . "$i" | wc -l); echo -e "$l\t$i"; done | sort -n; }
-cm () { ca "$2*$3/$1"; }
+cm () { ca "$2 * $3 / $1"; }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
 ct () { cd $(fd -d 1 -t d | sort | tail -1); }
@@ -107,7 +107,7 @@ rp () { local c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n 
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 s0 () { docker ps -f ancestor=atmoz/sftp -q | xargs docker stop; }
-s1 () { docker run -d -v $1:/home/pirate -p 666:22 --pull always --rm atmoz/sftp pirate:$(pw 1 1 1 5 | tee /dev/tty); }
+s1 () { docker run -d -v $1:/home/pirate -p 666:22 --pull always --rm atmoz/sftp pirate:$(pw 1 1 1 5 | ty); }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
@@ -123,13 +123,14 @@ td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86
 tg () { grep -i "$1" $(ls -t ~/trash/*.idx | head -1000) | sed 's/idx:/tar /' | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
+ty () { tee /dev/tty; }
 up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
 ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
-wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | tee /dev/tty | ma "$3" -E $ma; a=$b; done; }
+wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | ty | ma "$3" -E $ma; a=$b; done; }
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
 wx () { while read i; do eval $@; done; }
 xg () { compgen -c | sort -u | grep $@; }
