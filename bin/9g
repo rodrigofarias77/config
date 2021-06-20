@@ -1,8 +1,7 @@
 #!/usr/bin/python -u
 
-import glob, gzip, json, os, re, requests, sys, time
+import glob, gzip, html, json, os, re, requests, sys, time
 
-from html import unescape
 from selenium import webdriver
 
 a = webdriver.FirefoxOptions()
@@ -102,7 +101,8 @@ for i in reversed(l):
         print('> %s - %sM' % (i['url'], round(z, 1)))
         continue
 
-    t = re.sub('[^0-9A-Za-z]', '', unescape(unescape(i['title'])).replace("'", '').title())
+    t = html.unescape(html.unescape(i['title']))
+    t = re.sub('[^0-9A-Za-z]', '', re.sub("['‘’]", '', t).title())
     n = '%03d-%s-%s.%s' % (j, i['id'], t[:100], r.url.split('.')[-1])
 
     open(d + '/' + n, 'wb').write(r.content)
