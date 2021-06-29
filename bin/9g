@@ -44,13 +44,15 @@ d = w + '/' + str(round(time.time()))
 l = []
 x = [j['id'] for i in glob.glob(w + '/*.gz') for j in json.loads(gzip.open(i).read())]
 
-p = fj('https://9gag.com/v1/group-posts/')['data']['posts']
+p = fj('https://9gag.com/v1/group-posts/group/funny/type/hot')['data']['posts']
 
 while c < 50 and len(l) < 1000:
     for i in p:
         if i['id'] in x:
             c += 1
             print('> %s - %s' % (i['id'], c))
+        elif i['postSection']['name'] != 'Funny':
+            print('> %s - %s' % (i['id'], i['postSection']['name']))
         else:
             l.append(i)
             x.append(i['id'])
@@ -58,7 +60,7 @@ while c < 50 and len(l) < 1000:
             t = time.strftime('%F %T', time.localtime(i['creationTs']))
             print(i['id'] + ' - ' + t)
 
-    j = fj('https://9gag.com/v1/post/id/' + p[-1]['id'])['data']
+    j = fj('https://9gag.com/v1/post/id/' + l[-1]['id'])['data']
 
     if j['nextPosts']:
         p = j['nextPosts']
