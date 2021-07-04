@@ -8,7 +8,7 @@ a = webdriver.FirefoxOptions()
 a.add_argument('--headless')
 f = webdriver.Firefox(options=a, service_log_path='/tmp/geckodriver.log')
 
-def fj(u):
+def gj(u):
     while True:
         try:
             time.sleep(1)
@@ -26,10 +26,10 @@ def fj(u):
             print('> ' + u)
             time.sleep(5)
 
-def rg(u):
+def gs(u):
     while True:
         try:
-            time.sleep(1)
+            time.sleep(.5)
             return requests.get(u, stream=True)
         except KeyboardInterrupt:
             sys.exit(1)
@@ -44,7 +44,7 @@ d = w + '/' + str(round(time.time()))
 l = []
 x = [j['id'] for i in glob.glob(w + '/*.gz') for j in json.loads(gzip.open(i).read())]
 
-p = fj('https://9gag.com/v1/group-posts/group/funny/type/hot')['data']['posts']
+p = gj('https://9gag.com/v1/group-posts/group/funny/type/hot')['data']['posts']
 
 while c < 50 and len(l) < 1000:
     for i in p:
@@ -60,7 +60,7 @@ while c < 50 and len(l) < 1000:
             t = time.strftime('%F %T', time.localtime(i['creationTs']))
             print(i['id'] + ' - ' + t)
 
-    j = fj('https://9gag.com/v1/post/id/' + l[-1]['id'])['data']
+    j = gj('https://9gag.com/v1/post/id/' + l[-1]['id'])['data']
 
     if j['nextPosts']:
         p = j['nextPosts']
@@ -90,9 +90,9 @@ for i in reversed(l):
         break
 
     if i['type'] == 'Photo':
-        r = rg(i['images']['image700']['url'])
+        r = gs(i['images']['image700']['url'])
     elif i['type'] == 'Animated':
-        r = rg(i['images']['image460sv']['url'])
+        r = gs(i['images']['image460sv']['url'])
     else:
         print('> %s - %s' % (i['url'], i['type']))
         continue
