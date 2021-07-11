@@ -12,6 +12,7 @@ fs () { for i in $(seq 60 60 $(vd "$1")); do fm -v error -ss $i -i "$1" -t 6 -c 
 ft () { while read a b; do fm -v error -nostdin -ss $a ${b:+-to $b} -i "$1" ${@:4} -f mpegts -; done < "$3" | fm -i - -c copy "$2"; }
 fv () { eval $(ffprobe -v error -show_chapters -show_format -show_streams -of 'flat=h=0:s=_' "$2" | grep $1); }
 h7 () { fv ^stream_0 "$1"; r=$(ca "$stream_0_width/$stream_0_height"); echo 1280x$(ca "round(1280/$r/2)*2"); echo $(ca "round(720*$r/2)*2")x720; }
+iv () { while read i; do fm -v error -nostdin -i "$i" -pix_fmt yuv420p -f image2 -; done | fm -i - -c:v libx264 "$1"; }
 mm () { mediainfo "$1" | sed '/^Complete name/d; s/ \+:/:/' | head -n -2; }
 sc () { unset $(compgen -v | grep ^chapter); fv chapter "$1"; i=0; x=${1##*.}; while true; do s=chapter_${i}_start_time; e=chapter_${i}_end_time; t=chapter_${i}_tags_title; [ ${!s} ] || break; fm -nostdin -i "$1" ${@:2} -c copy -map_chapters -1 -metadata title="${!t}" -ss ${!s} -to ${!e} "${!t//\/}.$x" || read; let i++; done; }
 st () { for i in $(seq $1); do fm -v error -ss $(($i*$2)) -i $3 -frames 1 -f image2 -; done | fm -i - -vf "tile=1x$1" -q:v 1 $4; }
