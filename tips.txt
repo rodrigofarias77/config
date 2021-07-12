@@ -21,6 +21,13 @@ btrfs autodefrag,compress-force=zstd
 fuse.sshfs allow_other,delay_connect,reconnect
 ntfs dmask=022,fmask=133,gid=1000,uid=1000
 
+/etc/fonts/local.conf
+<selectfont>
+<rejectfont>
+<glob>/usr/share/fonts/truetype/foo/*</glob>
+</rejectfont>
+</selectfont>
+
 /etc/lightdm/lightdm.conf
 [Seat:*]
 autologin-user=foo # gpasswd -a foo autologin
