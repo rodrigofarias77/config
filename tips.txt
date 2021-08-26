@@ -5,6 +5,9 @@ gtk-primary-button-warps-slider = false
 .minttyrc
 WordCharsExcl=:
 
+.mozilla/firefox/foo/chrome/userChrome.css
+.tab-background { border-radius: 0px 0px !important; margin-bottom: 0px !important; }
+
 .ssh/config
 ControlMaster auto
 ControlPath ~/.ssh/%r@%h:%p
