@@ -47,7 +47,7 @@ cf () { fd -HI -d 1 -t d | while read i; do l=$(fd -t f . "$i" | wc -l); echo -e
 cm () { ca "$2 * $3 / $1"; }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
-ct () { cd $(fd -d 1 -t d | sort | tail -1); }
+ct () { cd "$(find -maxdepth 1 -type d | sort | tail -1)"; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 cz () { sudo compsize $1 | grep ^TOTAL | co 2-4; }
