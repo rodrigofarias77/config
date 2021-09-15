@@ -2,12 +2,13 @@
 
 import getopt, os, re, requests, sys
 
-g = getopt.getopt(sys.argv[1:], 'dlpr:s:tuz:')
+g = getopt.getopt(sys.argv[1:], 'adlpr:s:tuz:')
 o = dict(g[0])
 a = g[1]
 
 if not a:
-    sys.exit('''-d: sort by date
+    sys.exit('''-a: transmission
+-d: sort by date
 -l: list only
 -p: proxy
 -r regex: in name
@@ -100,6 +101,7 @@ if '-l' not in o:
     m = re.search('magnet:[^"]*', h).group()
     print(m)
 
-    os.system('transmission-remote -a "%s"' % m)
+    if '-a' in o:
+        os.system('transmission-remote -a "%s"' % m)
 
     print(re.search('http[^"]*\.torrent(?=")', h).group())
