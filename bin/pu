@@ -24,7 +24,7 @@ trap 'send failed' err
 
 [ $s ] && date && sleep $((RANDOM%3600))
 
-[ $a ] && while [ $(sed -r 's/ .*//; s/\.//; s/^0{,2}//' /proc/loadavg) -gt 100 ]; do date; sleep 5m; done
+[ $a ] && while [ $(cut -d . -f 1 /proc/loadavg) -ge 1 ]; do date; sleep 5m; done
 
 date
 uptime | sed -r 's/.*(up [^,]*).*/\u\1/'
