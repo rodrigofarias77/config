@@ -98,7 +98,7 @@ nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
 on () { while eval $([ $4 ] || echo !) nc -w 10 -z $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
-pm () { s=$(ps -eF | grep -i $1 | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
+pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
 rd () { nc -w 5 -z $1 3389 && n2 zenity --password | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 ${@:3}; }
