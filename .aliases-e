@@ -1,0 +1,14 @@
+[ -x /usr/bin/eopkg ] || return
+
+alias ai='sudo eopkg install'
+alias al="eopkg list-installed | tr -s ' ' | grep -i"
+alias an='eopkg info'
+alias ao='sudo eopkg remove-orphans --purge'
+alias ar='sudo eopkg autoremove --purge'
+alias au='sudo eopkg upgrade'
+
+as () { eopkg search $1 | tr -s ' '; }
+
+# for i in $(eopkg list-installed | sed 's/ .*//'); do echo "$(eopkg info $i | grep -m 1 ^Architecture | sed 's/.*Size: //') $i"; done
+
+# vim: filetype=sh
