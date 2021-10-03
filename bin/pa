@@ -2,7 +2,7 @@
 
 pd () { pactl info | sed -n "s/^Default $1: //p"; }
 
-sv () { sed -nr "s/^\t*Volume:.* ([0-9]*%).*/\1/p" | paste -s -d " "; }
+sv () { sed -nr 's/^\t*Volume:.* ([0-9]*%).*/\1/p' | paste -s -d ' '; }
 
 if [ "$1" == -m ]; then
     shift
@@ -16,6 +16,8 @@ if [ "$1" == -m ]; then
     else
         pactl list sources | sv
     fi
+elif [ "$1" == -h ]; then
+    echo -e 'output\n-m: input\n\n-t: toggle'
 else
     if [ "$1" ]; then
         if [ "$1" == -t ]; then
