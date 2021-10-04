@@ -5,6 +5,14 @@ gtk-primary-button-warps-slider = false
 .minttyrc
 WordCharsExcl=:
 
+.mozilla/firefox/foo/prefs.js
+browser.backspace_action
+gfx.webrender.force-legacy-layers
+layers.acceleration.force-enabled
+mousewheel.system_scroll_override.enabled
+widget.content.gtk-theme-override
+widget.non-native-theme.enabled
+
 .mozilla/firefox/foo/chrome/userChrome.css
 .tab-background { border-radius: 0px 0px !important; margin-bottom: 0px !important; }
 
