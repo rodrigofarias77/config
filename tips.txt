@@ -50,6 +50,12 @@ indicators=~host;~spacer;~session;~a11y;~clock;~power
 map to guest = Bad User
 guest ok = yes
 
+/etc/ssh/sshd_config
+Match User foo
+ChrootDirectory /home/sftp
+ForceCommand internal-sftp
+PasswordAuthentication no
+
 /etc/sudoers
 foo ALL=(ALL) NOPASSWD: /bin/foo, /bin/bar
 
