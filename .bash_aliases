@@ -25,7 +25,6 @@ alias lg='la -F | grep'
 alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
 alias os='[ $1 = -s ] && s=sudo && shift || s='
-alias rl='readlink -f'
 alias rz='rr -z'
 alias ti='ll -tr'
 alias tp='tar -OPx -f'
@@ -37,7 +36,7 @@ alias sudo='sudo '
 
 ap () { echo "$PATH" | grep -Fq "$1" || PATH="$1:$PATH"; }
 ba () { os; $s rc -p $1 ~/backup; }
-bd () { os; $s vi -d $1 ~/backup/$(rl $1 | tr / +); }
+bd () { os; $s vi -d $1 ~/backup/$(realpath $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -${1:-10} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
@@ -61,7 +60,7 @@ dp () { os; $s vi -d $2 ${1%/}/$2; }
 ds () { os; $s vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
-ef () { mq $2 && return; encfs -i ${3:-10} $(rl $1) $2; }
+ef () { mq $2 && return; encfs -i ${3:-10} $(realpath $1) $2; }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 et () { le $(ls /tmp/$1*log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
