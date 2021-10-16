@@ -8,6 +8,7 @@ cb=/dev/clipboard
 
 alias fd='fd -c never --path-separator=/'
 alias oo=cygstart
+alias pw='cygpath -aw'
 
 au () { cd ~/cygwin || return; curl -Os -z $au https://cygwin.com/$au; oo $au -M; }
 cb () { [ -e "$1" ] && cat "$1" > $cb || cat $cb > "$1"; }
