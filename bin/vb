@@ -7,6 +7,8 @@ case $1 in
         vboxmanage controlvm $2 acpipowerbutton ;;
     -d)
         $0 -n $2; read -p '> ' s; vboxmanage snapshot $2 delete $s ;;
+    -e)
+        $0 -n $2; read -p '> ' s; vboxmanage snapshot $2 restore $s ;;
     -g)
         vboxmanage startvm $2 --type gui ;;
     -h)
@@ -29,6 +31,7 @@ case $1 in
         echo '-0: save running
 -b vm: powerbutton
 -d vm: delete snapshot
+-e vm: restore snapshot
 -g vm: gui
 -h vm: headless
 -i vm: info
