@@ -50,7 +50,7 @@ cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
 ct () { cd "$(find -maxdepth 1 -type d | sort | tail -1)"; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
-cz () { sudo compsize $1 | grep ^TOTAL | co 2-4; }
+cz () { sudo compsize -x $1 | grep ^TOTAL | co 2-4; }
 d1 () { sed -n 's/^< //p'; }
 d2 () { sed -n 's/^> //p'; }
 d8 () { dig +short $1 @8.8.8.8; }
@@ -125,6 +125,7 @@ ty () { tee /dev/tty; }
 up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
 ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
+v1 () { sudo systemctl start vncserver@:1; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
