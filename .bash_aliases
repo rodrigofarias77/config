@@ -120,12 +120,12 @@ tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2")-$(date +%s -d "$1"))); date -d @$d -u +"$((d/86400))d %T"; }
 tg () { grep -i "$1" $(ls -t ~/trash/*.idx | head -1000) | sed 's/idx:/tar /' | while read t a; do echo "$(ll $t) $a"; tp $t "$a" | head -100; echo; ec -; done | le; }
 tt () { cd ~/tmp && ll; }
+tv () { sudo systemctl start vncserver@:1; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 ty () { tee /dev/tty; }
 up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
 ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
-v1 () { sudo systemctl start vncserver@:1; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval $@; do sleep 60; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
