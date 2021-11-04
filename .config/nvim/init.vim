@@ -24,5 +24,5 @@ map <F9> :set et sw=4 ts=4<CR>
 map <F10> :set et& sw& ts&<CR>
 map <F12> :windo set syntax&<CR>
 map <Space> :nohlsearch<CR>
-map <Tab> gt
-map <S-Tab> gT
+map <S-PageDown> gt
+map <S-PageUp> gT
