@@ -10,6 +10,8 @@ set showbreak=...\
 set title
 set wildignorecase
 
+let netrw_silent=1
+
 map <CR> :let z=winsaveview()<CR>*:call winrestview(z)<CR>
 map <C-Down> <C-E>
 map <C-Up> <C-Y>
