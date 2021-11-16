@@ -8,6 +8,6 @@ h=$1
 
 i=$(curl -s https://ipinfo.io | jq -r .ip)
 
-[ $i ] || exit 1
+[ "$i" ] || exit 1
 
-host $h | grep -q $i || curl -ns "https://dynupdate.no-ip.com/nic/update?hostname=$h"
+host $h | grep -q "$i" || curl -ns "https://dynupdate.no-ip.com/nic/update?hostname=$h"
