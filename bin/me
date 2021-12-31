@@ -1,20 +1,20 @@
 #!/bin/bash
 
-[ -z "$3" ] && echo "Usage: $0 mail cmd arg..." && exit 1
+[ -z "$3" ] && echo "Usage: $0 mail title cmd" && exit 1
 
 m=$1
-c=$2
-a=${@:3}
+t=$2
+c=$3
 
-l=/tmp/$c-$(date +%s).log
+l=/tmp/$t-$(date +%s).log
 
 exec > $l 2>&1
 
-te () { tail -100 $l | mail -s "$HOSTNAME: $c failed" $m; exit 1; }
+te () { tail -100 $l | mail -s "$HOSTNAME: $t failed" $m; exit 1; }
 
 trap te err
 
 date
 echo $@
 
-$c $a
+bash -c "$c"
