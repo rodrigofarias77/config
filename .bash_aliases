@@ -62,7 +62,7 @@ dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i ${3:-10} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
-et () { le $(ls /tmp/$1*log | tail -1); }
+et () { le $(ls /tmp/$1*.log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fd -t f ${3:-.} ${2:-.} -X grep -il "$1"; }
@@ -100,7 +100,7 @@ pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
-rd () { nc -w 5 -z $1 3389 && n2 zenity --password | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 ${@:3}; }
+rd () { nc -w 5 -z $1 3389 && zenity --password | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 ${@:3}; }
 re () { t=/tmp/tr; ef ~/.trash $t && rr -t $t "$@"; }
 rn () { mv "$2" "$1.${2##*.}"; }
 rp () { local c=$(type -p perl-rename prename | head -1); e="s/$1/$2/gi"; $c -n "$e" "${@:3}"; ry && $c -iv "$e" "${@:3}"; }
