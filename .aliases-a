@@ -11,6 +11,7 @@ ag () { ls -rt /var/log/apt/history.log* | xargs zgrep "^Install.*$1" | sed -e '
 al () { dpkg -l | grep $1 | co 2-3; }
 as () { l=$(n2 apt list | grep $1 | sed 's:/: :'); { grep installed <<< $l && echo; grep -v installed <<< $l; } | le -X; }
 au () { sudo apt update; sudo apt full-upgrade $1; }
+ts () { sudo timeshift --create; sudo timeshift --list; read -p '> ' s; sudo timeshift --delete --snapshot $s; }
 
 # for i in $(dpkg -l | tail -n +6 | co 2); do echo -e "$(apt-cache show $i | grep -m 1 ^Installed-Size | sed 's/.*: //')\t$i"; done
 
