@@ -17,8 +17,6 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 
 alias cn='cp --no-preserve=all'
 alias cu='curl -#LO'
-alias fa='fd -HIL'
-alias fd='fd -c never'
 alias hh=htop
 alias hs='python3 -m http.server'
 alias lg='la -F | grep'
@@ -129,7 +127,7 @@ up () { uptime | xargs; }
 us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
 ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
-wa () { while eval $@; do sleep 60; echo; ec -; done; }
+wa () { while eval "$1"; do sleep ${2:-60}; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
 wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | ty | ma "$3" -E $ma; a=$b; done; }
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
