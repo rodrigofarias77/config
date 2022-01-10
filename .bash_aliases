@@ -18,7 +18,6 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 alias cn='cp --no-preserve=all'
 alias cu='curl -#LO'
 alias hh=htop
-alias hs='python3 -m http.server'
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
 alias oo='nu xdg-open'
@@ -64,6 +63,8 @@ et () { le $(ls /tmp/$1*.log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fu () { fusermount -u $2 /tmp/$1; }
 gr () { fd -t f ${3:-.} ${2:-.} -X grep -il "$1"; }
+h0 () { docker ps -f ancestor=nginx -q | xargs -r docker stop; }
+h1 () { docker run -d -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
 hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
