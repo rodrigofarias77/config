@@ -61,8 +61,9 @@ ef () { mq $2 && return; encfs -i ${3:-10} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 et () { le $(ls /tmp/$1*.log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
+fr () { find $2 -xdev -type f | grep -i "$1" | sed 's:^\./::' | sort; }
 fu () { fusermount -u $2 /tmp/$1; }
-gr () { fd -t f ${3:-.} ${2:-.} -X grep -il "$1"; }
+gr () { fr $2 $3 | xargs -d '\n' grep -il "$1"; }
 h0 () { docker ps -f ancestor=nginx -q | xargs -r docker stop; }
 h1 () { docker run -d -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
 h8 () { sudo sed -i "/$1$/s/.* /$(host $1 8.8.8.8 | sed -n 's/.*has address //p' | ty; read) /" /etc/hosts; }
@@ -126,7 +127,7 @@ tv () { sudo systemctl start vncserver@:1; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 ty () { tee /dev/tty; }
 up () { uptime | xargs; }
-us () { n2 xargs -d '\n' -r du -chsx | sort -h | tail -100; }
+us () { xargs -d '\n' -r du -chsx | sort -h; }
 ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval "$1"; do sleep ${2:-60}; echo; ec -; done; }
