@@ -40,7 +40,7 @@ bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done;
 ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
-cf () { fd -HI -d 1 -t d | while read i; do l=$(fd -t f . "$i" | wc -l); echo -e "$l\t$i"; done | sort -n; }
+cf () { find -maxdepth 1 -mindepth 1 -printf '%P\n' -type d | while read i; do l=$(find "$i" -type f | wc -l); echo -e "$l\t$i"; done | sort -n; }
 cm () { ca "$2 * $3 / $1"; }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
