@@ -17,6 +17,7 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 
 alias cn='cp --no-preserve=all'
 alias cu='curl -#LO'
+alias fd='fd -HIL -c never'
 alias hh=htop
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
