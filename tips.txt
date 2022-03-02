@@ -6,12 +6,11 @@ gtk-primary-button-warps-slider = false
 WordCharsExcl=:
 
 .mozilla/firefox/foo/prefs.js
-browser.backspace_action
-browser.link.open_newwindow.restriction
-gfx.webrender.force-disabled
-layers.acceleration.force-enabled
+browser.backspace_action = 0
+browser.link.open_newwindow.restriction = 0
 mousewheel.system_scroll_override.enabled
 toolkit.legacyUserProfileCustomizations.stylesheets
+webgl.force-enabled
 widget.content.gtk-theme-override
 widget.non-native-theme.enabled
 
@@ -62,7 +61,7 @@ PasswordAuthentication no
 foo ALL=(ALL) NOPASSWD: /bin/foo, /bin/bar
 
 /etc/sysctl.d/50-swappiness.conf
-vm.swappiness=10
+vm.swappiness = 10
 
 /etc/tmpfiles.d/tmp.conf
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
