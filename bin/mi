@@ -17,7 +17,7 @@ case $1 in
         firefox $u/$i ;;
     -i)
         a=$(date +%Y%m%d -d "${3:-today}")
-        b=$(printf '%.1f' $(curl -Ls $u/$2 | sed -nr 's/.*"([^ ]*) based on [^ ]* user ratings".*/\1/p'))
+        b=$(printf '%.1f' $(curl -Ls $u/$2 | sed -nr 's/.*ratingValue":([^}]*).*/\1/p'))
         echo -e "d=$a\ni=$2\nr=$b" >> $n ;;
     -s)
         for a in */$n; do . $a; echo "$d $r $(dirname $a)"; done | sort | cut -c -31 | column ;;
