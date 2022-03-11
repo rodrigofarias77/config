@@ -17,6 +17,8 @@ case $1 in
         vboxmanage startvm $2 --type headless ;;
     -i)
         vboxmanage showvminfo $2 | less ;;
+    -m)
+        vboxmanage modifyvm $2 --memory $3 ;;
     -n)
         vboxmanage snapshot $2 list ;;
     -l)
@@ -40,6 +42,7 @@ case $1 in
 -i vm: info
 -l: list
 -n vm: list snapshots
+-m vm mb: memory
 -p vm: poweroff
 -r: running
 -s vm: save
