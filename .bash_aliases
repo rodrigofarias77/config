@@ -37,6 +37,7 @@ ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(realpath $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -${1:-10} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
+br () { n1 gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gnome/SettingsDaemon/Power --method org.freedesktop.DBus.Properties.Set org.gnome.SettingsDaemon.Power.Screen Brightness "<int32 $1>"; }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
 ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
@@ -117,7 +118,6 @@ sg () { systemctl list-unit-files | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
 sr () { rs "$@" && rm -r "$1"; }
 ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
-sv () { n2 ssvncviewer -bgr233 -encodings zrle -x11cursor $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
