@@ -22,6 +22,6 @@ trap te err
 date
 echo $@
 
-borg create --compression=zstd --filter=AME --list --stats $r::$d $a
+borg create --compression=zstd --filter=ACME --list --stats $r::$d $a
 
 borg prune --keep-last=$k --list --stats $r
