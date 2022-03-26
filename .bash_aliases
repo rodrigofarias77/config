@@ -59,7 +59,7 @@ dp () { os; $s vi -d $2 ${1%/}/$2; }
 ds () { os; $s vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
-ef () { mq $2 && return; encfs -i ${3:-10} $(realpath $1) $(realpath $2); }
+ef () { mq $2 && return; encfs -i ${3:-5} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 et () { le $(ls /tmp/$1*.log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
@@ -78,7 +78,7 @@ ii () { curl -s https://ipinfo.io/$1 && echo; }
 il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
 jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
 jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
-kp () { nc -w 1 -z $1 $2; }
+kp () { nc -vz -w 1 $1 $2; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
 lh () { ll $1 | head -20; }
