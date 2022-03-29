@@ -118,6 +118,7 @@ sg () { systemctl list-unit-files | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
 sr () { rs "$@" && rm -r "$1"; }
 ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
+sv () { zenity --password | nd ssvncviewer -autopass $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
