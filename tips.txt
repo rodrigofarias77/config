@@ -3,7 +3,11 @@
 
 .config/gtk-3.0/settings.ini
 [Settings]
+gtk-font-name = Sans 10
 gtk-primary-button-warps-slider = false
+gtk-theme-name = Plata
+gtk-xft-hintstyle = hintfull
+gtk-xft-rgba = rgb
 
 .minttyrc
 WordCharsExcl=:
@@ -24,9 +28,6 @@ widget.non-native-theme.enabled
 ControlMaster auto
 ControlPath ~/.ssh/%r@%h:%p
 ServerAliveInterval 60
-
-.xinitrc
-exec openbox-session
 
 /etc/environment
 QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
