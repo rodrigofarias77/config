@@ -86,19 +86,19 @@ lo () { tr A-Z a-z; }
 lr () { ll -d $2**/*$1*; }
 lt () { ll $1 | tail -20; }
 lu () { la -p | us; }
-ma () { mail -s "$HOSTNAME: $1" ${@:2}; }
+ma () { mail -s "$HOSTNAME: $1" ${@:2} $ma; }
 mc () { mkdir -p "$1" && cd "$1"; }
 ml () { mv "$1" "${1,,}"; }
 mo () { mv "$@" $OLDPWD; }
 mq () { mountpoint -q $1 && echo "$1 already mounted"; }
-ms () { ma $1 $ma <<< "$? - $PWD"; }
+ms () { ma $1 <<< "$? - $PWD"; }
 n1 () { "$@" 1> /dev/null; }
 n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
 nn () { n2 sudo nethogs $(route -n | sed -n '3s/.* //p'); }
 nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
-on () { while eval $([ $4 ] || echo !) nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on $ma <<< $@; }
+on () { while eval $([ $4 ] || echo !) nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on <<< $@; }
 pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
 pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
@@ -134,7 +134,7 @@ ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i 
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval "$1"; do sleep ${2:-60}; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
-wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | ty | ma "$3" -E $ma; a=$b; done; }
+wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | ty | ma "$3" -E; a=$b; done; }
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
 wx () { while read i; do eval $@; done; }
 xg () { compgen -c | sort -u | grep $@; }
