@@ -1,0 +1,9 @@
+#!/bin/bash
+
+type chromium > /dev/null || exit 1
+
+[ -z "$1" ] && echo "Usage: $0 [-p] url" && exit 1
+
+[ "$1" == -p ] && p='--proxy-server=socks://localhost:1080' && shift
+
+chromium --dump-dom --headless $p "$1" 2> /dev/null
