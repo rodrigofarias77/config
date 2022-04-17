@@ -17,7 +17,7 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 
 alias cn='cp --no-preserve=all'
 alias cu='curl -#LO'
-alias fd='fd -HIL -c never'
+alias fd='fd -HIL -c never --xdev'
 alias hh=htop
 alias lg='la -F | grep'
 alias nh='unset HISTFILE'
@@ -63,9 +63,7 @@ ef () { mq $2 && return; encfs -i ${3:-5} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 et () { le $(ls /tmp/$1*.log | tail -1); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
-fr () { find $2 -xdev -type f | grep -i "$1" | sed 's:^\./::' | sort; }
 fu () { fusermount -u $2 /tmp/$1; }
-gr () { fr $2 $3 | xargs -d '\n' grep -il "$1"; }
 h0 () { docker ps -f ancestor=nginx -q | xargs -r docker stop; }
 h1 () { docker run -d -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
 h8 () { sudo sed -i "/$1$/s/.* /$(host $1 8.8.8.8 | sed -n 's/.*has address //p' | ty; read) /" /etc/hosts; }
