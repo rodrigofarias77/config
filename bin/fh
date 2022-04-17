@@ -1,6 +1,6 @@
 #!/bin/bash
 
-p=~/.mozilla/firefox/*.${1:-default-release}
+p=~/.mozilla/firefox/*.${1:-default-*}
 
 ry () { read -p "? " r; [ "$r" = y ]; }
 sd () { s="sqlite3 $p/${1}.sqlite"; $s "select * $2" && ry && $s "delete $2"; }
