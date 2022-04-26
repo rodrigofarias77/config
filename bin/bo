@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 [ -z "$4" ] && echo "Usage: $0 repo keep mail args" && exit 1
 
 r=$1
@@ -15,7 +13,9 @@ l=/tmp/$(basename $0)-$d.log
 
 tty -s && exec > >(tee $l) 2>&1 || exec > $l 2>&1
 
-te () { tail -100 $l | mail -s "$HOSTNAME: $0 failed" $m; }
+ma () { mail -s "$HOSTNAME: $0 $1" $m; }
+
+te () { [ $? == 2 ] && tail $l | ma error && exit 1 || grep ^C $l | ma warning; }
 
 trap te err
 
