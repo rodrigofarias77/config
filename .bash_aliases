@@ -39,7 +39,7 @@ bh () { ls ~/backup/bash/*.gz | tail -${1:-10} | xargs zcat | perl -0pe 's/#(\d+
 bi () { bind -f ~/.inputrc; }
 br () { n1 gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gnome/SettingsDaemon/Power --method org.freedesktop.DBus.Properties.Set org.gnome.SettingsDaemon.Power.Screen Brightness "<int32 $1>"; }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
-ca () { python3 -c "print($1)"; }
+ca () { python -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cf () { find -maxdepth 1 -mindepth 1 -printf '%P\n' -type d | while read i; do l=$(find "$i" -type f | wc -l); echo -e "$l\t$i"; done | sort -n; }
