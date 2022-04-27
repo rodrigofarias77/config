@@ -74,8 +74,8 @@ hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
 il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
-jg () { journalctl -n 5000 | grep -i "$@" | le +G; }
-jj () { journalctl -n 5000 | grep -Eiv "$jj" | le +G; }
+jg () { journalctl -n 10000 | grep -i "$@" | le +G; }
+jj () { journalctl -n 10000 | grep -Eiv "$jj" | le +G; }
 kp () { nc -vz -w 1 $1 $2; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
