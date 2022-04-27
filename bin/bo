@@ -15,7 +15,7 @@ tty -s && exec > >(tee $l) 2>&1 || exec > $l 2>&1
 
 ma () { mail -s "$HOSTNAME: $0 $1" $m; }
 
-te () { [ $? == 2 ] && tail $l | ma error && exit 1 || grep ^C $l | ma warning; }
+te () { [ $? == 2 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma warning; }
 
 trap te err
 
