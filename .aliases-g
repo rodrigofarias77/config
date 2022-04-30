@@ -12,7 +12,7 @@ alias go='git log --no-color --date-order --graph --format="%h%d %s (%ar)"'
 alias gp='git log -M -p --decorate'
 
 gb () { git branch -v --sort=authordate; }
-gs () { git stash && git fetch --depth=1 $1 && git reset --hard FETCH_HEAD && git stash pop; }
+gs () { git stash; git fetch --depth=1 $1; git reset --hard FETCH_HEAD; git stash pop -q; gg -uno; }
 ro () { cd $(git rev-parse --show-toplevel); }
 
 # vim: filetype=sh
