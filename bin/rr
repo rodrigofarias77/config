@@ -45,8 +45,6 @@ case "$1" in
     *)
         b=$t/$(date +%s)
 
-        trap "rm -v $b.*; exit 1" err int
-
         pwd > $b.idx
 
         [ $z ] && ! tar --help | grep -q zstd && z=--gzip
