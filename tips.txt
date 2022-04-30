@@ -86,6 +86,7 @@ ssh -O cancel -L ...
 ssh foo ffmpeg -f v4l2 -i /dev/video0 -r 5 -c:v libx264 -f matroska - | ...
 sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl mask systemd-journald-audit.socket
+truncate -s 0 foo; chattr +C foo; dd if=/dev/zero of=foo bs=1M status=progress || rm foo
 
 --
 mkinitcpio -P
