@@ -19,4 +19,4 @@ trap te err int
 
 date
 
-ffmpeg -hide_banner -nostats -i "$(youtube-dl -g $u)" -t $t -c copy $b-$s.mkv
+ffmpeg -hide_banner -nostats -i "$(yt-dlp -g $u)" -t $t -c copy $b-$s.mkv
