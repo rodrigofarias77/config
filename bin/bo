@@ -24,4 +24,10 @@ echo $@
 
 borg create --compression=zstd --filter=ACME --list --stats $r::$d $a
 
-borg prune --keep-last=$k --list --stats $r
+TIMEFORMAT=%0lR
+
+time borg prune --keep-last=$k --list --stats $r
+
+borg --help | grep -q compact || exit 0
+
+time borg compact -v --threshold=50 $r
