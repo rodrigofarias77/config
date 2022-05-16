@@ -29,6 +29,16 @@ ControlMaster auto
 ControlPath ~/.ssh/%r@%h:%p
 ServerAliveInterval 60
 
+/etc/email/email.conf
+MY_NAME = 'Foo'
+SENDMAIL_BIN = '/usr/lib/sendmail -t -i'
+SMTP_AUTH = 'LOGIN'
+SMTP_AUTH_PASS = 'bar'
+SMTP_AUTH_USER = 'foo'
+SMTP_PORT = '587'
+SMTP_SERVER = 'smtp.gmail.com'
+USE_TLS = 'true'
+
 /etc/environment
 QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 
