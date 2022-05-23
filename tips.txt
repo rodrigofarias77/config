@@ -43,8 +43,8 @@ USE_TLS = 'true'
 QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 
 /etc/fstab
-btrfs compress-force=zstd
-fuse.sshfs allow_other,delay_connect,reconnect
+btrfs compress-force=zstd,subvol=root
+fuse.sshfs allow_other,noauto,x-systemd.automount
 ntfs dmask=022,fmask=133,gid=1000,uid=1000
 
 /etc/fonts/local.conf
