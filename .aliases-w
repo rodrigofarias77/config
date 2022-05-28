@@ -17,7 +17,7 @@ ev () { l=$(wevtutil qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d
 ml () { mv "$1" "${1,,}"; }
 pk () { pp $1 | cut -c 27-34 | xargs -rp -n 1 taskkill /f /pid; }
 pp () { tasklist /v | grep -i $1 | cut -c 1-118,144-182; }
-up () { systeminfo | grep 'Boot Time' | tr -s ' '; }
+up () { td $(wmic os get lastbootuptime | sed -nr 's/^(20..)(..)(..)(..)(..)(..).*/\1-\2-\3T\4:\5:\6/p') today; }
 tb () { tp $1 > $cb; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt}; cat $cb > $t; vim $t; cat $t > $cb; rr -z $t; }
 
