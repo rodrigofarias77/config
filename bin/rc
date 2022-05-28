@@ -3,7 +3,7 @@
 [ -z "$2" ] && echo -e "[-m] [-p] file dest" && exit 1
 
 [ "$1" = -m ] && shift && c='mv -nv' || c='cp -anv'
-[ "$1" = -p ] && shift && f=$(readlink -f "$1" | tr / +) || f=$(basename "$1")
+[ "$1" = -p ] && shift && f=$(realpath "$1" | tr / +) || f=$(basename "$1")
 
 p=${2%/}/$f # dest/file
 
