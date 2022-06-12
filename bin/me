@@ -17,4 +17,6 @@ trap te err
 date
 echo $@
 
-bash -c "$c"
+TIMEFORMAT=%0lR
+
+time bash -c "$c"
