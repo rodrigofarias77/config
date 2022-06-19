@@ -21,5 +21,6 @@ pn () { sudo vi -d $1{,.pacnew}; }
 # comm -23 <(pacman -Qqe | sort) <(for i in base $(pacman -Qgq base-devel); do pactree -u $i; done | sort -u)
 # makepkg -cis # base-devel
 # pacman -S archlinux-keyring
+# paru -S --rebuild qt5-styleplugins
 
 # vim: filetype=sh
