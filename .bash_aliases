@@ -35,7 +35,7 @@ alias sudo='sudo '
 ap () { echo "$PATH" | grep -Fq "$1" || PATH="$1:$PATH"; }
 ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(realpath $1 | tr / +); }
-bh () { ls ~/backup/bash/*.gz | tail -${1:-10} | xargs zcat | perl -0pe 's/#(\d+)\n(.*)/\1 \2/g' | sort -u | le; }
+bh () { ls ~/backup/bash/*.gz | tail -25 | xargs zcat | tr '\n' '#' | grep -Eo '[0-9]{10}#[^#]+' | tr '#' ' ' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
 br () { n1 gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gnome/SettingsDaemon/Power --method org.freedesktop.DBus.Properties.Set org.gnome.SettingsDaemon.Power.Screen Brightness "<int32 $1>"; }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
