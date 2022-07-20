@@ -121,7 +121,7 @@ sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2") - $(date +%s -d "$1"))); echo "$(($d / 86400))d $(date -d @$d -u +%T)"; }
-tg () { grep -i "$1" $(ls -t ${4:-~/trash/}*.idx) | sed 's/idx:/tar /' | while read t a; do x=$(tar -OPx -f $t "$a" | head -${3:-100} | tr -d '\0'); grep -iq "$2" <<< $x && echo -e "$(ll $t) $a\n$x\n" && sleep 5; done; }
+tg () { ls -t ${4:-~/trash/}*.idx | xargs grep -i "$1" | sed 's/idx:/tar /' | while read t a; do x=$(tar -OPx -f $t "$a" | head -${3:-100} | tr -d '\0'); grep -iq "$2" <<< $x && echo -e "$(ll $t) $a\n$x\n" && sleep 5; done; }
 tt () { cd ~/tmp && ll; }
 tv () { sudo systemctl start vncserver@:1; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
