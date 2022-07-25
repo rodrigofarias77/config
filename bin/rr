@@ -27,8 +27,9 @@ case "$1" in
         for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +1M); do
             ls -hl $i
             head ${i%.*}.idx
-            rm -f ${i%.*}.*
-            echo
+
+            tty -s && read
+            rm $r ${i%.*}.*
         done ;;
     -r)
         for i in $(ls -t $t/*.idx); do
@@ -38,6 +39,7 @@ case "$1" in
 
                 echo $d
                 ls -hl $a
+
                 read -p '? ' r && [ "$r" = y ] && cd "$d" &&
                     $s tar -x -f $a -Pkv && rm -fv ${i%.*}.* && break
             fi
