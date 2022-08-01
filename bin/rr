@@ -5,13 +5,14 @@ set -o pipefail
 
 t=~/trash
 u=30
+y=365
 
 [ -z "$1" ] && echo -e "$t
 -t: trash\n
 -k: keep
 -s: sudo
 -w: 7d to purge
--z: zstd\n
+-z: compress\n
 -p: purge ${u}d
 -r regex: restore
 " && exit 1
@@ -20,16 +21,22 @@ u=30
 [ "$1" = -k ] && k=1 && shift
 [ "$1" = -s ] && s=sudo && shift
 [ "$1" = -w ] && w=1 && shift
-[ "$1" = -z ] && z=--zstd && shift
+[ "$1" = -z ] && z=--gzip && shift
+
+[ -e $t ] || mkdir -v $d
+
+ry () { read -p '? ' r; [ "$r" = y ]; }
 
 case "$1" in
     -p)
-        for i in $(find $t/*.tar -mtime +365 -or -mtime +$u -size +1M); do
+        for i in $(find $t/*.tar -mtime +$y -or -mtime +$u -size +1M \
+                | xargs -r ls -S); do
             ls -hl $i
             head ${i%.*}.idx
 
-            tty -s && read
-            rm $r ${i%.*}.*
+            tty -s && { ry || continue; }
+
+            rm -f ${i%.*}.*
         done ;;
     -r)
         for i in $(ls -t $t/*.idx); do
@@ -40,8 +47,13 @@ case "$1" in
                 echo $d
                 ls -hl $a
 
-                read -p '? ' r && [ "$r" = y ] && cd "$d" &&
-                    $s tar -x -f $a -Pkv && rm -fv ${i%.*}.* && break
+                ry || continue
+
+                cd "$d"
+                $s tar -x -f $a -Pkv
+                rm -f ${i%.*}.*
+
+                break
             fi
         done ;;
     *)
@@ -49,7 +61,7 @@ case "$1" in
 
         pwd > $b.idx
 
-        [ $z ] && ! tar --help | grep -q zstd && z=--gzip
+        [ $z ] && tar --help | grep -q zstd && z=--zstd
 
         $s tar -c -f $b.tar -Pv $z "$@" | tee -a $b.idx
 
