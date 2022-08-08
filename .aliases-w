@@ -13,11 +13,10 @@ ai () { oo $cs -M -P $1; }
 al () { cygcheck -c -d | grep $1; }
 ar () { oo $cs -M -x $1; }
 as () { cygcheck -p $1 | grep -i $1; }
-au () { [ $1 ] && cd ${cs%/*} && curl -#O https://cygwin.com/${cs##*/}; oo $cs -M; }
+au () { [ $1 ] && curl -# https://cygwin.com/${cs##*/} -o $cs; oo $cs -M; }
 cb () { [ -e "$1" ] && cat "$1" > $cb || cat $cb > "$1"; }
 dc () { vim -d "$1" <(cat $cb); }
 ev () { wevtutil qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d '\r' | tr '\n' @ | sed -r 's/@{2,}/\n/g' | sed -nr 's/.*  Source: ([^@]*)@  Date: ([^@]*).*  Level: ([^@]*).*  Description: @([^@]*).*/\2 - \3 - \1 - \4/p' | le; }
-ml () { mv "$1" "${1,,}"; }
 pk () { pp $1 | cut -c 27-34 | xargs -rp -n 1 taskkill /f /pid; }
 pp () { tasklist /v | grep -i $1 | cut -c 1-118,144-182; }
 tb () { tp $1 > $cb; }
