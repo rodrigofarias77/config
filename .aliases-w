@@ -3,7 +3,7 @@ uname -o | grep -q Cygwin || return
 export CYGWIN=winsymlinks:native
 
 cb=/dev/clipboard
-cs=~/cygwin/setup-$(uname -m).exe
+cs=~/cygwin/setup-$(uname -m | grep x86_64 || echo x86).exe
 
 alias oo=cygstart
 alias pw='cygpath -aw'
