@@ -12,7 +12,7 @@ z=https://www.gyan.dev/ffmpeg/builds/$n
 set -x
 
 cd $1
-curl -LOs -z $n $z
+curl -LORs -z $n $z
 md5sum -c $s && exit
 
 bsdtar -xvf $n

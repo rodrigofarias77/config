@@ -16,7 +16,7 @@ jj='cron|pam_unix|systemd'
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
 alias cn='cp --no-preserve=all'
-alias cu='curl -#LO'
+alias cu='curl -#LOR'
 alias fd='fd -HIL -c never --xdev'
 alias hh=htop
 alias lg='la -F | grep'
