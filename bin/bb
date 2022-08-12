@@ -2,16 +2,21 @@
 
 set -e
 
-[ -z "$1" ] && echo '-m: move
+[ -z "$1" ] && echo '-l: link
+-m: move
 -s: sudo
 -t .: .*' && exit 1
 
-[ "$1" = -m ] && c='mv -iv' && shift || c='cp -aiv'
+c='cp -aiv'
+
+[ "$1" = -l ] && c="$c -l" && shift
+
+[ "$1" = -m ] && c='mv -iv' && shift
 
 [ "$1" = -s ] && s=sudo && shift
 
 [ "$1" = -t ] && d=${3%$2*} && shift 2 || d=$1
 
-y=$(stat -c %Y "$1")
+e=$(date +%s -r "$1")
 
-$s $c "$1" "${d%/}-$y"
+$s $c "$1" "${d%/}-$e"
