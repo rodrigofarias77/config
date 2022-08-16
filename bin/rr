@@ -23,7 +23,7 @@ y=365
 [ "$1" = -w ] && w=1 && shift
 [ "$1" = -z ] && z=--gzip && shift
 
-[ -e $t ] || mkdir -v $d
+[ -e $t ] || mkdir -v $t
 
 ry () { read -p '? ' r; [ "$r" = y ]; }
 
