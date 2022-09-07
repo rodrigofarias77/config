@@ -4,20 +4,19 @@ set -e
 
 [ -z "$1" ] && echo "Usage: $0 dir" && exit 1
 
-d=ffmpeg
 n=ffmpeg-release-essentials.7z
-s=ffmpeg.md5
 z=https://www.gyan.dev/ffmpeg/builds/$n
 
-set -x
-
 cd $1
-curl -LORs -z $n $z
-md5sum -c $s && exit
 
-bsdtar -xvf $n
-rm -fr $d
-sleep 5
-mv ffmpeg-*-essentials_build $d
+[ ! -e $n ] && touch -d @0 $n
 
-md5sum $n > $s
+t=$(date +%s -r $n)
+
+curl -#LOR -z $n $z
+
+[ $(date +%s -r $n) -eq $t ] && exit
+
+bsdtar -xvf $n --strip-components 1
+
+chmod +x bin/*.exe
