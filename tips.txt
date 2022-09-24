@@ -12,22 +12,30 @@ gtk-xft-rgba = rgb
 .minttyrc
 WordCharsExcl=:
 
-.mozilla/firefox/foo/prefs.js
-browser.backspace_action = 0
-browser.link.open_newwindow.restriction = 0
-dom.ipc.processCount
-mousewheel.system_scroll_override.enabled
-toolkit.legacyUserProfileCustomizations.stylesheets
-widget.content.gtk-theme-override
-widget.non-native-theme.enabled
-
-.mozilla/firefox/foo/chrome/userChrome.css
-.tab-background { border-radius: 0px 0px !important; margin-bottom: 0px !important; }
-
 .ssh/config
 ControlMaster auto
 ControlPath ~/.ssh/%r@%h:%p
 ServerAliveInterval 60
+
+.waterfox/*/chrome/userChrome.css
+.tab-background { border-radius: 0px 0px !important; margin-bottom: 0px !important; }
+
+.waterfox/*/user.js
+user_pref("browser.backspace_action", 0);
+user_pref("browser.contentblocking.category", "strict");
+user_pref("browser.display.use_document_fonts", 0);
+user_pref("browser.link.open_newwindow.restriction", 0);
+user_pref("browser.newtabpage.enabled", false);
+user_pref("browser.preferences.defaultPerformanceSettings.enabled", false);
+user_pref("browser.startup.homepage", "about:blank");
+user_pref("browser.tabs.loadInBackground", false);
+user_pref("dom.ipc.processCount", 1);
+user_pref("fission.autostart", false);
+user_pref("gfx.webrender.force-disabled", true);
+user_pref("layers.acceleration.force-enabled", true);
+user_pref("mousewheel.system_scroll_override.enabled", false);
+user_pref("widget.content.gtk-theme-override", "Plata");
+user_pref("widget.non-native-theme.enabled", false);
 
 /etc/email/email.conf
 MY_NAME = 'Foo'
@@ -46,13 +54,6 @@ QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 btrfs compress-force=zstd,subvol=root
 fuse.sshfs allow_other,delay_connect,reconnect
 ntfs dmask=022,fmask=133,gid=1000,uid=1000
-
-/etc/fonts/local.conf
-<selectfont>
-<rejectfont>
-<glob>/usr/share/fonts/truetype/foo/*</glob>
-</rejectfont>
-</selectfont>
 
 /etc/lightdm/lightdm.conf
 [Seat:*]
@@ -84,6 +85,9 @@ ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin foo - $TERM
 
 /etc/tmpfiles.d/tmp.conf
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
+
+/usr/share/applications/budgie-control-center.desktop
+Icon=gnome-settings
 
 --
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
