@@ -60,7 +60,6 @@ dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i ${3:-5} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
-et () { le $(ls /tmp/$1*.log | tail -1 | ty); }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fu () { fusermount -u $2 /tmp/$1; }
 h0 () { docker ps -f ancestor=nginx -q | xargs -r docker stop; }
@@ -122,6 +121,7 @@ ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2") - $(date +%s -d "$1"))); echo "$(($d / 86400))d $(date -d @$d -u +%T)"; }
 tg () { ls -t ${4:-~/trash/}*.idx | xargs grep -i "$1" | sed 's/idx:/tar /' | while read t a; do x=$(tar -OPx -f $t "$a" | head -${3:-100} | tr -d '\0'); grep -iq "$2" <<< $x && echo -e "$(ll $t) $a\n$x\n" && sleep 5; done; }
+tl () { for i in $(ls -r /tmp/$1*.log); do le $i; read -p $i; done; }
 tt () { cd ~/tmp && ll; }
 tv () { sudo systemctl start vncserver@:1; }
 tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
