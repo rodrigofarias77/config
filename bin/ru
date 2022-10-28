@@ -1,17 +1,20 @@
 #!/bin/bash
 
+[ "$1" = -c ] && c=1 && shift
+[ "$1" = -o ] && o=$2 && shift 2
 [ "$1" = -s ] && s=1 && shift
 [ "$1" = -u ] && u=1 && shift
 
-[ -z "$1" ] && echo -e "Usage: $0 [-s] [-u] mail [xtra]
+[ -z "$1" ] && echo -e "Usage: $0 [-c] [-o option] [-s] [-u] mail
+  -c: clean cache
+  -o: upgrade option
   -s: sleep before
   -u: apply updates\n
 Notify software updates to MAIL.
 " && exit 1
 
 n=$(basename $0)
-m=$1
-x=${@:2}
+m=$@
 
 l=/tmp/$n.log
 
@@ -23,6 +26,8 @@ date
 uptime | sed -r "s/.*(up [^,]*).*/\u\1/"
 
 [ -x /usr/bin/dnf ] && d=dnf || d=yum
+
+[ $c ] && $d clean all
 
 $d check-update
 
@@ -36,7 +41,7 @@ ma () {
 trap "ma failed; exit 1" err
 
 if [ $e -eq 100 ]; then
-    [ $u ] && echo -e "\n--" && $d -y upgrade $x
+    [ $u ] && echo -e "\n--" && $d -y upgrade $o
 
     ma # ok
 fi
