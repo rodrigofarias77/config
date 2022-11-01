@@ -78,9 +78,6 @@ ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin foo - $TERM
 /etc/tmpfiles.d/tmp.conf
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 
-/usr/share/applications/budgie-control-center.desktop
-Icon=gnome-settings
-
 --
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
