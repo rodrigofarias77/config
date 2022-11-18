@@ -92,6 +92,7 @@ n1 () { "$@" 1> /dev/null; }
 n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
 nn () { n2 sudo nethogs $(route -n | sed -n '3s/.* //p'); }
+ns () { sudo nmap -sn $1 | grep -v ^Host | tr '\n' @ | sed 's/@MAC/ - MAC/g' | tr @ '\n'; }
 nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
 on () { while ! nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on <<< $@; }
