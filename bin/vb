@@ -4,9 +4,9 @@ case $1 in
     -0)
         $0 -r | grep . && read && $0 -r | cut -d ' ' -f 1 | xargs -n 1 $0 -s ;;
     -a)
-        vboxmanage guestproperty enumerate $2 | sed -nr 's/.*IP, value: ([^,]*).*/\1/p' ;;
+        vboxmanage guestproperty enumerate $2 | sed -nr "s:.*V4/IP *= '([^']*).*:\1:p" ;;
     -b)
-        vboxmanage controlvm $2 acpipowerbutton; sleep 60; $0 -r | grep -q $2 && $0 -p $2 ;;
+        vboxmanage controlvm $2 acpipowerbutton; sleep 15; $0 -r | grep -q $2 && $0 -p $2 ;;
     -d)
         $0 -n $2; read -p '> ' s; vboxmanage snapshot $2 delete $s ;;
     -e)
