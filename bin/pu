@@ -18,7 +18,7 @@ l=/tmp/$n.log
 
 exec > $l 2>&1
 
-send () { { grep -E '^(error|warning)' $l && echo; head -1000 $l; } | mail -s "$HOSTNAME: $n $1" $m; }
+send () { { grep -E '^(error|warning)' $l && echo; head -500 $l; } | mail -s "$HOSTNAME: $n $1" $m; }
 
 trap 'send failed' err
 
