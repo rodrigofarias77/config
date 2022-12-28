@@ -42,7 +42,7 @@ bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done;
 ca () { python -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
-cf () { find -maxdepth 1 -mindepth 1 -printf '%P\n' -type d | while read i; do l=$(find "$i" -type f | wc -l); echo -e "$l\t$i"; done | sort -n; }
+cf () { ld | while read i; do l=$(find "$i" -type f | wc -l); echo -e "$l\t$i"; done | sort -n; }
 cm () { ca "$2 * $3 / $1"; }
 co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
@@ -79,6 +79,7 @@ jj () { journalctl -n 10000 | grep -Eiv "$jj" | le +G; }
 kp () { nc -vz -w 1 $1 $2; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
+ld () { find -maxdepth 1 -mindepth 1 -type d -printf '%P\n' | sort; }
 lh () { ll $1 | head -20; }
 lo () { tr A-Z a-z; }
 lr () { ll -d $2**/*$1*; }
