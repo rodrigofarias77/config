@@ -64,7 +64,7 @@ ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.
 fu () { fusermount -u $2 /tmp/$1; }
 h0 () { docker ps -f ancestor=nginx -q | xargs -r docker stop; }
 h1 () { docker run -d -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
-h8 () { sudo sed -i "/$1$/s/.* /$(host $1 8.8.8.8 | sed -n 's/.*has address //p' | ty; read) /" /etc/hosts; }
+hc () { host $1 1.1.1.1 | sed -n 's/.*has address //p'; }
 hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
