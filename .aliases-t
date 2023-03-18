@@ -1,0 +1,8 @@
+alias tc='tremc -X'
+
+cr () { transmission-create $(curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt | grep . | grep -v itzmx | sed -n '1,10s/^/-t /p' | ty) $@; }
+t0 () { te --exit; }
+t1 () { transmission-daemon --log-level=error; }
+te () { transmission-remote "$@"; }
+
+# vim: filetype=sh
