@@ -6,4 +6,4 @@ type chromium > /dev/null || exit 1
 
 [ "$1" == -p ] && p='--proxy-server=socks://localhost:1080' && shift
 
-chromium --dump-dom --headless $p "$1" 2> /dev/null
+chromium --dump-dom --headless=new $p "$1" 2> /dev/null
