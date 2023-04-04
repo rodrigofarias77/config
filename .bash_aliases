@@ -53,9 +53,10 @@ cz () { sudo compsize -x $1 | grep ^TOTAL | co 2-4; }
 d1 () { sed -n 's/^< //p'; }
 d2 () { sed -n 's/^> //p'; }
 db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
+dc () { vi -d $1 <(cb -o); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
 dp () { os; $s vi -d $2 ${1%/}/$2; }
-ds () { os; $s vi -d $2 scp://$1/$2; }
+ds () { $s vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i ${3:-5} $(realpath $1) $(realpath $2); }
