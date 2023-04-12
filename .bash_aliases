@@ -132,7 +132,7 @@ tx () { bsdtar -tf "$1" | head; read; bsdtar -xvf "$1"; }
 ty () { tee /dev/tty; }
 up () { uptime | xargs; }
 us () { xargs -d '\n' -r du -chsx | sort -h; }
-ux () { find -name '*.*' -type f | sed -r 's/.*\.(.*)/\L\1/' | sort -u | while read i; do z=$(find -iname "*.$i" -type f -exec du -ch {} + | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; find -iname "*.$i" -type f -exec du -ch {} + | sort -h | tail; done; }
+ux () { fd -t f '\.' | sed 's/.*\.//' | sort -u | while read i; do z=$(fd -e $i -t f -X du -ch | tail -1 | cut -f 1); echo -e "$z\t$i"; done | sort -h; while read -p '> ' i; do [ $i ] || break; fd -e $i -t f -X du -ch | sort -h | tail; done; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt} && cb -o > $t && vi $t && cb < $t && rr -z $t; }
 wa () { while eval "$1"; do sleep ${2:-60}; echo; ec -; done; }
 wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
