@@ -1,6 +1,9 @@
 alias tc='tremc -X'
 
 cr () { transmission-create $(curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt | grep . | grep -v itzmx | sed -n '1,10s/^/-t /p' | ty) $@; }
+gr () { curl -s "https://torrentgalaxy.to/rss?magnet&user=$1" | xmllint --xpath '/rss/channel/item/link/text()' - | tac | tail -25 | hf; }
+gt () { while true; do date; l=$(gr $1); cx <<< $l; t=$(grep -i $2 <<< $l | tail -1); [ "$t" ] && te -a "$t" && ma $1 <<< $t && break; sleep 10m; done; }
+hf () { sed 's|&amp;|\&|g; s|%3A|:|g; s|%2F|/|g'; }
 t0 () { te --exit; }
 t1 () { transmission-daemon --log-level=error; }
 te () { transmission-remote "$@"; }
