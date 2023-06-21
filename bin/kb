@@ -1,5 +1,0 @@
-#!/bin/bash
-
-c=$(gsettings get org.gnome.desktop.input-sources current)
-
-[ "$c" == 'uint32 0' ] && echo US || echo BR
