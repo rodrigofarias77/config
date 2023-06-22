@@ -1,3 +1,0 @@
-#!/bin/bash
-
-xdotool search --desktop 0 --onlyvisible --class $1 windowactivate || gtk-launch $2
