@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import getopt, os, re, requests, sys
+from urllib.parse import unquote
 
 g = getopt.getopt(sys.argv[1:], 'adlpr:s:tuz:')
 o = dict(g[0])
@@ -98,7 +99,7 @@ if '-l' not in o:
 
     h = requests.get(b + l[i]['href'], headers=e, proxies=s).text
 
-    m = re.search('magnet:[^"]*', h).group()
+    m = unquote(re.search('magnet:[^"]*', h).group())
     print(m)
 
     if '-a' in o:
