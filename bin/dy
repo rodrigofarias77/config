@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+type curl host jq > /dev/null
+
+[ -z "$1" ] && echo "Usage: $0 host" && exit 1
+
+h=$1
+
+. ~/dy.rc
+
+[ "$p" ] || exit 1
+
+i=$(curl -s https://ipinfo.io | jq -r .ip)
+
+[ "$i" ] || exit 1
+
+host $h | grep -q "$i" || curl "https://api.dynu.com/nic/update?hostname=$h&myip=$i&password=$p"
