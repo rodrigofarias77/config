@@ -14,6 +14,6 @@ au () { sudo apt update; sudo apt full-upgrade $1; }
 ts () { sudo timeshift --create; sudo timeshift --list; read -p '> ' s; sudo timeshift --delete --snapshot $s; }
 
 # dpkg -i .deb; ai -f
-# for i in $(dpkg -l | tail -n +6 | co 2); do echo -e "$(apt-cache show $i | grep -m 1 ^Installed-Size | sed 's/.*: //')\t$i"; done
+# dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
 
 # vim: filetype=sh
