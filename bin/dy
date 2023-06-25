@@ -8,7 +8,7 @@ type curl host jq > /dev/null
 
 h=$1
 
-. ~/dy.rc
+. ~/.dy.rc
 
 [ "$p" ] || exit 1
 
