@@ -37,7 +37,7 @@ ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(realpath $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -25 | xargs zcat | tr '\n' '#' | grep -Eao '[0-9]{10}#[^#]+' | tr '#' ' ' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
-br () { n1 gdbus call --session --dest org.gnome.SettingsDaemon.Power --object-path /org/gnome/SettingsDaemon/Power --method org.freedesktop.DBus.Properties.Set org.gnome.SettingsDaemon.Power.Screen Brightness "<int32 $1>"; }
+br () { m=$(csd-backlight-helper -b raw --get-max-brightness); sudo csd-backlight-helper -b raw --set-brightness $(($m * $1 / 100)); }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
 ca () { python -c "print($1)"; }
 cb () { xsel -b $@; }
