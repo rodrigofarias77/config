@@ -17,17 +17,16 @@ ControlMaster auto
 ControlPath ~/.ssh/%r@%h:%p
 ServerAliveInterval 60
 
+.mozilla/firefox/*/chrome/userChrome.css
+.tab-background { border-radius: 0px 0px !important; margin-bottom: 0px !important; }
+
 .mozilla/firefox/*/user.js
 user_pref("browser.backspace_action", 0);
-user_pref("browser.contentblocking.category", "strict");
-user_pref("browser.display.use_document_fonts", 0);
 user_pref("browser.link.open_newwindow.restriction", 0);
-user_pref("browser.newtabpage.enabled", false);
-user_pref("browser.startup.homepage", "about:blank");
-user_pref("browser.tabs.loadInBackground", false);
 user_pref("dom.ipc.processCount", 1);
 user_pref("fission.autostart", false);
 user_pref("mousewheel.system_scroll_override.enabled", false);
+user_pref("webgl.force-enabled", true);
 
 /etc/email/email.conf
 MY_NAME = 'Foo'
