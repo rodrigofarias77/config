@@ -37,7 +37,7 @@ ba () { os; $s rc -p $1 ~/backup; }
 bd () { os; $s vi -d $1 ~/backup/$(realpath $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -25 | xargs zcat | tr '\n' '#' | grep -Eao '[0-9]{10}#[^#]+' | tr '#' ' ' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
-br () { m=$(csd-backlight-helper -b raw --get-max-brightness); sudo csd-backlight-helper -b raw --set-brightness $(($m * $1 / 100)); }
+br () { c='csd-backlight-helper -b raw'; b=$($c --get-brightness); m=$($c --get-max-brightness); [ $1 ] && sudo $c --set-brightness $(($m * $1 / 100)) || echo $((($b + 1) * 100 / $m)); }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
 ca () { python -c "print($1)"; }
 cb () { xsel -b $@; }
