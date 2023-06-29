@@ -16,4 +16,4 @@ i=$(curl -s https://ipinfo.io | jq -r .ip)
 
 [ "$i" ] || exit 1
 
-host $h | grep -q "$i" || curl "https://api.dynu.com/nic/update?hostname=$h&myip=$i&password=$p"
+host $h | grep -q "$i" || curl -s "https://api.dynu.com/nic/update?hostname=$h&myip=$i&password=$p"
