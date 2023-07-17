@@ -39,7 +39,7 @@ bh () { ls ~/backup/bash/*.gz | tail -25 | xargs zcat | tr '\n' '#' | grep -Eao 
 bi () { bind -f ~/.inputrc; }
 br () { c='csd-backlight-helper -b raw'; b=$($c --get-brightness); m=$($c --get-max-brightness); [ $1 ] && sudo $c --set-brightness $(($m * $1 / 100)) || echo $((($b + 1) * 100 / $m)); }
 bx () { for i in $(borg list --short $1 | tac); do borg info $1::$i; read; done; }
-ca () { python -c "print($1)"; }
+ca () { python3 -c "print($1)"; }
 cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cf () { ld | while read i; do l=$(find "$i" -type f | wc -l); echo -e "$l\t$i"; done | sort -n; }
