@@ -4,6 +4,7 @@ set -e
 
 [ -z $3 ] && echo 'vm repo keep [mail]' && exit 1
 
+s=$0
 v=$1
 r=$2
 k=$3
@@ -11,9 +12,11 @@ m=$4
 
 d=$(date +%s)
 
-l=/tmp/$(basename $0)-$d.log
+l=/tmp/$(basename $s)-$d.log
 
-te () { mail -s "$HOSTNAME: $0 failed" $m < $l; }
+ma () { mail -s "$HOSTNAME: $s $1" $m; }
+
+te () { [ $? -gt 1 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma warning; }
 
 [ $m ] && exec > $l 2>&1 && trap te err
 
@@ -24,7 +27,7 @@ vboxmanage snapshot $v take $d
 
 cd $(vboxmanage showvminfo $v | sed -nr "s:^Config.* (.*)/$v/.*:\1:p")
 
-borg create --compression=zstd --filter=AME --list --stats $r::$d $v
+borg create --compression=zstd --filter=ACME --list --stats $r::$d $v
 
 vboxmanage snapshot $v delete $d
 
