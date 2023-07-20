@@ -2,6 +2,7 @@
 
 [ -z "$4" ] && echo "Usage: $0 repo keep mail args" && exit 1
 
+s=$0
 r=$1
 k=$2
 m=$3
@@ -9,13 +10,13 @@ a=${@:4}
 
 d=$(date +%s)
 
-l=/tmp/$(basename $0)-$d.log
+l=/tmp/$(basename $s)-$d.log
 
 tty -s && exec > >(tee $l) 2>&1 || exec > $l 2>&1
 
-ma () { mail -s "$HOSTNAME: $0 $1" $m; }
+ma () { mail -s "$HOSTNAME: $s $1" $m; }
 
-te () { [ $? == 2 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma warning; }
+te () { [ $? -gt 1 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma warning; }
 
 trap te err
 
