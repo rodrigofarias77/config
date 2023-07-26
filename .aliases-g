@@ -12,7 +12,7 @@ alias go='git log --no-color --date-order --graph --format="%h%d %s (%ar)"'
 alias gp='git log -M -p --decorate'
 
 cl () { git commit -m $(date +%s); gp; }
-gb () { git branch -v --sort=authordate; }
+gb () { git branch -v --sort=authordate $1; }
 gs () { $(git rev-parse --is-shallow-repository) || return; git stash; git fetch --depth=1 $1; git reset --hard FETCH_HEAD; git stash pop -q; gd HEAD@{1}..; gg -uno; }
 rh () { git reset HEAD^; }
 ro () { cd $(git rev-parse --show-toplevel); }
