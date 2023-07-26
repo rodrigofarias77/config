@@ -9,7 +9,7 @@ u="https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=meta
 
 [ -s $l ] && d=$(date -d "$(tail -1 $l | cut -d , -f 3)" -u +%s) || d=0
 
-[ $(($(date -u +%s) - $d)) -gt 3900 -a -z "$(pgrep -f cinnamon-screensaver)" ] && curl -s $u | tail -1 >> $l
+[ $(($(date -u +%s) - $d)) -gt 3900 ] && curl -s $u | tail -1 >> $l
 
 [ ! -s $l ] && echo ! && exit 1
 
