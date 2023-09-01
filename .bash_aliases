@@ -100,14 +100,14 @@ ns () { sudo nmap -sn $1 | grep -v ^Host | tr '\n' @ | sed 's/@MAC/ - MAC/g' | t
 nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
 on () { while ! nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on <<< $@; }
-pk () { pp $1 | tail -1 | co 2 | xargs -r kill --verbose $2; sleep 1; pp $1; }
+pk () { k=/bin/kill; $k --help | grep -q '\--verbose' && k="$k --verbose"; pp $1 | ty | tail -1 | co 2 | xargs -r $k $2; sleep 1; pp $1; }
 pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
 rd () { nc -w 5 -z $1 3389 && n2 zenity --password | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 /wm-class:ssvnc ${@:3}; }
 re () { t=/tmp/trash; ef ~/.trash $t && rr -t $t "$@"; }
 rn () { mv "$2" "$1.${2##*.}"; }
-rp () { c=$(type -p perl-rename prename); $c -n "$@"; ry && $c -iv "$@"; }
+rp () { c=$(type -p perl-rename prename); $c --help | grep -q '\--interactive' && c="$c -i"; $c -n "$@"; ry && $c -v "$@"; }
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
 s0 () { docker ps -f ancestor=atmoz/sftp -q | xargs -r docker stop; }
