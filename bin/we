@@ -5,12 +5,12 @@
 cd /tmp
 
 l=/tmp/$1.txt
-u="https://aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=csv&hoursBeforeNow=2&mostRecent=true&stationString=$1"
+u="https://aviationweather.gov/api/data/metar?ids=${1^^}"
 
-[ -s $l ] && d=$(date -d "$(tail -1 $l | cut -d , -f 3)" -u +%s) || d=0
+[ -s $l ] && d=$(date -r $l +%s) || d=0
 
-[ $(($(date -u +%s) - $d)) -gt 3900 ] && curl -s $u | tail -1 >> $l
+[ $(($(date -u +%s) - $d)) -gt 3900 ] && curl -s $u >> $l
 
 [ ! -s $l ] && echo ! && exit 1
 
-tail -1 $l | cut -d , -f 1 | perl -pe 's:.*KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)/.*:\1 \2C:'
+tail -1 $l | perl -pe 's:.*KT.*? ([-+]?[A-Z]{2,}).*? (M?[0-9]+)/.*:\1 \2C:'
