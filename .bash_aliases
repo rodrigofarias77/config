@@ -141,6 +141,7 @@ wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(
 wp () { while pgrep -a $1; do sleep 5m; date; done; }
 wx () { while read i; do eval $@; done; }
 xg () { compgen -c | sort -u | grep $@; }
+xt () { sleep 5; xdotool type "$*"; }
 xv () { x11vnc -q -display :0 -usepw $@; }
 
 for i in ~/.aliases-*; do . $i; done
