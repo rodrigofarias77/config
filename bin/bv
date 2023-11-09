@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -e
-
-[ -z $3 ] && echo 'vm repo keep [mail]' && exit 1
+[ -z $4 ] && echo 'vm repo keep mail' && exit 1
 
 s=$0
 v=$1
@@ -14,11 +12,13 @@ d=$(date +%s)
 
 l=/tmp/$(basename $s)-$d.log
 
+exec > $l 2>&1
+
 ma () { mail -s "$HOSTNAME: $s $1" $m; }
 
 te () { [ $? -gt 1 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma warning; }
 
-[ $m ] && exec > $l 2>&1 && trap te err
+trap te err
 
 date
 echo $@
