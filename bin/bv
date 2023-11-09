@@ -32,3 +32,9 @@ borg create --compression=zstd --filter=ACME --list --stats $r::$d $v
 vboxmanage snapshot $v delete $d
 
 borg prune --keep-last=$k --list --stats $r
+
+borg --help | grep -q compact || exit 0
+
+TIMEFORMAT=%0lR
+
+time borg compact -v --threshold=50 $r
