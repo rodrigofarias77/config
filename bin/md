@@ -1,0 +1,18 @@
+#!/bin/bash
+
+[ -z "$3" ] && echo "Usage: $0 mail name command" && exit 1
+
+m=$1
+n=$2
+c=$3
+
+a=/tmp/$n-a.log
+b=/tmp/$n-b.log
+
+bash -c "$c" > $b
+
+[ ! -e $a ] && cp $b $a
+
+diff $a $b | sed -n 's/^> //p' | mail -E -s "$HOSTNAME: $n" $m
+
+mv $b $a
