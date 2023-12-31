@@ -81,6 +81,7 @@ ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin foo - $TERM
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 
 --
+cat /proc/net/xt_recent/knock
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
