@@ -6,7 +6,7 @@ case $1 in
     -a)
         vboxmanage guestproperty enumerate $2 | sed -nr "s:.*V4/IP *= '([^']*).*:\1:p" ;;
     -b)
-        vboxmanage controlvm $2 acpipowerbutton; sleep 15; $0 -r | grep -q $2 && $0 -p $2 ;;
+        vboxmanage controlvm $2 acpipowerbutton; sleep 15; $0 -r | grep -q $2 && $0 -p $2; exit 0 ;;
     -d)
         $0 -n $2; read -p '> ' s; vboxmanage snapshot $2 delete $s ;;
     -e)
