@@ -108,7 +108,7 @@ pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d 
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
 pt () { mpv --no-audio --really-quiet --vo=tct "$@"; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
-rd () { nc -w 5 -z $1 3389 && systemd-ask-password | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 /wm-class:ssvnc ${@:3}; }
+rd () { nc -w 5 -z $1 3389 && sp | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 /wm-class:ssvnc ${@:3}; }
 re () { t=/tmp/trash; ef ~/.trash $t && rr -t $t "$@"; }
 rn () { mv "$2" "$1.${2##*.}"; }
 rp () { c=$(type -p perl-rename prename); $c --help | grep -q '\--interactive' && c="$c -i"; $c -n "$@"; ry && $c -v "$@"; }
@@ -122,8 +122,9 @@ sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl list-unit-files | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; ms rsync; }
+sp () { systemd-ask-password --emoji=no; }
 ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
-sv () { systemd-ask-password | nd ssvncviewer -autopass $@; }
+sv () { sp | nd ssvncviewer -autopass $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
