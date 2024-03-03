@@ -10,8 +10,10 @@ HISTTIMEFORMAT='%F %T '
 PROMPT_COMMAND='history -a'
 PS1='\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ '
 
+ad='--af=dynaudnorm'
 dt=%y%m%d-%H%M%S
 jj='cron|pam_unix|systemd'
+sp=--save-position-on-quit
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
 
