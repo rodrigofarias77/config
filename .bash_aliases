@@ -126,7 +126,7 @@ sg () { systemctl list-unit-files | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && t=$(date +%s) && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; [ $(($(date +%s) - $t)) -gt 60 ] && ms rsync; }
 sp () { systemd-ask-password --emoji=no; }
 ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
-sv () { sp | nd ssvncviewer -autopass $@; }
+sv () { sp | nd ssvncviewer -autopass -bgr233 -encodings zrle $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
 tb () { tp $1 | cb; }
@@ -149,7 +149,7 @@ wx () { while read i; do eval $@; done; }
 xd () { export DISPLAY=$1; }
 xg () { compgen -c | sort -u | grep $@; }
 xt () { sleep 5; xdotool type "$*"; }
-xv () { x11vnc -q -display :0 -usepw $@; }
+xv () { x11vnc -o /tmp/x11vnc.log -display :0 -usepw -wait 100 $@; }
 yt () { l=/tmp/mpv-$(date +%s).log; mpv --quiet --ytdl-format=${2:-18} $ad $1 &> $l & disown; echo $l; sleep 5; le $l; }
 
 for i in ~/.aliases-*; do . $i; done
