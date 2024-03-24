@@ -11,8 +11,7 @@ y=365
 -t: trash\n
 -k: keep
 -s: sudo
--w: 7d to purge
--z: compress\n
+-w: 7d to purge\n
 -p: purge ${u}d
 -r regex: restore
 " && exit 1
@@ -21,7 +20,6 @@ y=365
 [ "$1" = -k ] && k=1 && shift
 [ "$1" = -s ] && s=sudo && shift
 [ "$1" = -w ] && w=1 && shift
-[ "$1" = -z ] && z=--gzip && shift
 
 [ -e $t ] || mkdir -v $t
 
@@ -60,9 +58,7 @@ case "$1" in
 
         pwd > $b.idx
 
-        [ $z ] && tar --help | grep -q zstd && z=--zstd
-
-        $s tar -c -f $b.tar -Pv $z "$@" | tee -a $b.idx
+        $s tar -c -f $b.tar -Pv --zstd "$@" | tee -a $b.idx
 
         [ $w ] && $s touch -d "-$(($u - 7)) days" $b.*
 
