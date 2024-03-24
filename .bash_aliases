@@ -12,7 +12,7 @@ PS1='\[\e]0;\u@\h:\w\a\]\[\e[1;37m\]\u@\h:\w\[\e[0m\]\$ '
 
 ad='--af=dynaudnorm'
 dt=%y%m%d-%H%M%S
-jj='cron|pam_unix|systemd'
+jj='cron'
 sp=--save-position-on-quit
 
 alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -N --color=auto' mv='mv -iv' rm='rm -Iv'
@@ -75,8 +75,8 @@ hu () { sudo sed -i "/$1$/s/^[^ ]*/$2/" /etc/hosts; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
 il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
-jg () { journalctl -n 10000 | grep -i "$@" | le +G; }
-jj () { journalctl -n 10000 | grep -Eiv "$jj" | le +G; }
+jg () { journalctl -b $2 | grep -i "$1" | le +G; }
+jj () { journalctl -b $1 | grep -Eiv "$jj" | le +G; }
 kp () { nc -vz -w 1 $1 $2; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
