@@ -27,7 +27,7 @@ vboxmanage snapshot $v take $d
 
 cd $(vboxmanage showvminfo $v | sed -nr "s:^Config.* (.*)/$v/.*:\1:p")
 
-borg create --compression=zstd --filter=ACME --list --stats $r::$d $v
+borg create --compression=zstd --exclude=*.sav --filter=ACME --list --stats $r::$d $v
 
 vboxmanage snapshot $v delete $d
 
