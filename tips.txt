@@ -83,6 +83,8 @@ D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 --
 cat /proc/net/xt_recent/knock
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
+dd if=/dev/zero of=foo bs=10M count=100 oflag=direct status=progress
+dd if=foo of=/dev/null bs=10M iflag=direct status=progress
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
