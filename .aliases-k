@@ -4,7 +4,7 @@ k3 () { [ $1 ] && export KUBECONFIG=/etc/rancher/k3s/k3s.yaml || unset KUBECONFI
 ka () { kubectl -n $1 get all | tac; }
 kd () { kubectl -n $1 get secret $2 -o json | jq -r '.data[]' | base64 -d; echo; }
 ke () { kubectl get events -A ${1:---sort-by=.lastTimestamp}; }
-ko () { kubectl get pods -A --sort-by=.metadata.creationTimestamp | grep -v ^kube-system; }
+ko () { kubectl get pods -A --sort-by=.metadata.creationTimestamp | grep -Ev '^kube-system|Completed'; }
 ks () { n=$1 s=$2; f=/tmp/$(date +%s); kd $n $s > $f; vn $f; ry && kubectl -n $n delete secrets $s && kubectl -n $n create secret generic $s --from-literal=${3:-$s}="$(tr -d '\n' < $f)"; rm $f; }
 kt () { kubectl top pod -A --sort-by=memory | tac; }
 po () { kubectl -n $1 get pod -l app=$2 -o name; }
