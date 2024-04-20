@@ -6,7 +6,7 @@ set linebreak
 set mouse=
 set nojoinspaces
 set nostartofline
-set showbreak=...\ 
+set showbreak=>\ 
 set title
 set wildignorecase
 
