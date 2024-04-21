@@ -4,7 +4,7 @@ fa='-c:a aac -b:a 128k'
 fv='-c:v libx264 -level 4.1 -preset veryslow'
 
 bp () { mediainfo "$1" | sed -n "s/^Bits.*: //p"; }
-f4 () { ft $1.{mp4,ts,txt} -r 25 -s 854x480 $fv $fa; ms ffmpeg; }
+f4 () { ft ${1%.*}.{mp4,ts,txt} -r 25 -s 854x480 $fv $fa; ms ffmpeg; }
 fb () { fs "$1"; echo; ec -; r=23; while true; do o=ff-$r.mp4; fm -n -i ff-fs.mp4 $2 $fv -crf $r $o || break; echo; ec -; b=$(ca "int(round($(bp $o)*1000))"); [ $b -gt 55 ] && let r++ || let r--; [ $r -gt 27 -o $r -lt 19 ] && break; done; for i in ff-*; do echo "$i $(bp $i)"; done | ma ffmpeg $ma; read -p '? ' r; fm -i "$1" $3 $2 $fv -crf $r -ac 2 $fa -sn -map_metadata -1 ff.mp4; ms ffmpeg; }
 fk () { fm -i $1 -c copy ${1%.*}.mkv; }
 fm () { ffmpeg -hide_banner "$@"; }
