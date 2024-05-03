@@ -4,6 +4,7 @@ cr () { transmission-create $(curl -s https://raw.githubusercontent.com/ngosang/
 gr () { curl -s "https://torrentgalaxy.to/rss?magnet&user=$1" | xmllint --xpath '/rss/channel/item/link/text()' - | tac | tail -25 | hf; }
 gt () { while true; do date; l=$(gr $1); cx <<< $l; t=$(grep -i $2 <<< $l | tail -1); [ "$t" ] && te -a "$t" && ma $1 <<< $t && break; sleep 15m; done; }
 hf () { sed 's|&amp;|\&|g; s|%3A|:|g; s|%2F|/|g'; }
+mm () { mediainfo "$1" | tr '\n' '#' | sed 's/Complete name[^#]*#//; s/ *:/:/g; s/#*$//' | tr '#' '\n'; }
 t0 () { te --exit; }
 t1 () { transmission-daemon --log-level=error; }
 te () { transmission-remote "$@"; }
