@@ -1,5 +1,5 @@
 [core]
-	pager = /usr/share/git/diff-highlight/diff-highlight | less -Si
+	pager = less -Si
 [user]
 	name = Rodrigo Farias
 	email = rodrigofarias77@gmail.com
