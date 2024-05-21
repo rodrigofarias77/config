@@ -1,5 +1,3 @@
-" set clipboard+=unnamedplus
-" set formatoptions-=tc
 set guicursor+=a:blinkon1
 set ignorecase
 set linebreak
