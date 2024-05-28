@@ -15,7 +15,7 @@ te () { tail -100 $l | mail -s "$HOSTNAME: $t failed" $m; exit 1; }
 trap te err
 
 date
-echo $@
+echo "$@"
 
 TIMEFORMAT=%0lR
 
