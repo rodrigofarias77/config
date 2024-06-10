@@ -86,7 +86,7 @@ lo () { tr A-Z a-z; }
 lr () { ll -d $2**/*$1*; }
 lt () { ll $1 | tail -20; }
 lu () { la -p | us; }
-m1 () { while true; do date; xdotool mousemove_relative 50 0 sleep .1 mousemove_relative -- -50 0; sleep 10m; done; }
+m1 () { while true; do date; xdotool mousemove_relative 50 0 sleep .1 mousemove_relative -- -50 0; sleep 5m; done; }
 ma () { mail -s "$HOSTNAME: $1" ${@:2} $ma; }
 mc () { mkdir -p "$1" && cd "$1"; }
 ml () { mv "$1" "${1,,}"; }
