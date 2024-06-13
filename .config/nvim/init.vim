@@ -5,6 +5,7 @@ set mouse=
 set nojoinspaces
 set nostartofline
 set showbreak=>\ 
+set notermguicolors
 set title
 set wildignorecase
 
