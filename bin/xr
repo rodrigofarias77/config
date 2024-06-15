@@ -2,19 +2,17 @@
 
 set -e
 
-[ -z $2 ] && echo x y && exit 1
+[ -z $3 ] && echo x y out && exit 1
 
-c=($(cvt $1 $2 | sed -n "s/^Modeline //p" | xargs))
+c=($(cvt $1 $2 | tail -1 | xargs))
 
-m=${c[0]}
-
-s=$(xrandr | sed -n "s/ connected primary.*//p")
+m=${c[1]}
 
 set -x
 
-xrandr --newmode $m ${c[@]:1}
-xrandr --addmode $s $m
+xrandr --newmode $m ${c[@]:2}
+xrandr --addmode $3 $m
 
 sleep 1
 
-xrandr --output $s --mode $m
+xrandr --output $3 --mode $m
