@@ -109,7 +109,7 @@ pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d 
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
 pt () { mpv --no-audio --really-quiet --vo=tct "$@"; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
-rd () { nc -w 5 -z $1 3389 && sp | nd xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution /from-stdin -grab-keyboard /u:$2 /v:$1 /wm-class:ssvnc ${@:3}; }
+rd () { nc -w 5 -z $1 3389 || return; read -s p; xfreerdp +auto-reconnect /cert:ignore /dynamic-resolution -grab-keyboard /p:"$p" /u:$2 /v:$1 /wm-class:ssvnc ${@:3} &>> /tmp/xfreerdp.log & disown; unset p; }
 re () { t=/tmp/trash; ef ~/.trash $t && rr -t $t "$@"; }
 rn () { mv "$2" "$1.${2##*.}"; }
 rp () { c=$(type -p perl-rename prename); $c --help | grep -q '\--interactive' && c="$c -i"; $c -n "$@"; ry && $c -v "$@"; }
