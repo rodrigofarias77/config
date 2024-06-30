@@ -1,3 +1,5 @@
+silent! colorscheme vim
+
 set guicursor+=a:blinkon1
 set ignorecase
 set linebreak
