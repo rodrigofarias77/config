@@ -92,7 +92,7 @@ groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
 net use z: '\\foo\bar' /savecred # net use z: /delete
 powercfg -h off
-powershell 'get-appxpackage foo | remove-appxpackage'
+powershell 'get-appxpackage foo -allusers | remove-appxpackage -allusers'
 powershell 'get-appxprovisionedpackage -online | ft'
 powershell 'remove-appxprovisionedpackage -packagename foo -online'
 reg add 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation' /v RealTimeIsUniversal /t REG_DWORD /d 1
