@@ -7,16 +7,14 @@ t=$2
 b=$3
 m=$4
 
-s=$(date +%s)
-
-l=/tmp/$(basename $0)-$s.log
+l=/tmp/yl-$(date +%s).log
 
 exec > $l 2>&1
 
-te () { tail $l | mail -s "$HOSTNAME: $0" $m; exit 1; }
+te () { tail $l | mail -s "$HOSTNAME: $0" $m; }
 
 trap te err int
 
 date
 
-ffmpeg -hide_banner -nostats -i "$(yt-dlp -g $u)" -t $t -c copy $b-$s.mkv
+for i in {0..9}; do ffmpeg -hide_banner -nostats -i "$(yt-dlp -f b -g $u)" -t $t -c copy $b-$(date +%s).mkv; sleep 60; done
