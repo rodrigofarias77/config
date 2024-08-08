@@ -1,13 +1,15 @@
 #!/bin/bash
 
-[ -z "$4" ] && echo "Usage: $0 url time base mail" && exit 1
+[ -z "$4" ] && echo "Usage: $0 live secs base mail" && exit 1
 
 u=$1
-t=$2
+s=$2
 b=$3
 m=$4
 
-l=/tmp/yl-$(date +%s).log
+d=$(date +%s)
+
+l=/tmp/yl-$d.log
 
 exec > $l 2>&1
 
@@ -17,4 +19,14 @@ trap te err int
 
 date
 
-for i in {0..9}; do ffmpeg -hide_banner -nostats -i "$(yt-dlp -f b -g $u)" -t $t -c copy $b-$(date +%s).mkv; sleep 60; done
+e=$(($d + $s))
+
+while true; do
+    [ $d -ge $e ] && break
+
+    ffmpeg -hide_banner -nostats -i "$(yt-dlp -f b -g $u)" -t $(($e - $d)) -c copy $b-$d.mkv
+
+    sleep 60
+
+    d=$(date +%s)
+done
