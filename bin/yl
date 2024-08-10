@@ -21,7 +21,7 @@ date
 
 e=$(($d + $s))
 
-while true; do
+for i in {0..9}; do
     [ $d -ge $e ] && break
 
     ffmpeg -hide_banner -nostats -i "$(yt-dlp -f b -g $u)" -t $(($e - $d)) -c copy $b-$d.mkv
