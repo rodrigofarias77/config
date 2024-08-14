@@ -102,7 +102,7 @@ ns () { sudo nmap -sn $1 | grep -v ^Host | tr '\n' @ | sed 's/@MAC/ - MAC/g' | t
 nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
 on () { while ! nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on <<< $@; }
-pb () { u=$(cb -o | sed 's/?.*//'); echo "$u"; yt "--loop $u" best; }
+pb () { u=$(cb -o | sed 's/?.*//'); echo "$u"; yt $u best; }
 pc () { sed -nr "s/^$1:([^ ]*).*/\1/p" $2 | cb; }
 pk () { k=/bin/kill; $k --help | grep -q '\--verbose' && k="$k --verbose"; pp $1 | ty | tail -1 | co 2 | xargs -r $k $2; sleep 1; pp $1; }
 pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
@@ -149,7 +149,8 @@ xd () { export DISPLAY=$1; }
 xg () { compgen -c | sort -u | grep $@; }
 xt () { sleep 5; xdotool type "$*"; }
 xv () { x11vnc -o /tmp/x11vnc.log -display :0 -usepw -wait 100 $@; }
-yt () { l=/tmp/mpv-$(date +%s).log; mpv --quiet --ytdl-format=${2:-18} $ad $1 &> $l & disown; echo $l; sleep 5; le $l; }
+yp () { y=https://www.youtube.com; [ $2 ] && a= b=cat || a=$sp b=tac; curl -s $y/$1 | grep -o '/watch?v=[^"\]*' | sed "s|^|$y|" | $b | yt --playlist=- 18 $a; }
+yt () { l=/tmp/mpv-$(date +%s).log; mpv --loop --quiet --ytdl-format=${2:-18} $ad ${@:3} $1 &> $l & disown; echo $l; sleep 5; le $l; }
 
 for i in ~/.aliases-*; do . $i; done
 
