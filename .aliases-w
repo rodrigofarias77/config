@@ -1,5 +1,7 @@
 uname -o | grep -q Cygwin || return
 
+shopt -s extglob
+
 export CYGWIN=winsymlinks:native
 
 cb=/dev/clipboard
