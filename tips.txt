@@ -104,6 +104,7 @@ truncate -s 0 foo; chattr +C foo; dd if=/dev/zero of=foo bs=1M status=progress |
 
 --
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
+mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
 powercfg -h off
 powershell 'get-appxpackage foo -allusers | remove-appxpackage -allusers'
