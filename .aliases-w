@@ -24,6 +24,7 @@ ev () { wevtutil qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d '\r
 fd () { find -iname "*$1*" -printf '%P\n'; }
 pk () { pp $1 | co 2 | xargs -rp -n 1 taskkill /f /pid; }
 pp () { tasklist | grep -i $1; }
+ss () { wmic '/namespace:\\root\wmi' path msacpi_thermalzonetemperature get criticaltrippoint, currenttemperature; }
 tb () { tp $1 > $cb; }
 up () { td $(wmic os get lastbootuptime | sed -nr 's/^(20..)(..)(..)(..)(..)(..).*/\1-\2-\3T\4:\5:\6/p') today; }
 vc () { t=/tmp/vc-$(date +%s).${1:-txt}; cat $cb > $t; vim $t; cat $t > $cb; rr $t; }
