@@ -1,6 +1,8 @@
 #!/bin/bash
 
-[ -z "$4" ] && echo "Usage: $0 repo keep mail args" && exit 1
+[ -z "$4" ] && echo "Usage: $0 [-l base] repo keep mail args" && exit 1
+
+[ "$1" == -l ] && b=$2 && shift 2 || b=/tmp
 
 s=$0
 r=$1
@@ -10,7 +12,7 @@ a=${@:4}
 
 d=$(date +%s)
 
-l=/tmp/$(basename $s)-$d.log
+l=$b/$(basename $s)-$d.log
 
 tty -s && exec > >(tee $l) 2>&1 || exec > $l 2>&1
 
