@@ -103,7 +103,7 @@ nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
 on () { while ! nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on <<< $@; }
 pb () { u=$(cb -o | sed 's/?.*//'); echo "$u"; yt $u best; }
-pc () { sed -nr "s/^${2:-.*}:([^ ]*).*/\1/p" $1 | cb; }
+pc () { sed -nr "s/^${2:-.*}:([^ ]*).*/\1/p" $1 | head -1 | cb; }
 pk () { k=/bin/kill; $k --help | grep -q '\--verbose' && k="$k --verbose"; pp $1 | ty | tail -1 | co 2 | xargs -r $k $2; sleep 1; pp $1; }
 pm () { s=$(ps -eF | tail -n +2 | grep -i "$1" | grep -v grep | co 6 | paste -d + -s); ca "round((${s:-0}) / 1024, 1)"; }
 pp () { [ $1 ] || return; ps -ef --sort=start_time | grep -i $1 | grep -v grep; }
