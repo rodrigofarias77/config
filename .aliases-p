@@ -3,7 +3,7 @@
 pw=paru
 pm=/etc/pacman.d/mirrorlist
 
-alias ac="$pw -Sc"
+alias ac="$pw -Scd"
 alias ai="$pw -S --needed"
 alias al="pacman -Q | grep -i"
 alias an="$pw -Si"
@@ -21,6 +21,5 @@ pn () { sudo vi -d $1{,.pacnew}; }
 # pacman -Qeq | grep -v -f <(expac -l '\n' '%E' base) | cc
 # makepkg -cis # base-devel
 # pacman -S archlinux-keyring
-# paru -S --rebuild qt5-styleplugins
 
 # vim: filetype=sh
