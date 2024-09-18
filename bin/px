@@ -1,0 +1,18 @@
+#!/bin/bash
+
+[ -z $1 ] && echo 'l: playlist
+s: seek 1m
+*: key
+' && exit 1
+
+export DISPLAY=:0
+
+case $1 in
+    L) k=less ;;
+    l) k=greater ;;
+    S) k=Down ;;
+    s) k=Up ;;
+    *) k=$1 ;;
+esac
+
+xdotool search --class mpv key $k
