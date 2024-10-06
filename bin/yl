@@ -24,7 +24,7 @@ e=$(($d + $s))
 for i in {1..5}; do
     [ $d -ge $e ] && break
 
-    ffmpeg -hide_banner -nostats -i "$(yt-dlp -f b -g $u)" -t $(($e - $d)) -c copy $b-$d.mkv
+    ffmpeg -hide_banner -nostats -i "$(yt-dlp -f b -g --ignore-config $u)" -t $(($e - $d)) -c copy $b-$d.mkv
 
     sleep 60
 
