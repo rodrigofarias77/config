@@ -21,10 +21,10 @@ date
 
 e=$(($d + $s))
 
-for i in {1..5}; do
+for i in {0..9}; do
     [ $d -ge $e ] && break
 
-    timeout $(($e - $d)) yt-dlp -o $b-$d.mp4 --ignore-config --no-part $u
+    yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$(($e - $d))" --ignore-config $u
 
     sleep 60
 
