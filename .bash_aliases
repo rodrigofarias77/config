@@ -148,7 +148,7 @@ xg () { compgen -c | sort -u | grep $@; }
 xt () { sleep 5; xdotool type "$*"; }
 xv () { x11vnc -o /tmp/x11vnc.log -display :0 -usepw -wait 100 $@; }
 yp () { y=https://www.youtube.com; [ $2 ] && a= b=cat || a=$sp b=tac; curl -s $y/$1 | grep -o '/watch?v=[^"\]*' | sed "s|^|$y|" | $b | yt $a --playlist=-; }
-yt () { l=/tmp/mpv-$(date +%s).log; mpv --loop --quiet $ad $@ &> $l & disown; echo $l; sleep 5; le $l; }
+yt () { l=/tmp/mpv-$(date +%s).log; mpv --loop --quiet --ytdl-format=worst $ad $@ &> $l & disown; echo $l; sleep 5; le $l; }
 
 for i in ~/.aliases-*; do . $i; done
 
