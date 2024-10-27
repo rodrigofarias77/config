@@ -24,7 +24,7 @@ e=$(($d + $s))
 for i in {0..9}; do
     [ $d -ge $e ] && break
 
-    yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$(($e - $d))" --ignore-config $u
+    yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$(($e - $d))" $u
 
     sleep 60
 
