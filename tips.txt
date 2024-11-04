@@ -109,6 +109,7 @@ net use z: '\\foo\bar' /savecred # net use z: /delete
 powercfg -h off
 powershell 'get-appxpackage foo -allusers | remove-appxpackage -allusers'
 powershell 'get-appxprovisionedpackage -online | ft'
+powershell 'get-ciminstance msacpi_thermalzonetemperature -namespace root/wmi'
 powershell 'remove-appxprovisionedpackage -packagename foo -online'
 reg add 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation' /v RealTimeIsUniversal /t REG_DWORD /d 1
 reg add 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl' /v EnableLogFile /t REG_DWORD /d 0
