@@ -15,7 +15,7 @@ exec > $l 2>&1
 
 te () { tail $l | mail -s "$HOSTNAME: $0" $m; }
 
-trap te err int
+trap te err
 
 date
 
