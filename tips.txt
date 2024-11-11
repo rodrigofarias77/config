@@ -82,6 +82,7 @@ ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin foo - $TERM
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 
 --
+apt install -t bookworm-backports foo
 cat /proc/net/xt_recent/knock
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
 dd if=/dev/zero of=foo bs=10M count=100 oflag=direct status=progress
@@ -101,6 +102,7 @@ sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl daemon-reload
 systemctl mask systemd-journald-audit.socket
 truncate -s 0 foo; chattr +C foo; dd if=/dev/zero of=foo bs=1M status=progress || rm foo
+update-alternatives --install /usr/bin/vi vi /opt/nvim.appimage 110
 
 --
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
