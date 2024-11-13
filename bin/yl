@@ -24,7 +24,7 @@ e=$(($d + $s))
 for i in {0..9}; do
     [ $d -ge $e ] && break
 
-    yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$(($e - $d))" --force-keyframes-at-cuts $u
+    timeout -s SIGINT $(($e - $d)) yt-dlp -f best -o $b-$d.mp4 $u
 
     sleep 60
 
