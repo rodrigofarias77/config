@@ -21,7 +21,7 @@ date
 
 e=$(($d + $s))
 
-for i in {0..9}; do
+for i in {1..5}; do
     [ $d -ge $e ] && break
 
     timeout -s SIGINT $(($e - $d + 60)) yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$(($e - $d))" $u
