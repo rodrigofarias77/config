@@ -91,6 +91,7 @@ echo -n '52:54:00:'; for i in {1..3}; do openssl rand -hex 1; done | paste -d : 
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
+qemu-system-x86_64 ... -drive file=foo.iso,format=raw,media=cdrom
 rsync -ahv -AHX --exclude=/{dev,mnt,proc,run,sys,tmp} / /mnt
 rsync -e 'ssh bar ssh foo' foo :
 sed 's:/.*::' /usr/share/hunspell/pt_BR.dic | grep -E '.{8,}' | shuf -n 100
@@ -106,6 +107,7 @@ update-alternatives --install /usr/bin/vi vi /opt/nvim.appimage 110
 
 --
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
+diskperf -y
 mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
 powercfg -h off
@@ -115,3 +117,4 @@ powershell 'get-ciminstance msacpi_thermalzonetemperature -namespace root/wmi'
 powershell 'remove-appxprovisionedpackage -packagename foo -online'
 reg add 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation' /v RealTimeIsUniversal /t REG_DWORD /d 1
 reg add 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl' /v EnableLogFile /t REG_DWORD /d 0
+tzutil /s 'Eastern Standard Time'
