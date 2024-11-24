@@ -69,7 +69,7 @@ hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
 hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
-hs () { python -m http.server 8080; }
+hs () { python3 -m http.server 8080; }
 hu () { sudo sed -i "/$1$/s/^[^ ]*/$2/" /etc/hosts; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
