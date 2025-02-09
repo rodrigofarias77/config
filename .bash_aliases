@@ -62,14 +62,12 @@ ef () { mq $2 && return; encfs -i ${3:-5} ${@:4} $(realpath $1) $(realpath $2); 
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
 fu () { fusermount -u $2 /tmp/$1; }
-h0 () { docker ps -f ancestor=nginx -q | xargs -r docker stop; }
-h1 () { docker run -d -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
 hc () { host $1 1.1.1.1 | sed -n 's/.*has address //p'; }
 hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|"; }
 ho () { sed "s:$HOME:~:"; }
 hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
-hs () { python3 -m http.server 8080; }
+hs () { docker run -it -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
 hu () { sudo sed -i "/$1$/s/^[^ ]*/$2/" /etc/hosts; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
