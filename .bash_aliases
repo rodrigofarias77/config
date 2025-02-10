@@ -86,6 +86,7 @@ lu () { la -p | us; }
 m1 () { while true; do date; xdotool mousemove_relative 50 0 sleep .1 mousemove_relative -- -50 0; sleep 5m; done; }
 ma () { mail -s "$HOSTNAME: $1" ${@:2} $ma; }
 mc () { mkdir -p "$1" && cd "$1"; }
+mh () { ef ~/.$1 /tmp/$1 $2 && cd /tmp/$1 && nh; }
 ml () { mv "$1" "${1,,}"; }
 mo () { mv "$@" $OLDPWD; }
 mp () { nd mpv --quiet "$@"; }
