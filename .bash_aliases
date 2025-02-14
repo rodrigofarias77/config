@@ -142,7 +142,7 @@ wd () { w3m -cols ${2:-80} -dump -O ASCII $1; }
 wm () { a=$(eval $1); echo "$a"; b=$a; while true; do sleep $2 || return 1; b=$(eval $1); date; diff <(echo "$a") <(echo "$b") | d2 | ty | ma "$3" -E; a=$b; done; }
 wp () { while pgrep -af $1; do sleep 5m; date; done; }
 wx () { while read i; do eval $@; done; }
-xd () { export DISPLAY=$1; }
+xd () { echo $DISPLAY; read -p '> ' DISPLAY; }
 xg () { compgen -c | sort -u | grep $@; }
 xt () { sleep 5; xdotool type "$*"; }
 xv () { x11vnc -o /tmp/x11vnc.log -display :0 -usepw -wait 100 $@; }
