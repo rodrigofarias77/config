@@ -1,7 +1,10 @@
 #!/bin/bash
 
-[ -z "$4" ] && echo "Usage: $0 [-l base] repo keep mail args" && exit 1
+[ -z "$4" ] && echo "Usage: $0 [-k] [-l base] repo keep mail args" && exit 1
 
+v=$@
+
+[ "$1" == -k ] && p=1 && shift
 [ "$1" == -l ] && b=$2 && shift 2 || b=/tmp
 
 s=$0
@@ -23,7 +26,9 @@ te () { [ $? -gt 1 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma wa
 trap te err
 
 date
-echo $@
+echo $v
+
+[ $p ] && h=${r#*@} && nc -vz -w 1 ${h%:*} 55555
 
 borg create --compression=zstd --filter=ACME --list --stats $r::$d $a
 
