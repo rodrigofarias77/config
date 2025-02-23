@@ -95,6 +95,7 @@ qemu-system-x86_64 ... -drive file=foo.iso,format=raw,media=cdrom
 rsync -ahv -AHX --exclude=/{dev,mnt,proc,run,sys,tmp} / /mnt
 rsync -e 'ssh bar ssh foo' foo :
 sed 's:/.*::' /usr/share/hunspell/pt_BR.dic | grep -E '.{8,}' | shuf -n 100
+snap set system refresh.timer=00:00~24:00 # snap refresh --time
 ssh -CMY foo
 ssh -N -L ... # command="/sbin/nologin",no-pty ssh-rsa ...
 ssh -O cancel -L ...
