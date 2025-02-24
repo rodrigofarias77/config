@@ -12,7 +12,7 @@ alias pw='cygpath -aw'
 
 unalias fd
 
-ag () { h=~/cygwin/history.txt l=/var/log/setup.log; [ -e $h ] || touch $h; [ $2 ] && rz $h && sed -nr 's/^(.{19}).* install .*/\1/p' $l | sort -u | while read i; do echo -n "$i "; sed -nr "s|^$i.* install +([^ ]*).*|\1|p" $l | sort -u | paste -d , -s; done > $h; grep -i $1 $h; }
+ag () { h=~/cygwin/history.txt l=/var/log/setup.log; [ -e $h ] || touch $h; [ $2 ] && rr $h && sed -nr 's/^(.{19}).* install .*/\1/p' $l | sort -u | while read i; do echo -n "$i "; sed -nr "s|^$i.* install +([^ ]*).*|\1|p" $l | sort -u | paste -d , -s; done > $h; grep -i $1 $h; }
 ai () { oo $cs -M -P $1; }
 al () { cygcheck -c -d | grep $1; }
 ar () { oo $cs -M -x $1; }
