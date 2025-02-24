@@ -89,6 +89,7 @@ dd if=/dev/zero of=foo bs=10M count=100 oflag=direct status=progress
 dd if=foo of=/dev/null bs=10M iflag=direct status=progress
 echo -n '52:54:00:'; for i in {1..3}; do openssl rand -hex 1; done | paste -d : -s
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
+fio --filename=foo --size=1GB --direct=1 --rw=randrw --bs=4k --iodepth=256 --runtime=120 --numjobs=4 --time_based --group_reporting --name=foo
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
 qemu-system-x86_64 ... -drive file=foo.iso,format=raw,media=cdrom
@@ -108,6 +109,7 @@ update-alternatives --install /usr/bin/vi vi /opt/nvim.appimage 110
 
 --
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
+cmdkey /add:server /user:foo /pass:bar
 diskperf -y
 mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
