@@ -19,6 +19,8 @@ l=$b/$(basename $s)-$d.log
 
 tty -s && exec > >(tee $l) 2>&1 || exec > $l 2>&1
 
+[ $p ] && h=${r#*@} && nc -vz -w 1 ${h%:*} 55555
+
 ma () { mail -s "$HOSTNAME: $s $1" $m; }
 
 te () { [ $? -gt 1 ] && tail $l | ma error && exit 1 || grep '^[CE] ' $l | ma warning; }
@@ -27,8 +29,6 @@ trap te err
 
 date
 echo $v
-
-[ $p ] && h=${r#*@} && nc -vz -w 1 ${h%:*} 55555
 
 borg create --compression=zstd --filter=ACME --list --stats $r::$d $a
 
