@@ -1,6 +1,8 @@
 #!/bin/bash
 
-[ -z $1 ] && echo "Usage: $0 dir [to]" && exit 1
+[ $1 == -p ] && p=1 && shift
+
+[ -z $1 ] && echo "Usage: $0 [-p] dir [to]" && exit 1
 
 d=$1
 t=$2
@@ -14,5 +16,7 @@ cd $d
 
 git diff --quiet && exit
 git commit -a -m $(date +%s) -uno
+
+[ $p ] && git push origin HEAD
 
 [ $t ] && git log -1 -p | mail -s "$HOSTNAME: $d" $t
