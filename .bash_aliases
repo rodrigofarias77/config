@@ -60,7 +60,7 @@ dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i ${3:-5} ${@:4} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
-ff () { df -Th $@ | tail -n +2 | grep -v tmpfs | sort -k 7 | xargs printf '%-15.15s %-10.10s %5s %5s %5s %5s %s\n'; }
+ff () { df -Th --exclude-type={devtmpfs,efivarfs,tmpfs} $@; }
 fu () { fusermount -u $2 /tmp/$1; }
 hc () { host $1 1.1.1.1 | sed -n 's/.*has address //p'; }
 hg () { history | grep -i "$1" | le; }
