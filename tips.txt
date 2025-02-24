@@ -23,8 +23,6 @@ ServerAliveInterval 60
 .mozilla/firefox/*/user.js
 user_pref("browser.backspace_action", 0);
 user_pref("browser.link.open_newwindow.restriction", 0);
-user_pref("dom.ipc.processCount", 1);
-user_pref("fission.autostart", false);
 user_pref("mousewheel.system_scroll_override.enabled", false);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("webgl.force-enabled", true);
@@ -113,6 +111,7 @@ cmdkey /add:server /user:foo /pass:bar
 diskperf -y
 mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
+netstat -an -p TCP
 powercfg -h off
 powershell 'get-appxpackage foo -allusers | remove-appxpackage -allusers'
 powershell 'get-appxprovisionedpackage -online | ft'
