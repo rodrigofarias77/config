@@ -104,6 +104,7 @@ systemctl daemon-reload
 systemctl mask systemd-journald-audit.socket
 truncate -s 0 foo; chattr +C foo; dd if=/dev/zero of=foo bs=1M status=progress || rm foo
 update-alternatives --install /usr/bin/vi vi /opt/nvim.appimage 110
+zdump -v America/Toronto | grep 2025
 
 --
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
