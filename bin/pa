@@ -5,29 +5,29 @@ set -e
 if [ "$1" == -i ]; then
     shift
 
-    s=$(pactl -f json info | jq -r .default_source_name)
+    n=$(pactl get-default-source)
 
     if [ "$1" ]; then
         if [ "$1" == -t ]; then
-            pactl set-source-mute $s toggle
+            pactl set-source-mute $n toggle
         else
-            pactl set-source-volume $s $1%
+            pactl set-source-volume $n $1%
         fi
     else
-        pactl -f json list sources | jq -r '.[].volume."front-left".value_percent'
+        pactl get-source-volume $n | grep -o '[0-9]*%' | head -1
     fi
 elif [ "$1" == -h ]; then
     echo -e 'output\n-i: input\n\n-t: toggle'
 else
-    s=$(pactl -f json info | jq -r .default_sink_name)
+    n=$(pactl get-default-sink)
 
     if [ "$1" ]; then
         if [ "$1" == -t ]; then
-            pactl set-sink-mute $s toggle
+            pactl set-sink-mute $n toggle
         else
-            pactl set-sink-volume $s $1%
+            pactl set-sink-volume $n $1%
         fi
     else
-        pactl -f json list sinks | jq -r '.[].volume."front-left".value_percent'
+        pactl get-sink-volume $n | grep -o '[0-9]*%' | head -1
     fi
 fi
