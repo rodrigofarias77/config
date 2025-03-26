@@ -89,6 +89,7 @@ echo -n '52:54:00:'; for i in {1..3}; do openssl rand -hex 1; done | paste -d : 
 ffmpeg ... -vf yadif,scale=1280:720,crop=1280:692:0:14
 fio --filename=foo --size=1GB --direct=1 --rw=randrw --bs=4k --iodepth=256 --runtime=120 --numjobs=4 --time_based --group_reporting --name=foo
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
+iotop -Pboqt -d 60
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
 qemu-system-x86_64 ... -drive file=foo.iso,format=raw,media=cdrom
 rsync -ahv -AHX --exclude=/{dev,mnt,proc,run,sys,tmp} / /mnt
