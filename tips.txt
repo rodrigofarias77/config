@@ -91,6 +91,7 @@ fio --filename=foo --size=1GB --direct=1 --rw=randrw --bs=4k --iodepth=256 --run
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
 iotop -Pboqt -d 60
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
+nmcli connection modify foo ipv6.method disabled # nmcli connection up
 qemu-system-x86_64 ... -drive file=foo.iso,format=raw,media=cdrom
 rsync -ahv -AHX --exclude=/{dev,mnt,proc,run,sys,tmp} / /mnt
 rsync -e 'ssh bar ssh foo' foo :
