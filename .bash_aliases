@@ -44,7 +44,7 @@ cb () { xsel -b $@; }
 cc () { cut -c -$((${1:-1}*16-1)) | column -c $(tput cols); }
 cf () { ld | while read i; do l=$(find "$i" -type f | wc -l); echo -e "$l\t$i"; done | sort -n; }
 cm () { ca "$2 * $3 / $1"; }
-co () { sed -e 's/^\s\+//' -e 's/\s\+/ /g' | cut -d ' ' -f $1; }
+co () { tr -s ' ' '\t' | cut -f $1; }
 cs () { curl -o /dev/null -Ls -w '%{http_code}\n' $1; }
 cw () { wmctrl -c $1; }
 cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
@@ -117,7 +117,7 @@ s5 () { export ALL_PROXY=socks5h://localhost:1080; }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
 sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
-sg () { systemctl list-unit-files | co 1 | grep -i $1; }
+sg () { systemctl list-unit-files ${2:+--user} | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && t=$(date +%s) && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; e=$?; [ $(($(date +%s) - $t)) -gt 60 ] && ma rsync <<< $e; }
 sp () { systemd-ask-password --emoji=no; }
 ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
