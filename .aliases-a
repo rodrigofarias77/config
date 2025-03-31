@@ -14,6 +14,7 @@ au () { sudo apt update; sudo apt full-upgrade $1; }
 ts () { sudo timeshift --create; sudo timeshift --list; read -p '> ' s; [ $s ] && sudo timeshift --delete --snapshot $s; }
 
 # dpkg -i .deb; ai -f
+# ar $(dpkg -l | grep ^rc | co 2 | ty; read)
 # dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
 
 # vim: filetype=sh
