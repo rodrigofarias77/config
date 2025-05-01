@@ -65,6 +65,9 @@ PasswordAuthentication no
 /etc/sudoers
 foo ALL=(ALL) NOPASSWD: /bin/foo, /bin/bar
 
+/etc/sudoers.d/50-home
+Defaults env_keep += "HOME"
+
 /etc/sysctl.d/50-coredump.conf
 kernel.core_pattern = /dev/null
 
