@@ -4,7 +4,6 @@ set -e
 
 [ -z "$1" ] && echo '-l: link
 -m: move
--s: sudo
 -t .: .*' && exit 1
 
 c='cp -aiv'
@@ -13,10 +12,8 @@ c='cp -aiv'
 
 [ "$1" = -m ] && c='mv -iv' && shift
 
-[ "$1" = -s ] && s=sudo && shift
-
 [ "$1" = -t ] && d=${3%$2*} && shift 2 || d=$1
 
 e=$(date +%s -r "$1")
 
-$s $c "$1" "${d%/}-$e"
+$c "$1" "${d%/}-$e"
