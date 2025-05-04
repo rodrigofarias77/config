@@ -19,12 +19,9 @@ alias cp='cp -aiv' la='ls -A' le='less -RSi' ll='la -hl --color=always' ls='ls -
 
 alias cn='cp --no-preserve=all'
 alias cu='curl -#LOR'
-alias fd='fd -HIL -c never --xdev'
 alias hh=htop
-alias lg='la -F | grep'
 alias nh='unset HISTFILE'
 alias oo='n2 xdg-open'
-alias os='[ $1 = -s ] && s=sudo && shift || s='
 alias ti='ll -tr'
 alias tp='tar -OPx -f'
 alias uu='du -hs'
@@ -33,8 +30,8 @@ alias vn='vi -i NONE'
 alias sudo='sudo '
 
 ap () { echo "$PATH" | grep -Fq "$1" || PATH="$1:$PATH"; }
-ba () { os; $s rc -p $1 ~/backup; }
-bd () { os; $s vi -d $1 ~/backup/$(realpath $1 | tr / +); }
+ba () { rc -p $1 ~/backup; }
+bd () { vi -d $1 ~/backup/$(realpath $1 | tr / +); }
 bh () { ls ~/backup/bash/*.gz | tail -25 | xargs zcat | tr '\n' '#' | grep -Eao '[0-9]{10}#[^#]+' | tr '#' ' ' | sort -u | le; }
 bi () { bind -f ~/.inputrc; }
 br () { c='csd-backlight-helper -b raw'; b=$($c --get-brightness); m=$($c --get-max-brightness); [ $1 ] && sudo $c --set-brightness $(($m * $1 / 100)) || echo $((($b + 1) * 100 / $m)); }
@@ -51,16 +48,17 @@ cx () { sed "s/\t/  /g" | cut -c -${1:-$COLUMNS}; }
 cz () { sudo compsize -x $1 | grep ^TOTAL | co 2-4; }
 d1 () { sed -n 's/^< //p'; }
 d2 () { sed -n 's/^> //p'; }
-db () { os; $s vi -d $(ls -t $1{,-*} | head -2); }
+db () { vi -d $(ls -t $1{,-*} | head -2); }
 dc () { vi -d $1 <(cb -o); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
-dp () { os; $s vi -d $2 ${1%/}/$2; }
+dp () { vi -d $2 ${1%/}/$2; }
 ds () { $s vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i ${3:-5} ${@:4} $(realpath $1) $(realpath $2); }
 er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 ff () { df -Th --exclude-type={devtmpfs,efivarfs,tmpfs} $@; }
+fn () { find ${@:2} -iname "*$1*"; }
 fo () { cat -n | sort -u -k 2 | sort -n -k 1 | cut -f 2; }
 fu () { fusermount -u $2 /tmp/$1; }
 hc () { host $1 1.1.1.1 | sed -n 's/.*has address //p'; }
@@ -120,7 +118,7 @@ sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
 sg () { systemctl list-unit-files ${2:+--user} | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && t=$(date +%s) && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; e=$?; [ $(($(date +%s) - $t)) -gt 60 ] && ma rsync <<< $e; }
 sp () { systemd-ask-password --emoji=no; }
-ss () { sensors coretemp-isa-0000 | sed -n '/^Core/s/  \+/ /gp'; }
+ss () { sudo bash -ci "$*"; }
 sv () { sp | nd ssvncviewer -autopass -bgr233 -encodings zrle $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
 ta () { n1 tmux -2 attach -d; }
