@@ -84,6 +84,8 @@ D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 
 --
 apt install -t bookworm-backports foo
+apt-get -qq update && apt-get -qqs dist-upgrade
+apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -qq | grep -v 'Reading database'
 cat /proc/net/xt_recent/knock
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
 dd if=/dev/zero of=foo bs=10M count=100 oflag=direct status=progress
