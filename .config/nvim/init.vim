@@ -1,6 +1,8 @@
 silent! colorscheme vim
+syntax on
 
 set guicursor+=a:blinkon1
+set hlsearch
 set ignorecase
 set linebreak
 set mouse=
