@@ -5,6 +5,7 @@ set guicursor+=a:blinkon1
 set hlsearch
 set ignorecase
 set linebreak
+set modeline
 set mouse=
 set nojoinspaces
 set nostartofline
