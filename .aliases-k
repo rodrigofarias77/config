@@ -1,7 +1,5 @@
 [ $(type -p kubectl) ] || return
 
-export KUBE_EDITOR=nvim
-
 k3 () { [ $1 ] && unset KUBECONFIG || export KUBECONFIG=/etc/rancher/k3s/k3s.yaml; }
 ka () { kubectl -n $1 get all | tac; }
 kd () { kubectl -n $1 get secret $2 -o json | jq -r '.data[]' | base64 -d; echo; }
