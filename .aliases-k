@@ -1,6 +1,10 @@
 [ $(type -p kubectl) ] || return
 
-k3 () { [ $1 ] && unset KUBECONFIG || export KUBECONFIG=/etc/rancher/k3s/k3s.yaml; }
+kc=/etc/rancher/k3s/k3s.yaml
+
+[ -e $kc -a ! -r $kc ] && alias kubectl='sudo EDITOR=/bin/vi kubectl' && alias stern="sudo stern --kubeconfig $kc"
+
+k3 () { [ $1 ] && unset KUBECONFIG || export KUBECONFIG=$kc; }
 ka () { kubectl -n $1 get all | tac; }
 kd () { kubectl -n $1 get secret $2 -o json | jq -r '.data[]' | base64 -d; echo; }
 ke () { kubectl events -A $1; }
