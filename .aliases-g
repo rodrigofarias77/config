@@ -17,4 +17,6 @@ gs () { $(git rev-parse --is-shallow-repository) || return; git stash; git fetch
 rh () { git reset HEAD^; }
 ro () { cd $(git rev-parse --show-toplevel); }
 
+# git config --global credential.helper store
+
 # vim: filetype=sh
