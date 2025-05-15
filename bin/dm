@@ -1,0 +1,15 @@
+#!/bin/bash
+
+[ -z $3 ] && echo -e "Usage: $0 path x mail...\n
+Send notification to MAIL if PATH has less than XG of free space.
+" && exit 1
+
+n=$(basename $0)
+p=$1
+x=$2
+m=${@:3}
+
+[ $(df --output=avail $p | tail -1) -lt $(($x*1048576)) ] &&
+    df -h -PT $p | tail -1 | tr -s ' ' | mail -s "$(hostname -s): $n" $m
+
+exit 0

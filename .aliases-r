@@ -1,0 +1,16 @@
+[ -x /usr/bin/yum ] || return
+
+[ -x /usr/bin/dnf ] && c=dnf || c=yum
+
+alias ac="sudo $c clean all"
+alias ai="sudo $c install"
+alias an="$c info"
+alias ar="sudo $c remove"
+alias au="sudo $c upgrade"
+
+a0 () { $c -C list $2 "*$1*" | grep -v -e Packages$ -e ^Last -e ^Loaded | perl -0pe 's/\n +/ /g' | sort -u | sed -r -e 's/\.([^.]* )/ \1/' -e 's/  +/ /g'; }
+ag () { tr '\n' @ < /var/log/$c.log | grep -Eo '@Installed:(@  [^@]*)*' | tr -d @ | sed 's/ [0-9][^ ]* */ /g' | cut -c 13- | grep -i $1; }
+al () { a0 $1 installed; }
+as () { l=$(a0 $1 --showduplicates); grep @ <<< "$l" && echo; grep -v @ <<< "$l"; }
+
+# vim: filetype=sh

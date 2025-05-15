@@ -1,0 +1,13 @@
+[ -x /usr/bin/apt ] || return
+
+ar=--no-install-recommends
+
+alias ac='sudo apt-get clean'
+alias ai='sudo apt install'
+alias al='n2 apt list --installed | grep -i'
+alias an='apt show'
+alias ar='sudo apt --purge autoremove'
+alias au='sudo apt update; sudo apt full-upgrade'
+
+ag () { ls -rt /var/log/apt/history.log* | xargs zgrep "^Install.*$1" | sed -e 's/.*: //' -e 's/ ([^)]*),\?//g'; }
+as () { l=$(n2 apt search $@ | tail -n +3 | sed 's/\/[^ ]*//' | tr '\n' @ | sed -e 's/@  / - /g' -e 's/@\+/\n/g'); grep installed <<< "$l"; echo; grep -v installed <<< "$l"; }

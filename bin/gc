@@ -1,0 +1,18 @@
+#!/bin/bash
+
+[ -z $1 ] && echo "Usage: $0 dir [to]" && exit 1
+
+d=$1
+t=$2
+
+exec >> $d/.log 2>&1
+
+echo
+date
+
+cd $d
+
+git diff --quiet && exit
+git commit -a -m $(date +%s) -uno
+
+[ $t ] && git log -1 -p | mail -s "$(hostname -s): $d" $t

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+[ -z "$4" ] && echo "Usage: $0 repo keep mail args" && exit 1
+
+r=$1
+k=$2
+m=$3
+a=${@:4}
+
+d=$(date +%s)
+
+l=/tmp/$(basename $0)-$d.log
+
+exec > $l 2>&1
+
+t () { tail -100 $l | mail -s "$(hostname -s): $0 failed" $m; }
+
+trap t err
+
+date
+echo $@
+
+borg create --compression zstd --filter=AME --list --stats $r::$d $a
+
+borg prune --keep-last $k --list $r

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+[ "$1" = -s ] && s=1 && shift
+[ "$1" = -u ] && u=1 && shift
+
+[ -z $1 ] && echo "Usage: $0 [-s] [-u] mail" && exit 1
+
+[ $s ] && sleep $((RANDOM%600))
+
+n=$(basename $0)
+m=$1
+
+h=yay
+l=/tmp/$n.log
+
+fa () { lo | ma failed; exit 1; }
+lo () { tr -s " " < $l; }
+ma () { mail -s "$(hostname -s): $n $1" $m; }
+
+trap fa err
+
+exec > $l 2>&1
+
+date
+
+$h -Sy
+echo
+
+if $h -Qu | grep .; then
+    [ $u ] && echo -e "\n--" && $h -Su --devel --noconfirm
+
+    lo | ma
+fi
+
+uname -r | grep -q lts && p=linux-lts || p=linux
+
+r=$(uname -r | sed "s/-.*//")
+i=$($h -Q $p | sed -r "s/.* ([0-9]*\.[0-9]*\.[0-9]*).*/\1/")
+
+[ $r != $i ] && echo "kernel $i has been installed. The running version is $r." | ma

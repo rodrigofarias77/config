@@ -1,0 +1,24 @@
+#!/bin/bash
+
+[ -z "$4" ] && echo "Usage: $0 url time base mail" && exit 1
+
+u=$1
+t=$2
+b=$3
+m=$4
+
+s=$(date +%s)
+
+l=/tmp/$(basename $0)-$s.log
+
+exec > $l 2>&1
+
+t1 () { tail $l | mail -s "$(hostname -s): $0" $m; exit 1; }
+
+trap t1 err int
+
+date
+
+y=$(youtube-dl -g $u)
+
+ffmpeg -hide_banner -nostats -i $y -t $t -c copy $b-$s.mkv

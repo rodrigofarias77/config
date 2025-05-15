@@ -1,0 +1,97 @@
+#!/usr/bin/python -u
+
+import getopt, html, requests, re, sys, time, unicodedata
+
+if len(sys.argv) < 2:
+    sys.exit('''-d: sort by date
+-p 5: pages
+-r regex: in magnet
+-s 100: seeds
+-t: tor
+-z 500: size (MB)\n
+query
+-u user''')
+
+g = getopt.getopt(sys.argv[1:], 'dp:r:s:tuz:')
+o = dict(g[0])
+k = '+'.join(g[1])
+
+if '-t' in o:
+    b = 'http://uj3wazyk5u4hnvtk.onion'
+    x = {'http': 'socks5h://127.0.0.1:9050'}
+else:
+    b = 'https://thepiratebay.org'
+    x = None
+
+r = '(?s)/torrent/(?P<id>.*?)/.*?' \
+    + '"(?P<magnet>magnet:.*?)".*?' \
+    + 'Uploaded (?P<date>.*?), ' \
+    + 'Size (?P<size>.*?) (?P<unit>.*?),.*?' \
+    + '(/user/(?P<user>.*?)/.*?)?' \
+    + '"right">(?P<seed>.*?)<.*?' \
+    + '"right">(?P<leech>.*?)<.*?'
+
+if '-d' in o:
+    s = '%s/search/%s/%s/3'
+elif '-u' in o:
+    s = '%s/user/%s/%s'
+else:
+    s = '%s/search/%s/%s/7'
+
+l = []
+z = ['K', 'M', 'G']
+
+for p in range(int(o['-p']) if '-p' in o else 1):
+    c = 1
+    h = ''
+    u = s % (b, k, p)
+
+    while True:
+        try:
+            h = unicodedata.normalize('NFKD',
+                html.unescape(requests.get(u, proxies=x, timeout=5).text))
+        except:
+            pass
+
+        print(u)
+
+        if 'magnet:' in h:
+            time.sleep(1)
+            break
+        else:
+            time.sleep(5)
+
+        if c == 10:
+            sys.exit('Tried %s times' % c)
+        else:
+            c += 1
+
+    open('/tmp/pb.htm', 'w').write(h)
+
+    for i in re.finditer(r, h):
+        t = i.groupdict()
+
+        m = float(t['size']) * 1024 ** (z.index(t['unit'][0]) - 1)
+
+        if '-r' in o and not re.search('(?i)' + o['-r'], t['magnet']) \
+                or '-s' in o and int(t['seed']) < int(o['-s']) \
+                or '-z' in o and m < float(o['-z']):
+            continue
+
+        if t not in l:
+            l.append(t)
+
+print()
+
+if '-d' in o or '-u' in o:
+    l.sort(key=lambda t: int(t['id']), reverse=True)
+
+for t in reversed(l):
+    print('%s\n  %s, %s %s, %s/%s, %s' % (
+        t['magnet'],
+        t['date'],
+        t['size'],
+        t['unit'],
+        t['seed'],
+        t['leech'],
+        t['user'].lower() if t['user'] else '?'))

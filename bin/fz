@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+[ -z "$1" ] && echo "Usage: $0 dir" && exit 1
+
+d=ffmpeg
+n=ffmpeg-latest-win64-static.zip
+s=ffmpeg.md5
+z=http://ffmpeg.zeranoe.com/builds/win64/static
+
+set -x
+
+cd $1
+wget -N -nv --show-progress $z/$n
+md5sum -c $s && exit
+
+7z x $n
+rm -fr $d
+mv ${n%.*} $d
+
+md5sum $n > $s

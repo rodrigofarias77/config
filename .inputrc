@@ -1,0 +1,8 @@
+set completion-ignore-case on
+
+"\e[1;5A": "cd ..\C-m"
+"\e[1;5B": "''\C-b"
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5~": "~/"
+"\e[6~": end-of-history

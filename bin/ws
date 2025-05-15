@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xdotool search --onlyvisible --$1 $2 windowactivate || ${3:-false}

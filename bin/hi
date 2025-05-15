@@ -1,0 +1,21 @@
+#!/usr/bin/python
+
+import datetime, gzip, os, pydoc, re, sys
+
+if len(sys.argv) > 1:
+    f = gzip.open(sys.argv[1])
+else:
+    f = open(os.path.expanduser('~/.bash_history'))
+
+p = None
+l = []
+
+for i, j in sorted(re.findall(r'#(\d+)\n(.*)', f.read())):
+    s = int(i)
+    d = s - (p if p else s)
+    p = s
+    if d > 600:
+        l.append('%s %s' % ('.' * (d // 600), d // 60))
+    l.append(datetime.datetime.fromtimestamp(s).strftime('%Y%m%d-%H%M%S ') + j)
+
+pydoc.pager('\n'.join(l))

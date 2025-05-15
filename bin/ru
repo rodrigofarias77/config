@@ -1,0 +1,44 @@
+#!/bin/bash
+
+[ "$1" = -s ] && s=1 && shift
+[ "$1" = -u ] && u=1 && shift
+
+[ -z $1 ] && echo -e "Usage: $0 [-s] [-u] mail
+  -s: sleep before
+  -u: apply updates\n
+Notify software updates to MAIL.
+" && exit 1
+
+n=$(basename $0)
+m=$@
+
+[ $s ] && sleep $((RANDOM%600))
+
+l=/tmp/$n.log
+
+fa () { lo | ma failed; exit 1; }
+lo () { sed -r -e "s/^ +//" -e "s/ {2,}/ /g" -e "s/[-=]{3,}//" $l; }
+ma () { mail -s "$(hostname -s): $n $1" $m; }
+
+exec > $l 2>&1
+
+[ -x /usr/bin/dnf ] && d=dnf || d=yum
+
+[ $(id -u) = 0 ] || d="sudo $d"
+
+$d check-update
+
+e=$?
+
+trap fa err
+
+if [ $e -eq 100 ]; then
+    [ $u ] && echo -e "\n--" && $d -y upgrade
+
+    lo | ma
+fi
+
+r=$(uname -r)
+i=$(rpm -q kernel | tail -1 | cut -d - -f 2-)
+
+[ $r != $i ] && echo "kernel $i has been installed. The running version is $r." | ma

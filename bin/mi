@@ -1,0 +1,29 @@
+#!/bin/bash -e
+
+w=${2:-.}
+
+n=.nfo
+u=http://www.imdb.com/title
+
+[ -f $w/$n ] && . $w/$n
+
+rate () { wget -q $u/$1 -O - | sed -nr 's/.*"([^ ]*) based on [^ ]* user ratings".*/\1/p'; }
+
+case $1 in
+-c)
+    a=$(basename $(readlink -f $w)); echo -e "=HYPERLINK(\"$u/$i\", \"${a%-*}\")\t${a#*-}\t$r\t$(date +%F -d $d)" ;;
+-d)
+    for a in $(ls -t */$n | head -${2:-50}); do . $a; echo "$d $(dirname $a)"; done | sort ;;
+-f)
+    firefox $u/$i ;;
+-i)
+    a=$(date +%Y%m%d -d "${3:-today}"); echo -e "d=$a\ni=$2\nr=$(printf '%.1f' $(rate $2))" >> $n ;;
+-r)
+    rate $i ;;
+-s)
+    for a in */$n; do . $a; echo "$d $r $(dirname $a)"; done | sort | cut -c -31 | column ;;
+-u)
+    echo $u/$i ;;
+*)
+    echo -e "-c: cinerod\n-d: sort 2\n-f: firefox\n-i: .nfo\n-r: rate\n-s: sort 1\n-u: imdb"; exit 1 ;;
+esac

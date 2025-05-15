@@ -1,0 +1,22 @@
+#!/bin/bash
+
+[ -z "$3" ] && echo "Usage: $0 mail args" && exit 1
+
+p=$(readlink -f $0)
+m=$1
+a=${@:2}
+
+l=/tmp/$(basename $p)-$(date +%s).log
+
+exec > $l 2>&1
+
+t1 () { tail -50 $l | mail -s "$(hostname -s): $p failed" $m; exit 1; }
+
+trap t1 err int
+
+date
+echo $@
+
+TIMEFORMAT=%0lR
+
+time rsync -ahv --del $a

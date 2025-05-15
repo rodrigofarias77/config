@@ -1,0 +1,25 @@
+alignment tl
+double_buffer yes
+draw_shades no
+font sans:size=8
+gap_x 683
+gap_y 3
+own_window_argb_visual yes
+own_window_hints above
+own_window_transparent yes
+own_window_type dock
+own_window yes
+short_units yes
+update_interval 2
+use_xft yes
+
+TEXT
+${color grey}${time %^a} $color${time %^b %d, %Y} \
+${color grey}YXU $color${texeci 300 we cyxu} \
+${color grey}REC $color${texeci 300 we sbrf} \
+${color grey}MX $color$pa_sink_volume%
+${color grey}RAM $color$memperc% \
+${color grey}IO $color$diskio \
+${color grey}CPU $color$cpu% ${color grey}${cpugraph 8, 15} $color${execi 10 te}C \
+${color grey}DL $color${downspeed enp2s0} ${color grey}${downspeedgraph enp2s0 8, 15} \
+UL $color${upspeed enp2s0} ${color grey}${upspeedgraph enp2s0 8, 15}

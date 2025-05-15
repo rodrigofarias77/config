@@ -1,0 +1,16 @@
+#!/usr/bin/python
+
+import sys
+
+from selenium import webdriver
+
+o = webdriver.FirefoxOptions()
+o.add_argument('--headless')
+
+d = webdriver.Firefox(firefox_options=o, log_path='/tmp/geckodriver.log')
+
+try:
+    d.get(sys.argv[1])
+    print(d.page_source)
+finally:
+    d.quit()
