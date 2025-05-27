@@ -1,6 +1,6 @@
 [ $(type -p kubectl) ] || return
 
-. <(kubectl completion bash 2> /dev/null)
+. <(kubectl --kubeconfig=/dev/null completion bash)
 
 c=/etc/rancher/k3s/k3s.yaml
 
