@@ -1,10 +1,12 @@
 [ $(type -p kubectl) ] || return
 
-kc=/etc/rancher/k3s/k3s.yaml
+. <(kubectl completion bash 2> /dev/null)
 
-[ -e $kc -a ! -r $kc ] && alias kubectl='sudo EDITOR=/bin/vi kubectl' && alias stern="sudo stern --kubeconfig $kc"
+c=/etc/rancher/k3s/k3s.yaml
 
-k3 () { [ $1 ] && unset KUBECONFIG || export KUBECONFIG=$kc; }
+[ -e $c -a ! -r $c ] && alias kubectl='sudo EDITOR=/bin/vi kubectl' && alias stern="sudo stern --kubeconfig $c"
+
+k3 () { [ $1 ] && unset KUBECONFIG || export KUBECONFIG=$c; }
 ka () { kubectl -n $1 get all | tac; }
 kd () { kubectl -n $1 get secret $2 -o json | jq -r '.data[]' | base64 -d; echo; }
 ke () { kubectl events -A $1; }
@@ -14,7 +16,5 @@ ks () { n=$1 s=$2; f=/tmp/$(date +%s); kd $n $s > $f; vn $f; ry && kubectl -n $n
 kt () { kubectl top pod -A --sort-by=memory | tac; }
 po () { kubectl -n $1 get pod -l app=$2 -o name; }
 tn () { kubectl top node; }
-
-. <(kubectl completion bash)
 
 # vim: filetype=sh

@@ -52,7 +52,7 @@ db () { vi -d $(ls -t $1{,-*} | head -2); }
 dc () { vi -d $1 <(cb -o); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
 dp () { vi -d $2 ${1%/}/$2; }
-ds () { $s vi -d $2 scp://$1/$2; }
+ds () { vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; encfs -i ${3:-5} ${@:4} $(realpath $1) $(realpath $2); }
