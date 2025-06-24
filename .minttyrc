@@ -1,7 +1,5 @@
-BoldAsColour=yes
-BoldAsFont=yes
+BoldAsFont=no
 CursorType=block
-Font=Terminus (TTF) for Windows
-FontHeight=12
+Font=Fixedsys
 Scrollbar=none
 WordCharsExcl=:
