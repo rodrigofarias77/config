@@ -27,7 +27,7 @@ ry () { read -p '? ' r; [ "$r" = y ]; }
 
 case "$1" in
     -p)
-        for i in $(find $t/*.tar -mtime +$y -or -mtime +${2:-$u} -size +1M | xargs -r ls -rt); do
+        for i in $(find $t/*.tar -mtime +$y -or -mtime +$u -size +1M | xargs -r ls -rt); do
             ls -hl $i
             head ${i%.*}.idx
 
