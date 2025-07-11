@@ -1,4 +1,4 @@
-[ $(type -p kubectl) ] || return
+[ $(type -P kubectl) ] || return
 
 . <(kubectl --kubeconfig=/dev/null completion bash)
 
