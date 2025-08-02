@@ -11,7 +11,7 @@ ka () { kubectl -n $1 get all | tac; }
 kd () { kubectl -n $1 get secret $2 -o json | jq -r '.data[]' | base64 -d; echo; }
 ke () { kubectl events -A $1; }
 kn () { kubectl get nodes -o wide; }
-ko () { kubectl get pods -A --sort-by=.metadata.creationTimestamp | grep -v Completed; }
+ko () { kubectl get pods -A --sort-by=.status.startTime | grep -v Completed; }
 ks () { n=$1 s=$2; f=/tmp/$(date +%s); kd $n $s > $f; vn $f; truncate -s -1 $f; ry && kubectl -n $n delete secrets $s && kubectl -n $n create secret generic $s --from-file=${3:-$s}=$f; rm $f; }
 kt () { kubectl top pod -A --sort-by=memory | tac; }
 po () { kubectl -n $1 get pod -l app=$2 -o name; }
