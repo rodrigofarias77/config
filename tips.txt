@@ -114,7 +114,7 @@ sshfs foo: /mnt -o ssh_command='ssh -t bar ssh'
 systemctl daemon-reload
 systemctl mask systemd-journald-audit.socket
 truncate -s 0 foo; chattr +C foo; dd if=/dev/zero of=foo bs=1M status=progress || rm foo
-update-alternatives --install /usr/bin/vi vi /opt/nvim.appimage 110
+update-alternatives --remove-all desktop-theme
 zdump -v America/Toronto | grep 2025
 
 --
