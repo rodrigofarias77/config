@@ -35,7 +35,7 @@ echo
 if $h -Qu | grep .; then
     [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x
 
-    [ $c ] && yes | $h -Sccd
+    [ $c ] && $h -Sccd --noconfirm
 
     send # okay
 fi
