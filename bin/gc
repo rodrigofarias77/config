@@ -5,7 +5,7 @@
 [ -z $1 ] && echo "Usage: $0 [-p] dir [to]" && exit 1
 
 d=$1
-t=$2
+t=${@:2}
 
 exec >> $d/.log 2>&1
 
