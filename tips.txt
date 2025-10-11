@@ -72,12 +72,7 @@ Defaults env_keep += "HOME"
 kernel.core_pattern = /dev/null
 
 /etc/sysctl.d/50-swappiness.conf
-vm.swappiness = 10
-
-/etc/systemd/system/getty@tty1.service.d/autologin.conf
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin foo - $TERM
+vm.swappiness = 1
 
 /etc/tmpfiles.d/tmp.conf
 D! /tmp 1777 root root 0 # systemctl mask tmp.mount
