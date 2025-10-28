@@ -4,7 +4,7 @@
 
 c=/etc/rancher/k3s/k3s.yaml
 
-[ -e $c -a ! -r $c ] && alias kubectl='sudo EDITOR=/bin/vi kubectl' && alias stern="sudo stern --kubeconfig $c"
+[ -e $c -a ! -r $c ] && kubectl () { sudo EDITOR=/bin/vi kubectl "$@"; } && export -f kubectl && alias stern="sudo stern --kubeconfig $c"
 
 k3 () { [ $1 ] && unset KUBECONFIG || export KUBECONFIG=$c; }
 ka () { kubectl -n $1 get all | tac; }
