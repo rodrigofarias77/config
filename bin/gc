@@ -19,4 +19,4 @@ git commit -a -m $(date +%s) -uno
 
 [ $p ] && git push origin HEAD
 
-[ $t ] && git log -1 -p | mail -s "$HOSTNAME: $d" $t
+[ "$t" ] && git log -1 -p | mail -s "$HOSTNAME: $d" $t
