@@ -19,7 +19,7 @@ as () { curl -s https://mirrors.kernel.org/sourceware/cygwin/x86_64/setup.zst | 
 au () { f=${cs##*/}; cd ${cs%/*}; curl -#LOR -z $f https://cygwin.com/$f; oo $cs -M; }
 cb () { [ -e "$1" ] && cat "$1" > $cb || cat $cb > "$1"; }
 dc () { vim -d "$1" <(cat $cb); }
-ev () { wevtutil qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d '\r' | tr '\n' @ | sed -r 's/@{2,}/\n/g' | sed -nr 's/.*  Source: ([^@]*)@  Date: ([^@]*).*  Level: ([^@]*).*  Description: @([^@]*).*/\2 - \3 - \1 - \4/p' | le; }
+ev () { wevtutil qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d '\0\r' | tr '\n' @ | sed -r 's/@{2,}/\n/g' | sed -nr 's/.*  Source: ([^@]*)@  Date: ([^@]*).*  Level: ([^@]*).*  Description: @([^@]*).*/\2 - \3 - \1 - \4/p' | le; }
 pk () { pp $1 | co 2 | xargs -rp -n 1 taskkill /f /pid; }
 pp () { tasklist | grep -i $1; }
 ss () { wmic '/namespace:\\root\wmi' path msacpi_thermalzonetemperature get criticaltrippoint, currenttemperature; }
