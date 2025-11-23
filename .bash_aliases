@@ -64,7 +64,7 @@ fo () { cat -n | sort -u -k 2 | sort -n -k 1 | cut -f 2; }
 fu () { fusermount -u $2 /tmp/$1; }
 hc () { host $1 1.1.1.1 | sed -n 's/.*has address //p'; }
 hg () { history | grep -i "$1" | le; }
-hl () { grep -E --color "$1|"; }
+hl () { grep -E --color "$1|$"; }
 ho () { sed "s:$HOME:~:"; }
 hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
 hs () { docker run -it -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
