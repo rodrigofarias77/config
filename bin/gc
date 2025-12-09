@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ $1 == -p ] && p=1 && shift
+[ "$1" == -p ] && p=1 && shift
 
 [ -z $1 ] && echo "Usage: $0 [-p] dir [to]" && exit 1
 
