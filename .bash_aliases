@@ -67,7 +67,7 @@ hg () { history | grep -i "$1" | le; }
 hl () { grep -E --color "$1|$"; }
 ho () { sed "s:$HOME:~:"; }
 hr () { curl -Ls $1 | sed -nr 's/.*href[^>]*.([^<]*).*/\1/p'; }
-hs () { docker run -it -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
+hs () { docker run -p 8080:80 -v $PWD:/usr/share/nginx/html --pull always --rm nginx; }
 hu () { sudo sed -i "/$1$/s/^[^ ]*/$2/" /etc/hosts; }
 ia () { ip -4 -o a | sed -r 's/^[^ ]* ([^ ]*).*inet ([^/]*).*/\1: \2/'; }
 ii () { curl -s https://ipinfo.io/$1 && echo; }
@@ -86,6 +86,7 @@ lu () { la -p | us; }
 m1 () { while true; do date; xdotool mousemove_relative 50 0 sleep .1 mousemove_relative -- -50 0; sleep 5m; done; }
 ma () { mail -s "$HOSTNAME: $1" ${@:2} $ma; }
 mc () { mkdir -p "$1" && cd "$1"; }
+md () { docker run -e MINIDLNA_MEDIA_DIR=/media -e MINIDLNA_FRIENDLY_NAME=$HOSTNAME -v $PWD:/media --net=host --pull always --rm vladgh/minidlna; }
 mh () { ef ~/.$1 /tmp/$1 $2 && cd /tmp/$1 && nh; }
 ml () { mv "$1" "${1,,}"; }
 mo () { mv "$@" $OLDPWD; }
