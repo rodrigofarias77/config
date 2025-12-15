@@ -57,7 +57,7 @@ ds () { vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
 ef () { mq $2 && return; [ -d $2 ] || mkdir -v $2; gocryptfs -i ${3:-5m} -q ${@:4} $1 $2; }
-er () { [ $1 ] && a="/$1/" || a=0; [ $2 ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
+er () { [ "$1" ] && a="/$1/" || a=0; [ "$2" ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 ff () { df -Th --exclude-type={devtmpfs,efivarfs,tmpfs} $@; }
 fn () { find ${@:2} -iname "*$1*"; }
 fo () { cat -n | sort -u -k 2 | sort -n -k 1 | cut -f 2; }
