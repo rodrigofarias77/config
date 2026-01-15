@@ -113,6 +113,7 @@ rn () { mv "$2" "$1.${2##*.}"; }
 rp () { c=$(type -p perl-rename prename); $c --help | grep -q '\--interactive' && c="$c -i"; $c -n "$@"; ry && $c -v "$@"; }
 rs () { s='rsync -ahv --del'; $s -n "$@" && ry && $s --max-size=10M "$@" && $s -P "$@"; }
 ry () { echo -en "${1:-? }"; read r; [ "$r" = y ]; }
+s0 () { sleep 1; xset dpms force off; }
 s5 () { export ALL_PROXY=socks5h://localhost:1080; }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
