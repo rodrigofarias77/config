@@ -98,6 +98,7 @@ iotop -Pboqt -d 60
 kubectl get pods --field-selector status.phase=Failed
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
 nmcli connection modify foo ipv6.method disabled # nmcli connection up
+openssl x509 -in foo.cer -text -noout
 pacman-key --keyserver hkps://keyserver.ubuntu.com --recv-keys foo; pacman-key --lsign-key foo
 qemu-system-x86_64 ... -drive file=foo.iso,format=raw,media=cdrom
 rsync -ahv -AHX --exclude=/{dev,mnt,proc,run,sys,tmp} / /mnt
