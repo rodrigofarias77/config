@@ -130,4 +130,5 @@ powershell 'get-ciminstance msacpi_thermalzonetemperature -namespace root/wmi'
 powershell 'remove-appxprovisionedpackage -packagename foo -online'
 reg add 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation' /v RealTimeIsUniversal /t REG_DWORD /d 1
 reg add 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl' /v EnableLogFile /t REG_DWORD /d 0
+schtasks /run /tn foo
 tzutil /s 'Eastern Standard Time'
