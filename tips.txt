@@ -120,6 +120,7 @@ zdump -v America/Toronto | grep 2025
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
 cmdkey /add:server /user:foo /pass:bar
 diskperf -y
+icacls foo /reset /t /l
 mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
 netstat -an -p TCP
@@ -131,4 +132,5 @@ powershell 'remove-appxprovisionedpackage -packagename foo -online'
 reg add 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation' /v RealTimeIsUniversal /t REG_DWORD /d 1
 reg add 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl' /v EnableLogFile /t REG_DWORD /d 0
 schtasks /run /tn foo
+takeown /f foo /r
 tzutil /s 'Eastern Standard Time'
