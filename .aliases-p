@@ -1,9 +1,9 @@
 [ -x /usr/bin/pacman ] || return
 
-pw=paru
+pw=yay
 pm=/etc/pacman.d/mirrorlist
 
-alias ac="$pw -Scd"
+alias ac="$pw -RSc"
 alias ai="$pw -S --needed"
 alias al="pacman -Q | grep -i"
 alias an="$pw -Si"
@@ -13,7 +13,6 @@ alias au="$pw -Syu --devel"
 
 aa () { rr -k $pm; echo "Server = https://archive.archlinux.org/repos/$(date -d $1 +%Y/%m/%d)/\$repo/os/\$arch" | sudo tee $pm; au -yu; }
 ag () { sed -nr -e 's/^\[(.{10}).*started/?\1/p' -e 's/.*\] installed ([^ ]*).*/\1/p' /var/log/pacman.log | tr '\n' ' ' | tr '?' '\n' | grep $1; }
-ah () { p=$(hr $1 | grep zst$ | sort -V | tail -1); read -p $p; curl -#O $1/$p; paru -U $p; rr $p; }
 am () { rr -k $pm; reflector -c $1 | grep 'Server = http' | sudo tee $pm; }
 as () { l=$($pw -Ss $1 | perl -0pe 's/ *\n +/ - /g' | sed 's/\// /'); { echo "$l" | grep Installed && echo; echo "$l" | grep -v Installed; } | le -X; }
 pn () { sudo vi -d $1{,.pacnew}; }
