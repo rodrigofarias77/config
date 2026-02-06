@@ -3,11 +3,11 @@
 pw=yay
 pm=/etc/pacman.d/mirrorlist
 
-alias ac="$pw -RSc"
+alias ac="$pw -Sc"
 alias ai="$pw -S --needed"
 alias al="pacman -Q | grep -i"
 alias an="$pw -Si"
-alias ao="$pw -cc"
+alias ao="$pw -Ycc"
 alias ar="$pw -Rs"
 alias au="$pw -Syu --devel"
 
