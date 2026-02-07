@@ -26,7 +26,7 @@ for i in {1..5}; do
 
     t=$(($e - $d))
 
-    timeout -s SIGINT $(($t + 600)) yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$t" $u
+    timeout -s SIGINT $(($t + 900)) yt-dlp -f b -o $b-$d.mp4 --download-sections "*0-$t" $u
 
     sleep 60
 
