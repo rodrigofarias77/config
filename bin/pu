@@ -13,7 +13,7 @@ n=$(basename $0)
 m=$1
 x=${@:2}
 
-h=paru
+h=yay
 l=/tmp/$n.log
 
 exec > $l 2>&1
@@ -35,7 +35,7 @@ echo
 if $h -Qu | grep .; then
     [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x
 
-    [ $c ] && $h -Sccd --noconfirm
+    [ $c ] && $h -Scc --noconfirm
 
     send # okay
 fi
