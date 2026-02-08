@@ -27,13 +27,13 @@ trap 'send failed' err
 [ $a ] && while [ $(cut -d . -f 1 /proc/loadavg) -ge 1 ]; do date; sleep 5m; done
 
 date
-uptime | sed -r 's/.*(up [^,]*).*/\u\1/'
+uptime -p
 
 $h -Sy
 echo
 
 if $h -Qu | grep .; then
-    [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x
+    [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x | sed -e 's/\x1b\[.m//' -e 's/  \+/ /g'
 
     [ $c ] && $h -Scc --noconfirm
 
