@@ -13,7 +13,7 @@ n=$(basename $0)
 m=$1
 x=${@:2}
 
-h=yay
+h=paru
 l=/tmp/$n.log
 
 exec > $l 2>&1
@@ -33,9 +33,9 @@ $h -Sy
 echo
 
 if $h -Qu | grep .; then
-    [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x | sed -e 's/\x1b\[.m//' -e 's/  \+/ /g'
+    [ $u ] && echo -e '\n--' && $h -Su --devel --noconfirm --removemake $x
 
-    [ $c ] && $h -Scc --noconfirm
+    [ $c ] && $h -Sccd --noconfirm
 
     send # okay
 fi
