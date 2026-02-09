@@ -6,7 +6,8 @@ d=$(date -d '-365 days' +%s)000000
 ry () { read -p "? " r; [ "$r" = y ]; }
 sd () { s="sqlite3 $p/${1}.sqlite"; $s "select * $2" && ry && $s "delete $2"; }
 
-sd places "from moz_places where foreign_count = 0 and ifnull(last_visit_date, 0) < $d"
+sd places "from moz_historyvisits where visit_date < $d"
+sd places "from moz_places where foreign_count = 0 and id not in (select place_id from moz_historyvisits)"
 sd places "from moz_origins where id not in (select origin_id from moz_places)"
 
 sd cookies "from moz_cookies where lastaccessed < $d"
