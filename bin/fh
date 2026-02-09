@@ -1,7 +1,7 @@
 #!/bin/bash
 
 p=~/.mozilla/firefox/*.${1:-default-*}
-d=$(date -d '-90 days' +%s)000000
+d=$(date -d '-365 days' +%s)000000
 
 ry () { read -p "? " r; [ "$r" = y ]; }
 sd () { s="sqlite3 $p/${1}.sqlite"; $s "select * $2" && ry && $s "delete $2"; }
