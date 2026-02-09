@@ -1,6 +1,6 @@
 #!/bin/bash
 
-p=~/.mozilla/firefox/*.${1:-default-*}
+p=~/.mozilla/firefox/*.default-*
 d=$(date -d '-365 days' +%s)000000
 
 ry () { read -p "? " r; [ "$r" = y ]; }
