@@ -1,13 +1,7 @@
-.bash_profile
-[ -z "$DISPLAY" -a "$XDG_VTNR" == 1 ] && exec startx
-
-.config/gtk-3.0/settings.ini
-[Settings]
-gtk-font-name = Sans 10
-gtk-primary-button-warps-slider = false
-gtk-theme-name = Plata
-gtk-xft-hintstyle = hintfull
-gtk-xft-rgba = rgb
+.config/pipewire/pipewire.conf.d/custom.conf
+context.properties = {
+    default.clock.min-quantum = 1024
+}
 
 .minttyrc
 WordCharsExcl=:
@@ -26,19 +20,6 @@ user_pref("browser.link.open_newwindow.restriction", 0);
 user_pref("mousewheel.system_scroll_override.enabled", false);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("webgl.force-enabled", true);
-
-/etc/email/email.conf
-MY_NAME = 'Foo'
-SENDMAIL_BIN = '/usr/lib/sendmail -t -i'
-SMTP_AUTH = 'LOGIN'
-SMTP_AUTH_PASS = 'bar'
-SMTP_AUTH_USER = 'foo'
-SMTP_PORT = '587'
-SMTP_SERVER = 'smtp.gmail.com'
-USE_TLS = 'true'
-
-/etc/environment
-QT_QPA_PLATFORMTHEME=gtk2 # qt5-styleplugins
 
 /etc/fstab
 btrfs compress-force=zstd,subvol=root
