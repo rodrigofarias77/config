@@ -19,7 +19,6 @@ user_pref("browser.backspace_action", 0);
 user_pref("browser.link.open_newwindow.restriction", 0);
 user_pref("mousewheel.system_scroll_override.enabled", false);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-user_pref("webgl.force-enabled", true);
 
 /etc/fstab
 btrfs compress-force=zstd,subvol=root
@@ -62,6 +61,7 @@ D! /tmp 1777 root root 0 # systemctl mask tmp.mount
 apt install -t bookworm-backports foo
 apt-get -qq update && apt-get -qqs dist-upgrade
 apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -qq | grep -v 'Reading database' | mail -E -s "$(hostname): apt" foo@bar.com
+capture-pane -S -; save-buffer /tmp/foo.txt # tmux
 cat /proc/net/xt_recent/knock
 dconf write /org/gnome/terminal/legacy/profiles:/:foo/word-char-exceptions '@ms "-+./@_~"'
 dd if=/dev/zero of=foo bs=10M count=100 oflag=direct status=progress
