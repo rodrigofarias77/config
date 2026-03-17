@@ -144,6 +144,7 @@ wp () { while pgrep -af $1; do sleep 5m; date; done; }
 wx () { while read i; do eval $@; done; }
 xd () { echo $DISPLAY; read -p '> ' DISPLAY; export DISPLAY; }
 xg () { compgen -c | sort -u | grep $@; }
+xp () { xclip -selection clipboard -t image/png "$@"; }
 xt () { sleep 5; xdotool type "$*"; }
 xv () { x11vnc -o /tmp/x11vnc.log -display :0 -usepw -wait 100 $@; }
 yp () { y=https://www.youtube.com; [ $2 ] && a= b=cat || a=$sp b=tac; curl -s $y/$1 | grep -o '/watch?v=[^"\]*' | uniq | sed "s|^|$y|" | $b | yt $a --playlist=-; }
