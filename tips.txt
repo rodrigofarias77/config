@@ -102,6 +102,7 @@ cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe
 cmdkey /add:server /user:foo /pass:bar
 diskperf -y
 icacls foo /reset /t /l
+lusrmgr.msc
 mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
 netstat -an -p TCP
