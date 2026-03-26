@@ -28,6 +28,7 @@ trap 'send failed' err
 
 date
 uptime -p
+echo
 
 $h -Sy
 echo
