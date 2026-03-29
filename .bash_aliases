@@ -52,6 +52,7 @@ d2 () { sed -n 's/^> //p'; }
 db () { vi -d $(ls -t $1{,-*} | head -2); }
 dc () { vi -d $1 <(cb -o); }
 di () { dict -d wn "$*" | tail -n +5 | paste -s -d '' | sed -r -e 's/ {9,}/ /g' -e 's/ {6}([a-z]+) /\n\n\U\1\n  /g' -e 's/ {6}/\n  /g' | fold -s -w $COLUMNS; }
+dl () { docker image ls --format 'table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedSince}}\t{{.Size}}'; }
 dp () { vi -d $2 ${1%/}/$2; }
 ds () { vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
