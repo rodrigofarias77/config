@@ -21,8 +21,7 @@ user_pref("mousewheel.system_scroll_override.enabled", false);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
 /etc/fstab
-btrfs compress-force=zstd,subvol=root
-fuse.sshfs allow_other,delay_connect,reconnect
+host /mnt/host 9p _netdev,nofail 0 0
 ntfs dmask=022,fmask=133,gid=1000,uid=1000
 
 /etc/lightdm/lightdm.conf
