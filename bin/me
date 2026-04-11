@@ -19,4 +19,4 @@ echo "$@"
 
 export TIMEFORMAT=%0lR
 
-time bash -c "$c"
+time bash -ec "$c"
