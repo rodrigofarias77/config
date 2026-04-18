@@ -1,4 +1,4 @@
-uname -r | grep -iq microsoft || return
+uname -a | grep -Eiq 'cygwin|microsoft' || return
 
 ev () { wevtutil.exe qe ${1:-application} /c:${2:-1000} /f:text /rd:true | tr -d '\0\r' | tr '\n' @ | sed -r 's/@{2,}/\n/g' | sed -nr 's/.*  Source: ([^@]*)@  Date: ([^@]*).*  Level: ([^@]*).*  Description: @([^@]*).*/\2 - \3 - \1 - \4/p' | le; }
 pk () { pp $1 | co 2 | xargs -rp -n 1 taskkill.exe /f /pid; }
