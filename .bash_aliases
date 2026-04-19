@@ -79,6 +79,7 @@ kp () { nc -vz -w 1 $1 $2; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
 ld () { find -maxdepth 1 -mindepth 1 -type d -printf '%P\n' | sort; }
+lg () { la -F | grep -i $1; }
 lh () { ll $1 | head -20; }
 lo () { tr A-Z a-z; }
 lr () { ll -d $2**/*$1*; }
