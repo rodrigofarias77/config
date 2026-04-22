@@ -19,4 +19,6 @@ kt () { kubectl top pod -A --sort-by=memory | tac; }
 po () { kubectl -n $1 get pod -l app=$2 -o name; }
 tn () { kubectl top node; }
 
+# export KUBECONFIG=~/.kube/config:~/tmp/k3s.yaml && kubectl config view --flatten > config && re ~/.kube/config && mv config ~/.kube && unset KUBECONFIG
+
 # vim: filetype=sh
