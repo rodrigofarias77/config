@@ -149,7 +149,7 @@ xg () { compgen -c | sort -u | grep $@; }
 xp () { xclip -selection clipboard -t image/png "$@"; }
 xt () { sleep 5; xdotool type "$*"; }
 xv () { x11vnc -o /tmp/x11vnc.log -display :0 -usepw -wait 100 $@; }
-yp () { y=https://www.youtube.com; [ $2 ] && a= b=cat || a=$sp b=tac; curl -s $y/$1 | grep -o '/watch?v=[^"\]*' | uniq | sed "s|^|$y|" | $b | yt $a --playlist=-; }
+yp () { y=https://www.youtube.com; curl -s $y/$1 | grep -Po '/watch\?v=[\w-]+(?=")' | uniq | sed "s|^|$y|" | tac | yt $sp --playlist=-; }
 yt () { l=/tmp/mpv-$(date +%s).log; mpv --loop --quiet --ytdl-format='worst[protocol=https]/best[height<=360]' $ad $@ &> $l & disown; echo $l; sleep 5; le $l; }
 zl () { zfs list -r -t all $1; }
 zp () { zpool status; }
