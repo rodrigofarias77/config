@@ -1,10 +1,10 @@
 #!/bin/bash
 
 p=~/.mozilla/firefox/*.default-*
-d=$(date -d '-365 days' +%s)000000
+d=$(date -d "-365 days" +%s)000000
 
 ry () { read -p "? " r; [ "$r" = y ]; }
-sd () { s="sqlite3 $p/${1}.sqlite"; $s "select * $2" && ry && $s "delete $2"; }
+sd () { s="sqlite3 $p/${1}.sqlite"; $s -cmd ".mode box" "select * $2" | less -S && ry && $s "delete $2"; }
 
 sd places "from moz_historyvisits where visit_date < $d"
 sd places "from moz_places where foreign_count = 0 and id not in (select place_id from moz_historyvisits)"
