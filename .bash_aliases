@@ -75,7 +75,7 @@ ii () { curl -s https://ipinfo.io/$1 && echo; }
 il () { ip -o l | sed -nr 's/^[^ ]* ([^:]*).*ether ([^ ]*).*/\1: \2/p'; }
 jg () { journalctl -b $2 | grep -i "$1" | le +G; }
 jj () { journalctl -b $1 | grep -Eiv "($jj)" | le +G; }
-kp () { nc -vz -w 1 $1 $2; }
+kp () { nc -vz -w 1 $@; }
 l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
 ld () { find -maxdepth 1 -mindepth 1 -type d -printf '%P\n' | sort; }
@@ -99,7 +99,6 @@ n1 () { "$@" 1> /dev/null; }
 n2 () { "$@" 2> /dev/null; }
 nd () { nu "$@" & disown; }
 nn () { n2 sudo nethogs $(route -n | sed -n '3s/.* //p'); }
-np () { nc -vz -w 1 $@; }
 ns () { sudo nmap -sn $1 | grep -v ^Host | tr '\n' @ | sed 's/@MAC/ - MAC/g' | tr @ '\n'; }
 nu () { "$@" &> /dev/null; }
 om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}; }
