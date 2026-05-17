@@ -105,6 +105,7 @@ om () { sudo chown -v --reference=$1 ${@:2}; sudo chmod -v --reference=$1 ${@:2}
 on () { while ! nc -vz -w 5 $1 $2; do date; sleep ${3:-60}; done; ma on <<< $@; }
 pc () { sed -nr "s/^${2:-.*}:([^ ]*).*/\1/p" $1 | head -1 | cb; }
 pk () { pkill -ef "$@"; }
+pm () { smem -akt -P "\b$1\b"; }
 pp () { pgrep -fa "$1"; }
 pt () { mpv --no-audio --really-quiet --vf=fps=5 --vo=tct "$@"; }
 ra () { shuf -i ${2:-1}-$1 -n 1; }
