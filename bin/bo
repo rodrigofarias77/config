@@ -30,6 +30,8 @@ trap te err
 date
 echo $v
 
+export BORG_PASSCOMMAND='cat .bp'
+
 borg create --compression=zstd --filter=ACME --list --stats $r::$d $a
 
 TIMEFORMAT=%0lR
