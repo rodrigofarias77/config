@@ -75,7 +75,6 @@ git config --global credential.helper store
 git filter-branch --env-filter 'export GIT_AUTHOR_NAME=Foo; export GIT_AUTHOR_EMAIL=foo@bar.com' -- --all
 groupadd -r nonet; iptables -A OUTPUT -m owner --gid-owner nonet -j DROP; sudo -g nonet foo
 iotop -Pboqt -d 60
-kubectl get pods --field-selector status.phase=Failed
 mkinitcpio -P; grub-install /dev/sda; grub-mkconfig -o /boot/grub/grub.cfg
 nmcli connection modify foo ipv6.method disabled # nmcli connection up
 openssl x509 -in foo.cer -text -noout

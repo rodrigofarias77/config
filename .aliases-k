@@ -20,5 +20,6 @@ po () { kubectl -n $1 get pod -l app=$2 -o name; }
 tn () { kubectl top node; }
 
 # export KUBECONFIG=~/.kube/config:~/tmp/k3s.yaml && kubectl config view --flatten > config && re ~/.kube/config && mv config ~/.kube && unset KUBECONFIG
+# kubectl get pods --field-selector status.phase=Failed -A
 
 # vim: filetype=sh
