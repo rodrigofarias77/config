@@ -14,9 +14,10 @@ ServerAliveInterval 60
 .mozilla/firefox/*/chrome/userChrome.css
 .tab-background { border-radius: 0px 0px !important; margin-bottom: 0px !important; }
 
-.mozilla/firefox/*/user.js
+.mozilla/firefox/*/prefs.js
 user_pref("browser.backspace_action", 0);
 user_pref("browser.link.open_newwindow.restriction", 0);
+user_pref("dom.events.testing.asyncClipboard", true);
 user_pref("mousewheel.system_scroll_override.enabled", false);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
