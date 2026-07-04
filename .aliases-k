@@ -20,6 +20,7 @@ po () { kubectl -n $1 get pod -l app=$2 -o name; }
 tn () { kubectl top node; }
 
 # export KUBECONFIG=~/.kube/config:~/tmp/k3s.yaml && kubectl config view --flatten > config && re ~/.kube/config && mv config ~/.kube && unset KUBECONFIG
+# kubectl get daemonsets.apps -A -o json | jq -r '.items[] | select(.metadata.name | test("fluent")) | [.metadata.namespace, .metadata.name] | @tsv' | while read a b; do kubectl -n $a rollout restart daemonset $b || break; sleep 1; done
 # kubectl get pods --field-selector status.phase=Failed -A
 
 # vim: filetype=sh
