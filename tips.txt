@@ -98,13 +98,14 @@ zdump -v America/Toronto | grep 2025
 
 --
 cd /cygdrive/c/Windows/servicing/Packages && for i in *Hyper-V*.mum; do dism.exe /online /norestart /add-package:"$i"; done
-cmdkey /add:server /user:foo /pass:bar
+cmdkey /add:10.0.2.2 /user:foo /pass:bar
 diskperf -y
 icacls foo /reset /t /l
 lusrmgr.msc
 mount -t drvfs '\\foo\bar' /mnt
 net use z: '\\foo\bar' /savecred # net use z: /delete
 netstat -an -p TCP
+oobe\bypassnro
 powercfg -h off
 powershell 'get-appxpackage foo -allusers | remove-appxpackage -allusers'
 powershell 'get-appxprovisionedpackage -online | ft'
