@@ -32,6 +32,11 @@ autologin-user=foo # gpasswd -a foo autologin
 /etc/lightdm/lightdm-gtk-greeter.conf
 indicators=~host;~spacer;~session;~a11y;~clock;~power
 
+/etc/rancher/k3s/config.yaml
+kubelet-arg:
+  - eviction-hard=imagefs.available<5%,nodefs.available<5%
+  - image-gc-high-threshold=85
+
 /etc/samba/smb.conf
 map to guest = Bad User
 guest ok = yes
@@ -111,8 +116,8 @@ powershell 'get-appxpackage foo -allusers | remove-appxpackage -allusers'
 powershell 'get-appxprovisionedpackage -online | ft'
 powershell 'get-ciminstance msacpi_thermalzonetemperature -namespace root/wmi'
 powershell 'remove-appxprovisionedpackage -packagename foo -online'
-reg add 'HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation' /v RealTimeIsUniversal /t REG_DWORD /d 1
-reg add 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl' /v EnableLogFile /t REG_DWORD /d 0
+reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /t REG_DWORD /d 1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\EdgeUpdate" /v UpdateDefault /t REG_DWORD /d 2 /f
 schtasks /run /tn foo
 slmgr /rearm # /dlv
 takeown /f foo /r
