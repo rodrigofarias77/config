@@ -45,7 +45,7 @@ while getopts 'pr:ks:t:uw' o; do
     esac
 done
 
-shift $((OPTIND - 1))
+shift $(($OPTIND - 1))
 
 [ -e $t ] || mkdir -v $t
 
