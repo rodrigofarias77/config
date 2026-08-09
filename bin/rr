@@ -10,10 +10,10 @@ y=365
 z=--zstd
 
 he () {
-    echo -e "-p: purge ($y)
+    echo -e "-p: purge (${y}d)
 -r regex: restore\n
 -k: keep
--s size: purge
+-s size: purge ($s)
 -t trash ($t)
 -u: uncompressed
 -w: 7d to purge"
