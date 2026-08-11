@@ -51,7 +51,8 @@ shift $(($OPTIND - 1))
 
 case $m in
     p)
-        for i in $(find $t/*.tar -mtime +$y -or -mtime +$u -size +$s | xargs -r ls -rt); do
+        for i in $(find $t/*.tar -mtime +$y -or -mtime +$u -size +$s \
+                | xargs -r ls -rt); do
             ls -hl $i
             head ${i%.*}.idx
 
@@ -78,7 +79,11 @@ case $m in
             fi
         done ;;
     *)
-        b=$t/$(date +%s)
+        while true; do
+            b=$t/$(date +%s)
+
+            [ -e $b.idx ] && sleep 1 || break
+        done
 
         pwd > $b.idx
 
