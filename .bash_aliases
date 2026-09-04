@@ -57,7 +57,7 @@ dp () { vi -d $2 ${1%/}/$2; }
 ds () { vi -d $2 scp://$1/$2; }
 dt () { vi -d $1 <(tp $2); }
 ec () { head -c ${2:-80} /dev/zero | tr '\0' $1; echo; }
-ef () { mq $2 && return; [ -d $2 ] || mkdir -v $2; gocryptfs -i ${3:-5m} -q ${@:4} $1 $2; }
+ef () { [ -d $2 ] || mkdir -v $2; mountpoint $2 || gocryptfs -i ${3:-5m} -q ${@:4} $1 $2; }
 er () { [ "$1" ] && a="/$1/" || a=0; [ "$2" ] && b="/$2/" || b=$; sed -n "$a,${b}p"; }
 ff () { df -Th --exclude-type={devtmpfs,efivarfs,tmpfs} $@; }
 fn () { find ${@:2} -iname "*$1*"; }
@@ -93,7 +93,6 @@ mh () { ef ~/.$1 /tmp/$1 $2 && cd /tmp/$1 && nh; }
 ml () { mv "$1" "${1,,}"; }
 mo () { mv "$@" $OLDPWD; }
 mp () { nd mpv --quiet "$@"; }
-mq () { mountpoint -q $1 && echo "$1 already mounted"; }
 ms () { ma $1 <<< $?; }
 n1 () { "$@" 1> /dev/null; }
 n2 () { "$@" 2> /dev/null; }
@@ -119,7 +118,7 @@ s0 () { sleep 1; xset dpms force off; }
 s5 () { export ALL_PROXY=socks5h://localhost:1080; }
 sb () { unalias -a; . ~/.bashrc; }
 sd () { s='rsync -ahv'; $s -n "$@" && ry && $s "$@"; }
-sf () { mq $2 && return; mkdir -p $2; sshfs $1 $2 ${@:3}; }
+sf () { [ -d $2 ] || mkdir -v $2; mountpoint $2 || sshfs $1 $2 ${@:3}; }
 sg () { systemctl list-unit-files ${2:+--user} | co 1 | grep -i $1; }
 sm () { s='rsync -ahv --del'; $s -n "${@:2}" && ry && t=$(date +%s) && $s --max-size=1M "${@:2}" && $s -P --bwlimit=$1 "${@:2}"; e=$?; [ $(($(date +%s) - $t)) -gt 60 ] && ma rsync <<< $e; }
 sp () { systemd-ask-password --emoji=no; }
