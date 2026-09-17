@@ -80,10 +80,10 @@ l2 () { la -F $1 | cc 2; }
 lc () { la -F $1 | cc; }
 ld () { find -maxdepth 1 -mindepth 1 -type d -printf '%P\n' | sort; }
 lg () { la -F | grep -i $@; }
-lh () { ll $1 | head -20; }
+lh () { ll $1 | head -25; }
 lo () { tr A-Z a-z; }
 lr () { ll -d $2**/*$1*; }
-lt () { ll $1 | tail -20; }
+lt () { ll $1 | tail -25; }
 lu () { la -p | us; }
 m1 () { while true; do date; xdotool mousemove_relative 50 0 sleep .1 mousemove_relative -- -50 0; sleep 5m; done; }
 ma () { mail -s "$HOSTNAME: $1" ${@:2} $ma; }
