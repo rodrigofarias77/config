@@ -125,7 +125,7 @@ sp () { systemd-ask-password --emoji=no; }
 ss () { sudo bash -ci "$*"; }
 sv () { sp | nd ssvncviewer -autopass -bgr233 -encodings zrle $@; }
 sx () { sudo x11vnc -q -display :0 -usepw -auth /run/lightdm/root/:0 $@; }
-ta () { n1 tmux -2 attach -d; }
+ta () { n1 tmux attach -d; }
 tb () { tp $1 | cb; }
 td () { d=$(($(date +%s -d "$2") - $(date +%s -d "$1"))); echo "$(($d / 86400))d"; }
 tg () { find ~/trash/ -name '*.idx' | sort -r | xargs grep -i "$1" | sed 's/idx:/tar /' | while read t a; do x=$(tar -OPx -f $t "$a" | head -${3:-25} | tr -d '\0'); grep -iq "$2" <<< $x && echo -e "$(ll $t) $a\n$x\n" && sleep 5; done; }
